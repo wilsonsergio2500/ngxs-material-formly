@@ -1,0 +1,52 @@
+
+<div class="login-frame">
+  <mat-card>
+    <div class="logo-font logo-header color-primary">
+      Fire8
+    </div>
+    <div class="flex-center">
+      <span class="subheading">Welcome to FocusOne Connect</span>
+    </div>
+    <div class="form-region">
+
+      <form [formGroup]="LoginForm" (ngSubmit)="Submit()">
+
+        <mat-form-field class="block">
+          <input matInput type="text" placeholder="Username" formControlName="Username">
+          <mat-error formControlItem="Username"></mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="block">
+          <input matInput type="Password" placeholder="Password" formControlName="Password">
+          <mat-error formControlItem="Password"></mat-error>
+        </mat-form-field>
+
+        <div class="error-container" *ngIf="hasError">
+          <mat-card>
+            <mat-icon color="warn">error</mat-icon>
+            <span class="msg">Invalid Login</span>
+          </mat-card>
+        </div>
+
+        <loading-button [IsBusy]="btnLoading" type="submit" mat-raised-button class="flex-center">
+          <loading-button-ready>
+            Login
+          </loading-button-ready>
+          <loading-button-busy>
+            Login In...
+          </loading-button-busy>
+        </loading-button>
+
+
+
+      </form>
+
+    </div>
+    
+    <div class="flex-center">
+      <button mat-button color="accent" type="button" >Forgot Password</button>
+    </div>
+    <!--Here will be my login view..-->
+  </mat-card>
+  <!--Here will be my login view..-->
+</div>

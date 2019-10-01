@@ -1,0 +1,8 @@
+<div mat-dialog-content>
+  <p>{{data.message}}</p>
+  <div class="flex-center">
+    <button mat-button type="button" mat-raised-button color="primary" (click)="onOk()" cdkFocusInitial>OK</button>
+    <button mat-button type="button" color="warn" (click)="onCancel()">Cancel</button>
+  </div>
+</div>
+

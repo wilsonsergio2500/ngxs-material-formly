@@ -1,0 +1,46 @@
+@import "../../../styles-variables";
+.login-frame {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  margin-top: -10vh;
+}
+
+.block {
+  display: block;
+}
+
+.flex-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.error-container{
+  margin:5px;
+  .msg{
+    position:absolute;
+    top:10px;
+    padding:10px;
+    color:$mat-color-warn;
+  }
+}
+
+.logo-font {
+  font-family: spartan
+}
+.logo-header{
+
+  font-size: 30px;
+  padding:20px;
+}
+.subheading{
+  font-size:0.8em;
+  color:#777;
+
+}
+.form-region{
+  padding: 20px;
+}

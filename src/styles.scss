@@ -1,1 +1,97 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* You can add global styles to this file, and also import other style files */
+
+@import "styles-variables";
+
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+@font-face {
+  font-family: 'salazar';
+  src: url('assets/fonts/salazar.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'fabolous';
+  src: url('assets/fonts/fabolous.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'spartan';
+  src: url('assets/fonts/spartan.otf') format('opentype');
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Roboto+Mono);
+$custom-typography: mat-typography-config( $font-family: 'Roboto Mono' );
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+div {
+  /*font-family: 'Roboto Mono', monospace;*/
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.color-primary {
+  color: mat-color($primary);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.snackbar-branded {
+  background-color: white;
+  border: 1px solid lightgray;
+
+  .loading-message {
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+$color-main: #2E2E2E;
+
+a {
+  color: $color-main;
+  text-decoration: none;
+}
+
+.dialog-responsive {
+  width: 800px;
+  height: 500px;
+}
+
+@media(max-width: 959px) {
+  .dialog-responsive {
+    max-width: 90vw !important;
+    height: 90vh;
+  }
+}
+
+.formly-file-uploader > * .mat-form-field-label {
+  display: none !important;
+}
+
+.hidden-field {
+  display: none;
+}
+/*require it to be Global*/
+/*require it to be list-filter.component.html*/
+.cdk-virtual-scroll-content-wrapper {
+  max-width: 100%;
+}
+
+.white-space-pre-wrap {
+  white-space: pre-wrap;
+}
+
