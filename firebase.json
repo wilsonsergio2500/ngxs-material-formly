@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "Fire8",
+      "public": "dist/Fire8",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
