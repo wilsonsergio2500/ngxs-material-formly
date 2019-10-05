@@ -107,6 +107,7 @@
     <Folder Include="src\app\components\ui-elements\snackbar-status\types\error\" />
     <Folder Include="src\app\components\ui-elements\snackbar-status\types\progress\" />
     <Folder Include="src\app\decorators\" />
+    <Folder Include="src\app\firebase\services\" />
     <Folder Include="src\app\full\login\" />
     <Folder Include="src\app\full\main\" />
     <Folder Include="src\app\full\main\dashboard\" />
@@ -140,6 +141,7 @@
     <Folder Include="src\app\modules\ng2-ui-auth\" />
     <Folder Include="src\app\modules\web-worker\" />
     <Folder Include="src\app\modules\web-worker\contracts\" />
+    <Folder Include="src\app\firebase\" />
     <Folder Include="src\app\utils\" />
     <Folder Include="src\app\full\" />
     <Folder Include="src\assets\" />
@@ -174,6 +176,9 @@
     <TypeScriptCompile Include="src\app\decorators\autounsuscribe.decorator.ts" />
     <TypeScriptCompile Include="src\app\decorators\onchange.decorator.ts" />
     <TypeScriptCompile Include="src\app\decorators\onelementready.decorator.ts" />
+    <TypeScriptCompile Include="src\app\firebase\firebase.module.ts" />
+    <TypeScriptCompile Include="src\app\firebase\services\firedatabase.service.ts" />
+    <TypeScriptCompile Include="src\app\firebase\services\firestore.service.ts" />
     <TypeScriptCompile Include="src\app\full\elements.ts" />
     <TypeScriptCompile Include="src\app\full\full.component.ts" />
     <TypeScriptCompile Include="src\app\full\login\login.component.ts" />
