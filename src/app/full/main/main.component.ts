@@ -4,6 +4,7 @@ import { Store, Select } from '@ngxs/store';
 //import { Logout } from '../../xs-ng/auth/auth.actions';
 //import { MenuState } from '../../xs-ng/menu/menu.state';
 import { Observable, interval } from 'rxjs';
+import { Logout } from '../../xs-ng/auth/auth.actions';
 //import { MenuGetItems } from '../../xs-ng/menu/menu.action';
 
 @Component({
@@ -28,7 +29,7 @@ export class MainViewComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private media: MediaMatcher,
     private changeDetectorRef: ChangeDetectorRef,
-    //private store: Store
+    private store: Store
   ) {
   }
 
@@ -49,6 +50,6 @@ export class MainViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   logout() {
-    //this.store.dispatch(new Logout());
+    this.store.dispatch(new Logout());
   }
 }

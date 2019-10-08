@@ -3,7 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { FormTypeBuilder } from '../../modules/form-type-builder/form-type-builder.service';
 import { NgTypeFormGroup } from '../../modules/form-type-builder/form-type-builder.model';
 import { ILoginCredentials } from './login.contract';
-import { Store, Actions, ofActionErrored } from '@ngxs/store';
+import { Store } from '@ngxs/store';
+import { LoginWithEmailAndPassword } from '../../xs-ng/auth/auth.actions';
 
 @Component({
   selector: 'login',
@@ -18,8 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formTypeBuilder: FormTypeBuilder,
-    //private store: Store,
-    //private actions: Actions
+    private store: Store
   ) {
 
   }
@@ -59,7 +59,11 @@ export class LoginComponent implements OnInit {
     if (this.LoginForm.valid) {
       this.btnLoading = true;
 
-      //this.store.dispatch(new Login(this.LoginForm.value));
+
+        this.store.dispatch(new LoginWithEmailAndPassword({
+            email: this.LoginForm.value.Username,
+            password: this.LoginForm.value.Password
+        }))
 
 
       

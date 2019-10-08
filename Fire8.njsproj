@@ -142,8 +142,11 @@
     <Folder Include="src\app\modules\web-worker\" />
     <Folder Include="src\app\modules\web-worker\contracts\" />
     <Folder Include="src\app\firebase\" />
+    <Folder Include="src\app\guards\" />
+    <Folder Include="src\app\xs-ng\" />
     <Folder Include="src\app\utils\" />
     <Folder Include="src\app\full\" />
+    <Folder Include="src\app\xs-ng\auth\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\assets\fonts\" />
     <Folder Include="src\environments\" />
@@ -189,6 +192,8 @@
     <TypeScriptCompile Include="src\app\full\main\main.module.ts" />
     <TypeScriptCompile Include="src\app\full\main\main.routing.module.ts" />
     <TypeScriptCompile Include="src\app\full\main\under-contruction\under-construction.component.ts" />
+    <TypeScriptCompile Include="src\app\guards\auth.guard.ts" />
+    <TypeScriptCompile Include="src\app\guards\guards.ts" />
     <TypeScriptCompile Include="src\app\materialcomponents.module.ts" />
     <TypeScriptCompile Include="src\app\modules\form-type-builder\components\elements.ts" />
     <TypeScriptCompile Include="src\app\modules\form-type-builder\components\mat-form-error-accesor\base\BaseMatErrorAccesorHandler.ts" />
@@ -246,6 +251,10 @@
     <TypeScriptCompile Include="src\app\shared.module.ts" />
     <TypeScriptCompile Include="src\app\utils\country-states.ts" />
     <TypeScriptCompile Include="src\app\utils\get-nested.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\auth\auth.actions.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\auth\auth.model.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\auth\auth.state.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\states.ts" />
     <TypeScriptCompile Include="src\environments\environment.prod.ts" />
     <TypeScriptCompile Include="src\environments\environment.ts" />
     <TypeScriptCompile Include="src\main.ts" />
