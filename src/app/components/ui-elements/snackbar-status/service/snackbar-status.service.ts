@@ -27,7 +27,7 @@ export class SnackbarStatusService{
         this.snackbar.dismiss();
     }
 
-  OpenComplete(msg?: string, duration = 900000){
+    OpenComplete(msg?: string, duration = 3000){
         const message = msg || 'Action completed!';
     this.snackbar.openFromComponent(CompletedSnackbarComponent, <MatSnackBarConfig>{
       duration: duration,

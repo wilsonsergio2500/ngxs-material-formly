@@ -50,6 +50,8 @@
     <Content Include="src\app\components\ui-elements\snackbar-status\types\completed\snackbar-completed.component.html" />
     <Content Include="src\app\components\ui-elements\snackbar-status\types\error\snackbar-error.component.html" />
     <Content Include="src\app\components\ui-elements\snackbar-status\types\progress\snackbar-progress.component.html" />
+    <Content Include="src\app\full\admin\admin.component.html" />
+    <Content Include="src\app\full\admin\admin.component.scss" />
     <Content Include="src\app\full\full.component.html" />
     <Content Include="src\app\full\full.component.scss" />
     <Content Include="src\app\full\login\login.component.html" />
@@ -112,6 +114,7 @@
     <Folder Include="src\app\full\main\" />
     <Folder Include="src\app\full\main\dashboard\" />
     <Folder Include="src\app\full\main\under-contruction\" />
+    <Folder Include="src\app\full\admin\" />
     <Folder Include="src\app\modules\" />
     <Folder Include="src\app\modules\form-type-builder\" />
     <Folder Include="src\app\modules\form-type-builder\components\" />
@@ -182,6 +185,10 @@
     <TypeScriptCompile Include="src\app\firebase\firebase.module.ts" />
     <TypeScriptCompile Include="src\app\firebase\services\firedatabase.service.ts" />
     <TypeScriptCompile Include="src\app\firebase\services\firestore.service.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\admin.component.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\admin.module.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\admin.routing.module.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\elements.ts" />
     <TypeScriptCompile Include="src\app\full\elements.ts" />
     <TypeScriptCompile Include="src\app\full\full.component.ts" />
     <TypeScriptCompile Include="src\app\full\login\login.component.ts" />

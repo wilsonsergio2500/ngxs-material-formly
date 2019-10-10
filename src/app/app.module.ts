@@ -26,7 +26,6 @@ import { environment } from '../environments/environment';
       BrowserAnimationsModule,
       FirebaseModule,
       SharedModule.forRoot(),
-      //AngularFireModule.initializeApp(environment.firebase),
       NgxsModule.forRoot([...getRootStates()], { developmentMode: !environment.production }),
       NgxsRouterPluginModule.forRoot(),
       NgxsReduxDevtoolsPluginModule.forRoot({

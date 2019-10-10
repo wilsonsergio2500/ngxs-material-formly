@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout } from './auth.actions';
 import { take, tap } from 'rxjs/operators';
 import { Navigate } from '@ngxs/router-plugin';
+import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 
 
 @State<IAuthStateModel>({
@@ -17,7 +18,10 @@ export class AuthState implements NgxsOnInit {
     private mainPage = '/main';
     private loginPage = '/login';
 
-    constructor(private fireAuth: AngularFireAuth) {
+    constructor(
+        private fireAuth: AngularFireAuth,
+        private snackBarStatus: SnackbarStatusService
+    ) {
     }
 
     ngxsOnInit(ctx?: StateContext<IAuthStateModel>) {
@@ -46,7 +50,8 @@ export class AuthState implements NgxsOnInit {
     onAuthenticatUser(ctx: StateContext<IAuthStateModel>, action: LoginWithEmailAndPassword) {
        return this.fireAuth.auth.signInWithEmailAndPassword(action.request.email, action.request.password).then((userCredentials: firebase.auth.UserCredential) => {
            const { uid, phoneNumber, photoURL, email, displayName } = userCredentials.user;
-           ctx.dispatch(new LoginSuccess({ uid, phoneNumber, photoURL, email, displayName }))
+           ctx.dispatch(new LoginSuccess({ uid, phoneNumber, photoURL, email, displayName }));
+           this.snackBarStatus.OpenComplete('Authenticated');
         }).catch(error => {
             ctx.dispatch(new LoginFail())
         });
