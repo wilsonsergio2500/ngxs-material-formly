@@ -1,7 +1,7 @@
 import { State, Selector, NgxsOnInit, StateContext, Action } from "@ngxs/store";
 import { IAuthStateModel, User } from './auth.model';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout } from './auth.actions';
+import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout, LoginRedirectOnAuthenticated } from './auth.actions';
 import { take, tap } from 'rxjs/operators';
 import { Navigate } from '@ngxs/router-plugin';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
@@ -50,11 +50,20 @@ export class AuthState implements NgxsOnInit {
     onAuthenticatUser(ctx: StateContext<IAuthStateModel>, action: LoginWithEmailAndPassword) {
        return this.fireAuth.auth.signInWithEmailAndPassword(action.request.email, action.request.password).then((userCredentials: firebase.auth.UserCredential) => {
            const { uid, phoneNumber, photoURL, email, displayName } = userCredentials.user;
-           ctx.dispatch(new LoginSuccess({ uid, phoneNumber, photoURL, email, displayName }));
+           ctx.dispatch([
+               new LoginSuccess({ uid, phoneNumber, photoURL, email, displayName }),
+               new LoginRedirectOnAuthenticated()
+           ])
+              
            this.snackBarStatus.OpenComplete('Authenticated');
         }).catch(error => {
             ctx.dispatch(new LoginFail())
         });
+    }
+
+    @Action(LoginRedirectOnAuthenticated)
+    onAuthenticatedRedirect(ctx: StateContext<IAuthStateModel>) {
+        ctx.dispatch(new Navigate([this.mainPage]))
     }
 
     @Action(Logout)
@@ -69,7 +78,6 @@ export class AuthState implements NgxsOnInit {
         ctx.patchState({
             user: action.user
         })
-        ctx.dispatch(new Navigate([this.mainPage]))
     }
 
     @Action([LoginFail, LogoutSuccess])

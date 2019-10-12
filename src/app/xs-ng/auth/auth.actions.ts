@@ -23,6 +23,10 @@ export class LoginWithEmailAndPassword {
     constructor(public request: IAuthenticateUser) { }
 }
 
+export class LoginRedirectOnAuthenticated {
+  static type = '[Auth] RedirectOnAuthenticated'
+}
+
 export class Logout {
     static type = '[Auth] Logout';
 }
