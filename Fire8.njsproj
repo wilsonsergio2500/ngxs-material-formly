@@ -52,6 +52,9 @@
     <Content Include="src\app\components\ui-elements\snackbar-status\types\progress\snackbar-progress.component.html" />
     <Content Include="src\app\full\admin\admin.component.html" />
     <Content Include="src\app\full\admin\admin.component.scss" />
+    <Content Include="src\app\full\admin\posts\admin-post.component.html" />
+    <Content Include="src\app\full\admin\posts\create\admin-post-create.component.html" />
+    <Content Include="src\app\full\admin\posts\create\admin-post-create.component.scss" />
     <Content Include="src\app\full\full.component.html" />
     <Content Include="src\app\full\full.component.scss" />
     <Content Include="src\app\full\login\login.component.html" />
@@ -110,6 +113,11 @@
     <Folder Include="src\app\components\ui-elements\snackbar-status\types\progress\" />
     <Folder Include="src\app\decorators\" />
     <Folder Include="src\app\firebase\services\" />
+    <Folder Include="src\app\full\admin\posts\" />
+    <Folder Include="src\app\full\admin\posts\create\" />
+    <Folder Include="src\app\full\admin\posts\list\" />
+    <Folder Include="src\app\full\admin\posts\edit\" />
+    <Folder Include="src\app\full\admin\xs-ng\" />
     <Folder Include="src\app\full\login\" />
     <Folder Include="src\app\full\main\" />
     <Folder Include="src\app\full\main\dashboard\" />
@@ -189,6 +197,10 @@
     <TypeScriptCompile Include="src\app\full\admin\admin.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.routing.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\elements.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.component.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.module.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.routing.module.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\posts\create\admin-post-create.component.ts" />
     <TypeScriptCompile Include="src\app\full\elements.ts" />
     <TypeScriptCompile Include="src\app\full\full.component.ts" />
     <TypeScriptCompile Include="src\app\full\login\login.component.ts" />
