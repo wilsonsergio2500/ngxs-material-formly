@@ -201,6 +201,7 @@
     <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.routing.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\create\admin-post-create.component.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\posts\elements.ts" />
     <TypeScriptCompile Include="src\app\full\elements.ts" />
     <TypeScriptCompile Include="src\app\full\full.component.ts" />
     <TypeScriptCompile Include="src\app\full\login\login.component.ts" />
