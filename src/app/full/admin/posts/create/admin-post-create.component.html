@@ -1,1 +1,17 @@
-Hi from create
+
+  <div flex="100" fxLayout="column">
+
+    Hi from create
+    <div>
+      <formly-form-flex-json [formlyGroup]="formlyGroup"
+                             [show-revert]="true"
+                             btn-ready="Create"
+                             btn-busy="Creating..."
+                             [read-only]="false"
+                             [is-busy]="isPosting$ | async"
+                             (onFormSubmit)="formSubmit($event)">
+      </formly-form-flex-json>
+    </div>
+    
+
+  </div>

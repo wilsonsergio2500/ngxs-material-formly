@@ -201,6 +201,7 @@
     <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.routing.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\create\admin-post-create.component.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\posts\create\admin-post-crete.contract.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\elements.ts" />
     <TypeScriptCompile Include="src\app\full\elements.ts" />
     <TypeScriptCompile Include="src\app\full\full.component.ts" />
@@ -226,8 +227,8 @@
     <TypeScriptCompile Include="src\app\modules\form-type-builder\form-type.builder.module.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\base\fields-schema.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\base\fields-types-schemas.ts" />
-    <TypeScriptCompile Include="src\app\modules\formly-fields-extended\base\FormlyGroup.ts" />
-    <TypeScriptCompile Include="src\app\modules\formly-fields-extended\base\IFormlyGroup.ts" />
+    <TypeScriptCompile Include="src\app\modules\formly-fields-extended\base\FormlyTypeGroup.ts" />
+    <TypeScriptCompile Include="src\app\modules\formly-fields-extended\base\IFormlyTypeGroup.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\forms\formly-form-flex-json\fomly-form-flex-json.component.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\forms\formly-form-flex-layout\formly-form-flex-layout.component.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\ngx-formly-fields-extended.module.ts" />

@@ -1,9 +1,9 @@
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { IFormlyGroup } from './IFormlyGroup';
+import { IFormlyTypeGroup } from './IFormlyTypeGroup';
 
 
-export class FormlyGroup<T = any> implements IFormlyGroup<T> {
+export class FormlyTypeGroup<T = any> implements IFormlyTypeGroup<T> {
 
   model: T;
   options: FormlyFormOptions;
@@ -14,7 +14,7 @@ export class FormlyGroup<T = any> implements IFormlyGroup<T> {
   IsBusy: boolean = false;
 
   constructor(config?: { [p in keyof T]: FormlyFieldConfig })
-  constructor(config?: { [p in keyof T]: FormlyFieldConfig }, ops: IFormlyGroup<T> = {}, ) {
+    constructor(config?: { [p in keyof T]: FormlyFieldConfig }, ops: IFormlyTypeGroup<T> = {}, ) {
     this.model = ops && ops.model || <T>{};
     this.options = ops && ops.options || <FormlyFormOptions>{};
     this.form = ops && ops.form || new FormGroup({});

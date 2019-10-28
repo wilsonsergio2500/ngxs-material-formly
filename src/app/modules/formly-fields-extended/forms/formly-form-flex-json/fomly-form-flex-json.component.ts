@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { IFormlyGroup } from '../../base/IFormlyGroup';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { Observable } from 'rxjs';
+import { IFormlyTypeGroup } from '../../base/IFormlyTypeGroup';
 
 /*
 usage:
@@ -27,7 +26,7 @@ export class FormlyFormFlexJsonComponent<T> implements OnChanges{
   private _showRevertbtn: boolean = false;
 
   @Input()
-  formlyGroup: IFormlyGroup<T>;
+  formlyGroup: IFormlyTypeGroup<T>;
 
   @Input('btn-ready')
   btnReady: string;
