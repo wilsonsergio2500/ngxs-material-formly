@@ -34,7 +34,6 @@ import { FormlyForm } from '@ngx-formly/core';
         [fxFlex]="field.templateOptions.fxFlex"
         [fxFlex.xs]="100"
         [fxHide.xs]="field.templateOptions.fxHideXs"
-        [form]="field.form"
         [field]="field"
         [ngClass]="field.className"
         [ngStyle]="{'padding.px': 10}">

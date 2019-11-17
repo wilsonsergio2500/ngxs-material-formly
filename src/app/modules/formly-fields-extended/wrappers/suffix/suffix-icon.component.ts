@@ -12,11 +12,11 @@ import { FieldWrapper } from '@ngx-formly/core';
 })
 export class SuffixIconWrapperComponent extends FieldWrapper implements AfterViewInit {
   @ViewChild('fieldComponent', { read: ViewContainerRef, static: true }) fieldComponent: ViewContainerRef;
-  @ViewChild('matSuffix', { static: true}) matSuffix: TemplateRef<any>;
+  @ViewChild('matSuffix', { static: false}) matSuffix: TemplateRef<any>;
 
-  ngAfterViewInit() {
-    if (this.matSuffix) {
-      //setTimeout(() => this.to.suffix = this.matSuffix);
+    ngAfterViewInit() {
+        if (this.matSuffix) {
+            Promise.resolve().then(() => this.to.suffix = this.matSuffix);
     }
   }
 }

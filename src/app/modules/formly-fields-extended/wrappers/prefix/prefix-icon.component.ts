@@ -11,7 +11,7 @@ export class PrefixIconWrapperComponent extends FieldWrapper implements AfterVie
 
   ngAfterViewInit() {
     if (this.matPrefix) {
-      //setTimeout(() => this.to.prefix = this.matPrefix);
+        Promise.resolve().then(() => this.to.prefix = this.matPrefix);
     }
   }
 }
