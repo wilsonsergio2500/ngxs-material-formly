@@ -6,8 +6,8 @@ import { FieldWrapper } from '@ngx-formly/core';
   templateUrl: 'prefix-icon.component.html'
 })
 export class PrefixIconWrapperComponent extends FieldWrapper implements AfterViewInit {
-  @ViewChild('fieldComponent', { read: ViewContainerRef, static: false }) fieldComponent: ViewContainerRef;
-  @ViewChild('matPrefix', { static: false}) matPrefix: TemplateRef<any>;
+  @ViewChild('fieldComponent', { read: ViewContainerRef, static: true }) fieldComponent: ViewContainerRef;
+  @ViewChild('matPrefix', { static: true}) matPrefix: TemplateRef<any>;
 
   ngAfterViewInit() {
     if (this.matPrefix) {

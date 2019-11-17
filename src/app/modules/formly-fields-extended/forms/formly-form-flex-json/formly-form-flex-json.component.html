@@ -1,6 +1,25 @@
 
-<form [formGroup]="formlyGroup.form" autocomplete="off" (ngSubmit)="submit($event)">
-  <formly-form-flex [model]="formlyGroup.model" [fields]="formlyGroup.fields" [options]="formlyGroup.options" [form]="formlyGroup.form">
+  <form [formGroup]="formlyGroup.form" autocomplete="off" (ngSubmit)="submit($event)">
+    <formly-form-flex [model]="formlyGroup.model" [fields]="formlyGroup.fields" [options]="formlyGroup.options" [form]="formlyGroup.form">
+
+      <!--<div fxflex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
+
+      <loading-button [IsBusy]="formlyGroup.IsBusy || btnIsBusy" mat-raised-button type="submit" [disabled]="isSubmitDisabled" fxflex="100" [hidden]="readOnly">
+        <loading-button-ready>
+          {{ btnReady }}
+        </loading-button-ready>
+        <loading-button-busy>
+          {{ btnBusy }}
+        </loading-button-busy>
+      </loading-button>
+
+      <button mat-button color="warn" type="button" (click)="formlyGroup.options.resetModel()" *ngIf="showRevertBtn">Reset</button>
+
+      <ng-content></ng-content>
+
+    </div>-->
+
+    </formly-form-flex>
 
     <div fxflex="100" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign.gt-xs="end center">
 
@@ -18,6 +37,5 @@
       <ng-content></ng-content>
 
     </div>
- 
-  </formly-form-flex>
-</form>
+
+  </form>

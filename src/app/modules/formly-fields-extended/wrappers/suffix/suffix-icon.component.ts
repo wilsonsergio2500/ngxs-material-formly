@@ -11,8 +11,8 @@ import { FieldWrapper } from '@ngx-formly/core';
   `,
 })
 export class SuffixIconWrapperComponent extends FieldWrapper implements AfterViewInit {
-  @ViewChild('fieldComponent', { read: ViewContainerRef, static: false }) fieldComponent: ViewContainerRef;
-  @ViewChild('matSuffix', { static: false}) matSuffix: TemplateRef<any>;
+  @ViewChild('fieldComponent', { read: ViewContainerRef, static: true }) fieldComponent: ViewContainerRef;
+  @ViewChild('matSuffix', { static: true}) matSuffix: TemplateRef<any>;
 
   ngAfterViewInit() {
     if (this.matSuffix) {

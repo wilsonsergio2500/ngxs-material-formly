@@ -81,13 +81,13 @@ export class FormlyTypeGroup<T = any> implements IFormlyTypeGroup<T> {
     this.model = model;
   }
 
-  get(key: keyof T) {
-    return this.form.get(key);
-  }
+    get(key: keyof T) {
+        return this.form.get(key);
+    }
 
-  patchValue(key: keyof T, value: any) {
-    this.form.get(key).patchValue(value);
-  }
+    patchValue(model: Partial<T>) {
+        this.model = { ...this.model, ...model }
+    }
 
   setFields(config: { [p in keyof T]: FormlyFieldConfig }) {
 
@@ -99,7 +99,8 @@ export class FormlyTypeGroup<T = any> implements IFormlyTypeGroup<T> {
         formlyConfig.key = key;
         fields.push(formlyConfig);
       });
-      this.fields = [...fields];
+        this.fields = [...fields];
+        console.log(this.fields);
     }
 
   }
