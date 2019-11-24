@@ -4,19 +4,25 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../../environments/environment'
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 
 @NgModule({
-  imports: [
-    AngularFireModule.initializeApp(environment.firebase, 'firebase-cms'),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireStorageModule,
-  ],
-  exports: [
-    AngularFireModule,
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireStorageModule,
-  ]
+    imports: [
+        AngularFireModule.initializeApp(environment.firebase, 'firebase-cms'),
+        AngularFirestoreModule,
+        AngularFireDatabaseModule,
+        AngularFireAuthModule,
+        AngularFireStorageModule,
+        AngularFireAuthGuardModule 
+    ],
+    exports: [
+        AngularFireModule,
+        AngularFirestoreModule,
+        AngularFireDatabaseModule,
+        AngularFireAuthModule,
+        AngularFireStorageModule,
+        AngularFireAuthGuardModule 
+    ]
 })
-export class FirebaseModule {}
+export class FirebaseModule { }

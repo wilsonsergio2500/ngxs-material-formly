@@ -1,4 +1,3 @@
-import { Inject } from "@angular/core";
 import { AngularFirestore, QueryFn } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
@@ -9,9 +8,8 @@ export abstract class FirestoreService<T> {
   protected abstract basePath: string;
 
   constructor(
-    @Inject(AngularFirestore) protected firestore: AngularFirestore,
+   protected firestore: AngularFirestore,
   ) {
-
   }
 
   doc$(id: string): Observable<T> {
@@ -39,11 +37,11 @@ export abstract class FirestoreService<T> {
   }
 
   create(value: T) {
-    const id = this.firestore.createId();
-    return this.collection.doc(id).set(Object.assign({}, { id }, value)).then(_ => {
+    const Id = this.firestore.createId();
+    return this.collection.doc(Id).set(Object.assign({}, { Id }, value)).then(_ => {
       if (!environment.production) {
         console.groupCollapsed(`Firestore Service [${this.basePath}] [create]`)
-        console.log('[Id]', id, value)
+        console.log('[Id]', Id, value)
         console.groupEnd()
       }
     })

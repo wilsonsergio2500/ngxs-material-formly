@@ -118,6 +118,7 @@
     <Folder Include="src\app\full\admin\posts\list\" />
     <Folder Include="src\app\full\admin\posts\edit\" />
     <Folder Include="src\app\full\admin\xs-ng\" />
+    <Folder Include="src\app\full\admin\xs-ng\posts\" />
     <Folder Include="src\app\full\login\" />
     <Folder Include="src\app\full\main\" />
     <Folder Include="src\app\full\main\dashboard\" />
@@ -154,6 +155,8 @@
     <Folder Include="src\app\modules\web-worker\contracts\" />
     <Folder Include="src\app\firebase\" />
     <Folder Include="src\app\guards\" />
+    <Folder Include="src\app\schemas\" />
+    <Folder Include="src\app\schemas\posts\" />
     <Folder Include="src\app\xs-ng\" />
     <Folder Include="src\app\utils\" />
     <Folder Include="src\app\full\" />
@@ -203,6 +206,10 @@
     <TypeScriptCompile Include="src\app\full\admin\posts\create\admin-post-create.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\create\admin-post-crete.contract.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\elements.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.actions.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.model.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.state.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\xs-ng\states.ts" />
     <TypeScriptCompile Include="src\app\full\elements.ts" />
     <TypeScriptCompile Include="src\app\full\full.component.ts" />
     <TypeScriptCompile Include="src\app\full\login\login.component.ts" />
@@ -269,6 +276,8 @@
     <TypeScriptCompile Include="src\app\modules\web-worker\web-worker.module.ts" />
     <TypeScriptCompile Include="src\app\modules\web-worker\web-worker.service.ts" />
     <TypeScriptCompile Include="src\app\modules\web-worker\web-worker.ts" />
+    <TypeScriptCompile Include="src\app\schemas\posts\post.firebase.ts" />
+    <TypeScriptCompile Include="src\app\schemas\posts\post.model.ts" />
     <TypeScriptCompile Include="src\app\shared.module.ts" />
     <TypeScriptCompile Include="src\app\utils\country-states.ts" />
     <TypeScriptCompile Include="src\app\utils\get-nested.ts" />

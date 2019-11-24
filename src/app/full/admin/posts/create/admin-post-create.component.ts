@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IAdminPostCreate } from './admin-post-crete.contract';
 import { FieldTypes } from '../../../../modules/formly-fields-extended/base/fields-types-schemas';
 import { FormlyTypeGroup } from '../../../../modules/formly-fields-extended/base/FormlyTypeGroup';
+import { Store } from '@ngxs/store';
+import { CreatePostAction } from '../../xs-ng/posts/posts.actions';
 
 @Component({
     selector: 'admin-post-create',
@@ -12,28 +14,31 @@ export class AdminPostCreateComponent {
 
     formlyGroup: FormlyTypeGroup<IAdminPostCreate>;
 
-    constructor() {
+    constructor(private store: Store) {
         this.bindForm();
     }
 
     bindForm() {
 
+        const url = new FieldTypes.InputField('Url', true);
         const title = new FieldTypes.InputField('Title', true, 100);
-        title.templateOptions.suffixIcon = 'bookmark';
-
+        const date = new FieldTypes.DatePickerField('Date', true);
+        //title.templateOptions.suffixIcon = 'bookmark';
         const body = new FieldTypes.InputField('Body', true, 100);
-        const email = new FieldTypes.EmailField('Email', true, 100)
 
         this.formlyGroup = new FormlyTypeGroup<IAdminPostCreate>({
+            url,
             title,
+            date,
             body,
-            email
         });
 
-        this.formlyGroup.patchValue({ email: 'email@gmail.com' });
+    }
+    formSubmit($event) {
+        this.formlyGroup.markAsBusy();
 
+        this.store.dispatch(new CreatePostAction({...this.formlyGroup.model}))
 
     }
-
 
 }

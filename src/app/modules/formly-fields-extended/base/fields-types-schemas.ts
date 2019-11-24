@@ -1,10 +1,10 @@
-import { FieldSchemas } from './fields-schema';
 import { FormlyFieldConfig, FormlyTemplateOptions } from '@ngx-formly/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { FormlyLifeCycleOptions } from '@ngx-formly/core/lib/components/formly.field.config';
 import { IFileUploaderOptions } from '../types/file-uploader/contracts/file-uploader-formly.options';
 import { Observable } from 'rxjs';
 import { getCountryStates } from '../../../utils/country-states';
+import { extend } from 'webdriver-js-extender';
 
 
 export namespace FieldTypes {
@@ -414,7 +414,29 @@ export namespace FieldTypes {
       this.templateOptions.fileUploder = { ...config };
       this.templateOptions.label = 'Document';
     }
-  }
+    }
+
+    export class FriendlyUrlField extends InputBase {
+        constructor(label: string, required: boolean, fxFlex = 100) {
+            super(label, required, fxFlex);
+            this.validators = {
+                'urlfriendly': {
+                    expression: (formGroup: FormGroup) => {
+                        if (!!formGroup.value) {
+                            const regex = /[ !@#$%^&*()+\=\[\]{};':"\\|,.<>\/?]/g;
+                            return !regex.test(formGroup.value);
+                        } else {
+                            return true;
+                        }
+                    },
+                    message: (error, field: FormlyFieldConfig) => {
+                        return `"${field.formControl.value}" is not a valid url name`;
+                    }
+                }
+            }
+            this.templateOptions.description = 'no slashes, spaces or special characters';
+        }
+    }
 
   //export class LimitSelection extends InputBase {
   //  constructor(list$: Observable<any[][]>, controlConfig: Partial<ILimitSelectionFormly> = {}) {
