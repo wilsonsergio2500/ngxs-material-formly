@@ -155,6 +155,7 @@
     <Folder Include="src\app\modules\web-worker\contracts\" />
     <Folder Include="src\app\firebase\" />
     <Folder Include="src\app\guards\" />
+    <Folder Include="src\app\resolvers\" />
     <Folder Include="src\app\schemas\" />
     <Folder Include="src\app\schemas\posts\" />
     <Folder Include="src\app\xs-ng\" />
@@ -276,6 +277,8 @@
     <TypeScriptCompile Include="src\app\modules\web-worker\web-worker.module.ts" />
     <TypeScriptCompile Include="src\app\modules\web-worker\web-worker.service.ts" />
     <TypeScriptCompile Include="src\app\modules\web-worker\web-worker.ts" />
+    <TypeScriptCompile Include="src\app\resolvers\resolvers.ts" />
+    <TypeScriptCompile Include="src\app\resolvers\load-user.resolver.ts" />
     <TypeScriptCompile Include="src\app\schemas\posts\post.firebase.ts" />
     <TypeScriptCompile Include="src\app\schemas\posts\post.model.ts" />
     <TypeScriptCompile Include="src\app\shared.module.ts" />

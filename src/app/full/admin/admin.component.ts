@@ -2,6 +2,7 @@ import { Component, ChangeDetectorRef, OnInit, AfterViewInit, OnDestroy } from '
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Store } from '@ngxs/store';
 import { Logout } from '../../xs-ng/auth/auth.actions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'admin-view-component',
@@ -16,7 +17,7 @@ export class AdminComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         private media: MediaMatcher,
         private changeDetectorRef: ChangeDetectorRef,
-        private store: Store
+        private store: Store,
     ) {
     }
 

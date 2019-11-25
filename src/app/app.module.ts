@@ -13,6 +13,7 @@ import { getFullPageViewComponents } from './full/elements';
 import { getRootStates } from './xs-ng/states';
 import { getRootGuards } from './guards/guards';
 import { environment } from '../environments/environment';
+import { getGlobalResolvers } from './resolvers/resolvers';
 
 
 @NgModule({
@@ -33,7 +34,10 @@ import { environment } from '../environments/environment';
       }),
       MaterialComponentsModule
   ],
-  providers: [...getRootGuards()],
+    providers: [
+        ...getRootGuards(),
+        ...getGlobalResolvers()
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
