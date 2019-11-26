@@ -75,7 +75,6 @@ export class AuthState implements NgxsOnInit {
 
     @Action(LoginSuccess)
     onLoginSuccess(ctx: StateContext<IAuthStateModel>, action: LoginSuccess) {
-        console.log(action.user);
         ctx.patchState({
             user: action.user
         })

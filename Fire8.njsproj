@@ -55,6 +55,8 @@
     <Content Include="src\app\full\admin\posts\admin-post.component.html" />
     <Content Include="src\app\full\admin\posts\create\admin-post-create.component.html" />
     <Content Include="src\app\full\admin\posts\create\admin-post-create.component.scss" />
+    <Content Include="src\app\full\admin\posts\list\admin-post-list.component.html" />
+    <Content Include="src\app\full\admin\posts\list\admin-post-list.component.scss" />
     <Content Include="src\app\full\full.component.html" />
     <Content Include="src\app\full\full.component.scss" />
     <Content Include="src\app\full\login\login.component.html" />
@@ -112,6 +114,7 @@
     <Folder Include="src\app\components\ui-elements\snackbar-status\types\error\" />
     <Folder Include="src\app\components\ui-elements\snackbar-status\types\progress\" />
     <Folder Include="src\app\decorators\" />
+    <Folder Include="src\app\firebase\types\" />
     <Folder Include="src\app\firebase\services\" />
     <Folder Include="src\app\full\admin\posts\" />
     <Folder Include="src\app\full\admin\posts\create\" />
@@ -197,6 +200,7 @@
     <TypeScriptCompile Include="src\app\firebase\firebase.module.ts" />
     <TypeScriptCompile Include="src\app\firebase\services\firedatabase.service.ts" />
     <TypeScriptCompile Include="src\app\firebase\services\firestore.service.ts" />
+    <TypeScriptCompile Include="src\app\firebase\types\firebase-entity.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.routing.module.ts" />
@@ -207,6 +211,7 @@
     <TypeScriptCompile Include="src\app\full\admin\posts\create\admin-post-create.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\create\admin-post-crete.contract.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\elements.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\posts\list\admin-post-list.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.actions.ts" />
     <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.model.ts" />
     <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.state.ts" />

@@ -19,14 +19,11 @@ export class AdminPostCreateComponent implements OnInit {
     constructor(
         private store: Store,
         private activatedRoute: ActivatedRoute,
-        private snackBarStatus: SnackbarStatusService
     ) {
-        console.log(this.activatedRoute.snapshot);
     }
 
     ngOnInit() {
         this.bindForm();
-        this.snackBarStatus.OpenComplete('completed');
     }
 
     bindForm() {

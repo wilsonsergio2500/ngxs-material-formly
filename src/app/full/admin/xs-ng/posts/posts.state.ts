@@ -6,7 +6,7 @@ import { PostFireStore } from '../../../../schemas/posts/post.firebase';
 import { CreatePostAction, SetPostAsWorkingAction, SetPostAsDoneAction } from './posts.actions';
 import { SnackbarStatusService } from '../../../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 import { from } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, mergeMap } from 'rxjs/operators';
 import { AuthState } from '../../../../xs-ng/auth/auth.state';
 
 @State({
@@ -43,19 +43,18 @@ export class PostState {
     @Action(CreatePostAction)
     onCreatePost(ctx: StateContext<IPostStateModel>, action: CreatePostAction) {
 
-        this.store.selectOnce(AuthState.getUser).pipe(
-            tap(u => console.log(u))
-        ).subscribe();
 
-        this.posts.create(action.request).then(g => {
-            console.log(g);
-        });
-
-        return from(this.posts.create(action.request)).pipe(
+        return this.store.selectOnce(AuthState.getUser).pipe(
+            mergeMap((user) => {
+                const form = { ...action.request };
+                form.createDate = Date.now().toString();
+                form.createdBy = user;
+                return from(this.posts.create(form))
+            }),
             tap(() => {
-                console.log('enter on tap');
                 this.snackBarStatus.OpenComplete('Post succesfully created');
             })
         );
+
     }
 }
