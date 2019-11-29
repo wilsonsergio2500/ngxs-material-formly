@@ -1,23 +1,26 @@
 
-import { State, Action, StateContext, Store } from '@ngxs/store'
+import { State, Action, StateContext, Store, Selector } from '@ngxs/store'
 import { IPostStateModel } from './posts.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PostFireStore } from '../../../../schemas/posts/post.firebase';
-import { CreatePostAction, SetPostAsWorkingAction, SetPostAsDoneAction } from './posts.actions';
+import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction } from './posts.actions';
 import { SnackbarStatusService } from '../../../../components/ui-elements/snackbar-status/service/snackbar-status.service';
-import { from } from 'rxjs';
-import { tap, mergeMap } from 'rxjs/operators';
+import { from, Subscription } from 'rxjs';
+import { tap, mergeMap, delay } from 'rxjs/operators';
 import { AuthState } from '../../../../xs-ng/auth/auth.state';
 
 @State({
     name: 'postState',
     defaults: <IPostStateModel>{
-        working: false
+        working: false,
+        posts: [],
+        size: 0
     }
 })
 export class PostState {
 
     private posts: PostFireStore;
+    private GetPostSubscription: Subscription;
     constructor(
         angularFireStore: AngularFirestore,
         private store: Store,
@@ -26,7 +29,17 @@ export class PostState {
         this.posts = new PostFireStore(angularFireStore);
     }
 
-    @Action(SetPostAsWorkingAction)
+    @Selector()
+    static IsLoading(state: IPostStateModel) {
+        return state.working;
+    }
+
+    @Selector()
+    static getItems(state: IPostStateModel) {
+        return state.posts;
+    }
+
+    @Action(SetPostAsLoadingAction)
     onPostAsworking(ctx: StateContext<IPostStateModel>) {
         ctx.patchState({
             working: true
@@ -43,7 +56,6 @@ export class PostState {
     @Action(CreatePostAction)
     onCreatePost(ctx: StateContext<IPostStateModel>, action: CreatePostAction) {
 
-
         return this.store.selectOnce(AuthState.getUser).pipe(
             mergeMap((user) => {
                 const form = { ...action.request };
@@ -57,4 +69,28 @@ export class PostState {
         );
 
     }
+
+    @Action(GetPostsAction)
+    onGetPost(ctx: StateContext<IPostStateModel>, action: GetPostsAction) {
+
+        if (!this.GetPostSubscription) {
+            ctx.dispatch(new SetPostAsLoadingAction())
+            this.GetPostSubscription = this.posts.collection$().pipe(
+                tap(items => {
+                    ctx.dispatch(new SetPostsAction(items))
+                }),
+                delay(250),
+                mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
+            ).subscribe();
+        }
+    }
+
+    @Action(SetPostsAction)
+    onSetPost(ctx: StateContext<IPostStateModel>, action: SetPostsAction) {
+        const posts = action.request;
+        const size = posts.length;
+        ctx.patchState({ posts, size });
+    }
+
+
 }

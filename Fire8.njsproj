@@ -212,6 +212,7 @@
     <TypeScriptCompile Include="src\app\full\admin\posts\create\admin-post-crete.contract.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\elements.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\list\admin-post-list.component.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\posts\list\admin-post-list.resolver.ts" />
     <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.actions.ts" />
     <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.model.ts" />
     <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.state.ts" />

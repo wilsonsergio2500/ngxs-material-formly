@@ -8,7 +8,7 @@ import { FirebaseModule } from '../../../firebase/firebase.module';
 import { MaterialComponentsModule } from '../../../materialcomponents.module';
 import { AdminPostRoutingModule } from './admin-post.routing.module'
 
-import { getAdminComponents } from './elements';
+import { getAdminComponents, getAdminProviders } from './elements';
 
 @NgModule({
     declarations: [
@@ -22,6 +22,9 @@ import { getAdminComponents } from './elements';
         FirebaseModule,
         MaterialComponentsModule,
         AdminPostRoutingModule
+    ],
+    providers: [
+        ...getAdminProviders()
     ]
 })
 export class AdminPostModule {
