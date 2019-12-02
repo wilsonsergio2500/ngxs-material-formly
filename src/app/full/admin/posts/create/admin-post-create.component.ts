@@ -5,7 +5,6 @@ import { FormlyTypeGroup } from '../../../../modules/formly-fields-extended/base
 import { Store } from '@ngxs/store';
 import { CreatePostAction } from '../../xs-ng/posts/posts.actions';
 import { ActivatedRoute } from '@angular/router';
-import { SnackbarStatusService } from '../../../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 
 @Component({
     selector: 'admin-post-create',
@@ -15,6 +14,7 @@ import { SnackbarStatusService } from '../../../../components/ui-elements/snackb
 export class AdminPostCreateComponent implements OnInit {
 
     formlyGroup: FormlyTypeGroup<IAdminPostCreate>;
+    listPath  = "../list"
 
     constructor(
         private store: Store,

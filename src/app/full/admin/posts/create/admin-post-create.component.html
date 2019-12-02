@@ -1,18 +1,32 @@
 
   <div flex="100" fxLayout="column">
 
-    <div>
+    <div fxLayout="row">
 
-      <formly-form-flex-json [formlyGroup]="formlyGroup"
-                         [show-revert]="true"
-                         btn-ready="Create"
-                         btn-busy="Creating..."
-                         [read-only]="false"
-                         [is-busy]="isPosting$ | async"
-                         (onFormSubmit)="formSubmit($event)">
-  </formly-form-flex-json>
+      <div [ngStyle]="{'margin-top.px': 15}">
+        <a mat-button [routerLink]="listPath">
+        <mat-icon color="primary">chevron_left</mat-icon>
+        </a>
+      </div>
+
+      <div>
+        <h3>New Post</h3>
+      </div>
 
     </div>
-    
 
-  </div>
+      <div>
+
+        <formly-form-flex-json [formlyGroup]="formlyGroup"
+                               [show-revert]="true"
+                               btn-ready="Create"
+                               btn-busy="Creating..."
+                               [read-only]="false"
+                               [is-busy]="isPosting$ | async"
+                               (onFormSubmit)="formSubmit($event)">
+        </formly-form-flex-json>
+
+      </div>
+
+
+    </div>

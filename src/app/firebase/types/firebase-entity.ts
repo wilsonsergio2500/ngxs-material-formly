@@ -1,6 +1,6 @@
 
 export interface IFireBaseEntity {
     Id?: string;
-    createDate?: string | Date;
+    createDate?: number | Date;
     createdBy?: any;
 }

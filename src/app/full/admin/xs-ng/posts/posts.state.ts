@@ -8,6 +8,7 @@ import { SnackbarStatusService } from '../../../../components/ui-elements/snackb
 import { from, Subscription } from 'rxjs';
 import { tap, mergeMap, delay } from 'rxjs/operators';
 import { AuthState } from '../../../../xs-ng/auth/auth.state';
+import { Navigate } from '@ngxs/router-plugin';
 
 @State({
     name: 'postState',
@@ -59,12 +60,13 @@ export class PostState {
         return this.store.selectOnce(AuthState.getUser).pipe(
             mergeMap((user) => {
                 const form = { ...action.request };
-                form.createDate = Date.now().toString();
+                form.createDate = Date.now();
                 form.createdBy = user;
                 return from(this.posts.create(form))
             }),
             tap(() => {
                 this.snackBarStatus.OpenComplete('Post succesfully created');
+                ctx.dispatch(new Navigate(['admin/posts/list']))
             })
         );
 
@@ -75,7 +77,7 @@ export class PostState {
 
         if (!this.GetPostSubscription) {
             ctx.dispatch(new SetPostAsLoadingAction())
-            this.GetPostSubscription = this.posts.collection$().pipe(
+            this.GetPostSubscription = this.posts.collection$(ref => ref.orderBy('createDate',  'desc')).pipe(
                 tap(items => {
                     ctx.dispatch(new SetPostsAction(items))
                 }),
