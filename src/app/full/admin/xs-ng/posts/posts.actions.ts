@@ -14,12 +14,18 @@ export class CreatePostAction {
 }
 
 export class GetPostsAction {
-  static type = '[Post] Get Posts'
+  static type = '[Post] Get All Posts'
 }
 
 export class SetPostsAction {
-    static type = '[Post] Set Posts';
+    static type = '[Post] Set All Posts';
     constructor(public request: IPostFirebaseModel[]) { }
 }
 
+export class GetPostPageAction {
+    static type = '[Posts] Get Posts Page'
+}
+export class SetPostPage {
+    static type = '[Posts] Set Post Page';
+}
 

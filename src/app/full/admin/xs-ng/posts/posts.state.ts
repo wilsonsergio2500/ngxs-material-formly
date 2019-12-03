@@ -3,19 +3,22 @@ import { State, Action, StateContext, Store, Selector } from '@ngxs/store'
 import { IPostStateModel } from './posts.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PostFireStore } from '../../../../schemas/posts/post.firebase';
-import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction } from './posts.actions';
+import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction } from './posts.actions';
 import { SnackbarStatusService } from '../../../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 import { from, Subscription } from 'rxjs';
 import { tap, mergeMap, delay } from 'rxjs/operators';
 import { AuthState } from '../../../../xs-ng/auth/auth.state';
 import { Navigate } from '@ngxs/router-plugin';
+import { FirebasePaginationStateModel } from '../../../../firebase/types/firabes-pagination';
+import { IPostFirebaseModel } from '../../../../schemas/posts/post.model';
 
 @State({
     name: 'postState',
     defaults: <IPostStateModel>{
         working: false,
         posts: [],
-        size: 0
+        size: 0,
+        paginationState: new FirebasePaginationStateModel<IPostFirebaseModel>()
     }
 })
 export class PostState {
@@ -92,6 +95,34 @@ export class PostState {
         const posts = action.request;
         const size = posts.length;
         ctx.patchState({ posts, size });
+    }
+
+    @Action(GetPostPageAction)
+    onGetPostPage(ctx: StateContext<IPostStateModel>, action: GetPostPageAction) {
+
+        const { paginationState } = ctx.getState();
+        const { pageSize,  prev_start_at } = paginationState;
+        if (!this.GetPostSubscription) {
+            this.GetPostSubscription = this.posts.collection$(ref => ref.limit(pageSize).orderBy('createDate', 'desc')).pipe(
+                tap(model => {
+                    if (!model.length) {
+                        return false;
+                    }
+
+                    const first = model[0];
+                    const last = model[model.length - 1];
+                    const prev_start_at = [];
+                    const pagination_count = 0;
+                    const next = false;
+                    const prev = false;
+                    const prevStartAt = [...prev_start_at, first];
+                    const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prevStartAt, items: model };
+                    ctx.patchState({ paginationState: newPaginationState })
+
+                })
+            ).subscribe();
+        }
+
     }
 
 

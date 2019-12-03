@@ -200,6 +200,7 @@
     <TypeScriptCompile Include="src\app\firebase\firebase.module.ts" />
     <TypeScriptCompile Include="src\app\firebase\services\firedatabase.service.ts" />
     <TypeScriptCompile Include="src\app\firebase\services\firestore.service.ts" />
+    <TypeScriptCompile Include="src\app\firebase\types\firabes-pagination.ts" />
     <TypeScriptCompile Include="src\app\firebase\types\firebase-entity.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.module.ts" />
