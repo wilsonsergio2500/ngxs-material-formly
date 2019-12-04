@@ -10,5 +10,5 @@ import { PostState } from '../../xs-ng/posts/posts.state';
 export class AdminPostListComponent {
 
     @Select(PostState.IsLoading) working$;
-    @Select(PostState.getItems) records$;
+    @Select(PostState.getPage) records$;
 }

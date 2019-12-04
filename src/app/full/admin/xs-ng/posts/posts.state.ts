@@ -43,6 +43,11 @@ export class PostState {
         return state.posts;
     }
 
+    @Selector()
+    static getPage(state: IPostStateModel) {
+        return state.paginationState.items;
+    }
+
     @Action(SetPostAsLoadingAction)
     onPostAsworking(ctx: StateContext<IPostStateModel>) {
         ctx.patchState({
@@ -103,6 +108,7 @@ export class PostState {
         const { paginationState } = ctx.getState();
         const { pageSize,  prev_start_at } = paginationState;
         if (!this.GetPostSubscription) {
+            ctx.dispatch(new SetPostAsLoadingAction());
             this.GetPostSubscription = this.posts.collection$(ref => ref.limit(pageSize).orderBy('createDate', 'desc')).pipe(
                 tap(model => {
                     if (!model.length) {
@@ -118,8 +124,8 @@ export class PostState {
                     const prevStartAt = [...prev_start_at, first];
                     const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prevStartAt, items: model };
                     ctx.patchState({ paginationState: newPaginationState })
-
-                })
+                }),
+                mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
             ).subscribe();
         }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { GetPostsAction } from '../../xs-ng/posts/posts.actions';
+import { GetPostsAction, GetPostPageAction } from '../../xs-ng/posts/posts.actions';
 
 @Injectable()
 export class AdminPostListResolver implements Resolve<any>{
@@ -10,7 +10,8 @@ export class AdminPostListResolver implements Resolve<any>{
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-        this.store.dispatch(new GetPostsAction());
+       // this.store.dispatch(new GetPostsAction());
+        this.store.dispatch(new GetPostPageAction())
         return;
 
     }
