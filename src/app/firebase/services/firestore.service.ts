@@ -55,9 +55,16 @@ export abstract class FirestoreService<T> {
         console.groupEnd()
       }
     })
-  }
+    }
+
+    queryCollection(queryFn?: QueryFn) {
+        return this.firestore.collection<T>(`${this.basePath}`, queryFn);
+    }
 
   private get collection() {
     return this.firestore.collection(`${this.basePath}`);
-  }
+    }
+
+    
+
 }

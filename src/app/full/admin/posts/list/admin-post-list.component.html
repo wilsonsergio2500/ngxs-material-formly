@@ -51,6 +51,12 @@
 
           </mat-table>
 
+          <ng-container *ngIf="true">
+
+            <firebase-pagination (onNextPage)="onNextPage()"></firebase-pagination>
+
+          </ng-container>
+
         </ng-container>
 
       </ng-container>

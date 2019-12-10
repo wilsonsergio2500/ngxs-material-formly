@@ -3,10 +3,10 @@ import { State, Action, StateContext, Store, Selector } from '@ngxs/store'
 import { IPostStateModel } from './posts.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PostFireStore } from '../../../../schemas/posts/post.firebase';
-import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction } from './posts.actions';
+import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction, PostNextPage } from './posts.actions';
 import { SnackbarStatusService } from '../../../../components/ui-elements/snackbar-status/service/snackbar-status.service';
-import { from, Subscription } from 'rxjs';
-import { tap, mergeMap, delay } from 'rxjs/operators';
+import { from, Subscription, of } from 'rxjs';
+import { tap, mergeMap, delay, catchError } from 'rxjs/operators';
 import { AuthState } from '../../../../xs-ng/auth/auth.state';
 import { Navigate } from '@ngxs/router-plugin';
 import { FirebasePaginationStateModel } from '../../../../firebase/types/firabes-pagination';
@@ -106,30 +106,96 @@ export class PostState {
     onGetPostPage(ctx: StateContext<IPostStateModel>, action: GetPostPageAction) {
 
         const { paginationState } = ctx.getState();
-        const { pageSize,  prev_start_at } = paginationState;
+        const { pageSize } = paginationState;
         if (!this.GetPostSubscription) {
             ctx.dispatch(new SetPostAsLoadingAction());
-            this.GetPostSubscription = this.posts.collection$(ref => ref.limit(pageSize).orderBy('createDate', 'desc')).pipe(
-                tap(model => {
-                    if (!model.length) {
-                        return false;
-                    }
+            this.GetPostSubscription = this.posts.queryCollection(ref => ref.limit(pageSize).orderBy('createDate', 'desc'))
+                .snapshotChanges().pipe(
+                    tap(models => {
+                        console.log('here');
+                        if (!models.length) {
+                            return false;
+                        }
 
-                    const first = model[0];
-                    const last = model[model.length - 1];
-                    const prev_start_at = [];
-                    const pagination_count = 0;
-                    const next = false;
-                    const prev = false;
-                    const prevStartAt = [...prev_start_at, first];
-                    const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prevStartAt, items: model };
-                    ctx.patchState({ paginationState: newPaginationState })
-                }),
-                mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
-            ).subscribe();
+                        const first = models[0].payload.doc.id
+                        const last = models[models.length - 1].payload.doc.id;
+
+                        let items = [];
+                        for (let item of models) {
+                            items.push(item.payload.doc.data());
+                        }
+                        const prev_start_at = [first];
+                        const pagination_count = 0;
+                        const next = false;
+                        const prev = false;
+                        const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prev_start_at, items };
+                        ctx.patchState({ paginationState: newPaginationState })
+
+                    }),
+                    mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
+                ).subscribe();
+            //this.GetPostSubscription = this.posts.collection$(ref => ref.limit(pageSize).orderBy('createDate', 'desc')).pipe(
+            //    tap(model => {
+            //        if (!model.length) {
+            //            return false;
+            //        }
+
+            //        const first = model[0].Id;
+            //        const last = model[model.length - 1].Id;
+            //        const pagination_count = 0;
+            //        const next = false;
+            //        const prev = false;
+            //        const prevStartAt = [...prev_start_at, first];
+            //        const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prevStartAt, items: model };
+            //        ctx.patchState({ paginationState: newPaginationState })
+            //    }),
+            //    mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
+            //).subscribe();
         }
-
     }
 
+    @Action(PostNextPage)
+    onNextPage(ctx: StateContext<IPostStateModel>, action: PostNextPage) {
 
+        const { paginationState } = ctx.getState();
+        let { pageSize, last, pagination_count, prev_start_at, first } = paginationState;
+        console.log(last, first);
+        return this.posts.queryCollection(ref => ref.orderBy('createDate', 'desc').startAfter(first).limit(pageSize))
+            .get().pipe(
+                tap(models => {
+                    let next = false;
+                    const currentSize = models.docs.length;
+
+                    console.log(models);
+
+                    if (!currentSize) {
+                        next = true;
+                        return;
+                    }
+
+                    const first = models.docs[0].id;
+                    const last = models.docs[currentSize - 1].id;
+                    let items = [];
+                    for (let it of models.docs) {
+                        items.push(it.data());
+                    }
+                    pagination_count++;
+                    const prevStartAt = [...prev_start_at, first];
+                    next = false;
+
+                    console.log(items);
+                    
+                    const newPaginationState = { ...paginationState, next, first, last, items, pagination_count, prev_start_at: prevStartAt };
+                    ctx.patchState({ paginationState: newPaginationState })
+
+                })
+                , catchError(error => {
+                    const newPaginationState = { ...paginationState, next: false };
+                    ctx.patchState({ paginationState: newPaginationState })
+                    return of("INCORRECT_SEQUENCE_ERROR");
+                })
+            );
+
+
+    }
 }

@@ -1,0 +1,25 @@
+
+.firebase-pagination {
+  display: block;
+  background: #fff;
+  color: rgba(0,0,0,.54);
+
+  .firebase-pagination-outer-container {
+    display: flex;
+
+    .firebase-paginator-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: 56px;
+      padding: 0 8px;
+      flex-wrap: wrap-reverse;
+      width: 100%;
+
+      .firebase-paginator-range-actions {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}

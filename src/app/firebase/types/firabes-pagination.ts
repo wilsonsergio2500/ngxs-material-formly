@@ -1,8 +1,9 @@
+
 export interface IFirebasePaginationState<T> {
     items: T[];
-    first: T;
-    last: T;
-    prev_start_at: T[];
+    first: string | firebase.firestore.QueryDocumentSnapshot;
+    last: string | firebase.firestore.QueryDocumentSnapshot;
+    prev_start_at: (string | firebase.firestore.QueryDocumentSnapshot)[];
     pagination_count: number;
 
     next: boolean;
@@ -14,9 +15,9 @@ export interface IFirebasePaginationState<T> {
 export class FirebasePaginationStateModel<T> implements IFirebasePaginationState<T>{
     pageSize: number;
     items: T[];
-    first: T;
-    last: T;
-    prev_start_at: T[];
+    first: string | firebase.firestore.QueryDocumentSnapshot;
+    last: string | firebase.firestore.QueryDocumentSnapshot;
+    prev_start_at: (string | firebase.firestore.QueryDocumentSnapshot)[];
     pagination_count: number;
     next: boolean;
     prev: boolean;

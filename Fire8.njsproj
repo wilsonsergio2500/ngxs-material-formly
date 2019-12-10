@@ -43,6 +43,8 @@
     <Content Include="src\app\components\ui-elements\check-animation\check-animation.component.html" />
     <Content Include="src\app\components\ui-elements\confirmation-dialog\modal\confirmation-modal.component.html" />
     <Content Include="src\app\components\ui-elements\confirmation-dialog\modal\confirmation-modal.component.scss" />
+    <Content Include="src\app\components\ui-elements\firebase-pagination\firebase-pagination.component.html" />
+    <Content Include="src\app\components\ui-elements\firebase-pagination\firebase-pagination.component.scss" />
     <Content Include="src\app\components\ui-elements\loading-button\busy\busy.component.html" />
     <Content Include="src\app\components\ui-elements\loading-button\loading-button.component.html" />
     <Content Include="src\app\components\ui-elements\loading-button\ready\ready.component.html" />
@@ -107,6 +109,7 @@
     <Folder Include="src\app\components\ui-elements\loading-button\busy\" />
     <Folder Include="src\app\components\ui-elements\loading-button\ready\" />
     <Folder Include="src\app\components\ui-elements\loading-panel\" />
+    <Folder Include="src\app\components\ui-elements\firebase-pagination\" />
     <Folder Include="src\app\components\ui-elements\snackbar-status\" />
     <Folder Include="src\app\components\ui-elements\snackbar-status\service\" />
     <Folder Include="src\app\components\ui-elements\snackbar-status\types\" />
@@ -182,6 +185,7 @@
     <TypeScriptCompile Include="src\app\components\ui-elements\confirmation-dialog\elements.ts" />
     <TypeScriptCompile Include="src\app\components\ui-elements\confirmation-dialog\modal\confirmation-modal.component.ts" />
     <TypeScriptCompile Include="src\app\components\ui-elements\elements.ts" />
+    <TypeScriptCompile Include="src\app\components\ui-elements\firebase-pagination\firebase-pagination.component.ts" />
     <TypeScriptCompile Include="src\app\components\ui-elements\loading-button\busy\busy.component.ts" />
     <TypeScriptCompile Include="src\app\components\ui-elements\loading-button\elements.ts" />
     <TypeScriptCompile Include="src\app\components\ui-elements\loading-button\loading-button.component.ts" />

@@ -25,7 +25,11 @@ export class SetPostsAction {
 export class GetPostPageAction {
     static type = '[Posts] Get Posts Page'
 }
-export class SetPostPage {
-    static type = '[Posts] Set Post Page';
+
+export class PostPrevPage {
+  static type = '[Posts] Get Post Previous Page'
 }
 
+export class PostNextPage {
+    static type = '[Posts] Get Post Next Page';
+}
