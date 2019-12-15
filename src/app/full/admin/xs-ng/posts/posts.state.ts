@@ -106,51 +106,52 @@ export class PostState {
     onGetPostPage(ctx: StateContext<IPostStateModel>, action: GetPostPageAction) {
 
         const { paginationState } = ctx.getState();
-        const { pageSize } = paginationState;
+        const { pageSize, orderByField } = paginationState;
         if (!this.GetPostSubscription) {
             ctx.dispatch(new SetPostAsLoadingAction());
-            this.GetPostSubscription = this.posts.queryCollection(ref => ref.limit(pageSize).orderBy('createDate', 'desc'))
-                .snapshotChanges().pipe(
-                    tap(models => {
-                        console.log('here');
-                        if (!models.length) {
-                            return false;
-                        }
+            //this.GetPostSubscription = this.posts.queryCollection(ref => ref.limit(pageSize).orderBy(orderByField, 'desc'))
+            //    .snapshotChanges().pipe(
+            //        tap(models => {
+            //            console.log('here');
+            //            if (!models.length) {
+            //                return false;
+            //            }
 
-                        const first = models[0].payload.doc.id
-                        const last = models[models.length - 1].payload.doc.id;
+            //            const first = models[0].payload.doc.data()[orderByField]
+            //            const last = models[models.length - 1].payload.doc.data()[orderByField];
 
-                        let items = [];
-                        for (let item of models) {
-                            items.push(item.payload.doc.data());
-                        }
-                        const prev_start_at = [first];
-                        const pagination_count = 0;
-                        const next = false;
-                        const prev = false;
-                        const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prev_start_at, items };
-                        ctx.patchState({ paginationState: newPaginationState })
+            //            let items = [];
+            //            for (let item of models) {
+            //                items.push(item.payload.doc.data());
+            //            }
+            //            console.log(items);
+            //            const prev_start_at = [first];
+            //            const pagination_count = 0;
+            //            const next = false;
+            //            const prev = false;
+            //            const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prev_start_at, items };
+            //            ctx.patchState({ paginationState: newPaginationState })
 
-                    }),
-                    mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
-                ).subscribe();
-            //this.GetPostSubscription = this.posts.collection$(ref => ref.limit(pageSize).orderBy('createDate', 'desc')).pipe(
-            //    tap(model => {
-            //        if (!model.length) {
-            //            return false;
-            //        }
+            //        }),
+            //        mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
+            //    ).subscribe();
+            this.GetPostSubscription = this.posts.collection$(ref => ref.limit(pageSize).orderBy(orderByField, 'desc')).pipe(
+                tap(model => {
+                    if (!model.length) {
+                        return false;
+                    }
 
-            //        const first = model[0].Id;
-            //        const last = model[model.length - 1].Id;
-            //        const pagination_count = 0;
-            //        const next = false;
-            //        const prev = false;
-            //        const prevStartAt = [...prev_start_at, first];
-            //        const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prevStartAt, items: model };
-            //        ctx.patchState({ paginationState: newPaginationState })
-            //    }),
-            //    mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
-            //).subscribe();
+                    const first = model[0][orderByField];
+                    const last = model[model.length - 1][orderByField];
+                    const pagination_count = 0;
+                    const next = model.length === pageSize;
+                    const prev = false;
+                    const prevStartAt = [first];
+                    const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prevStartAt, items: model };
+                    ctx.patchState({ paginationState: newPaginationState })
+                }),
+                mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
+            ).subscribe();
         }
     }
 
@@ -158,9 +159,9 @@ export class PostState {
     onNextPage(ctx: StateContext<IPostStateModel>, action: PostNextPage) {
 
         const { paginationState } = ctx.getState();
-        let { pageSize, last, pagination_count, prev_start_at, first } = paginationState;
+        let { pageSize, last, pagination_count, prev_start_at, first, orderByField } = paginationState;
         console.log(last, first);
-        return this.posts.queryCollection(ref => ref.orderBy('createDate', 'desc').startAfter(first).limit(pageSize))
+        return this.posts.queryCollection(ref => ref.limit(pageSize).orderBy(orderByField, 'desc').startAfter(last))
             .get().pipe(
                 tap(models => {
                     let next = false;
@@ -173,8 +174,8 @@ export class PostState {
                         return;
                     }
 
-                    const first = models.docs[0].id;
-                    const last = models.docs[currentSize - 1].id;
+                    const first = models.docs[0].data()[orderByField];
+                    const last = models.docs[currentSize - 1].data()[orderByField];
                     let items = [];
                     for (let it of models.docs) {
                         items.push(it.data());

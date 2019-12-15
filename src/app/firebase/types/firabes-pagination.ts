@@ -1,26 +1,28 @@
 
 export interface IFirebasePaginationState<T> {
     items: T[];
-    first: string | firebase.firestore.QueryDocumentSnapshot;
-    last: string | firebase.firestore.QueryDocumentSnapshot;
-    prev_start_at: (string | firebase.firestore.QueryDocumentSnapshot)[];
+    first: string | number;
+    last: string | number;
+    prev_start_at: any[];
     pagination_count: number;
 
     next: boolean;
     prev: boolean;
     pageSize: number;
+    orderByField: string;
 
 }
 
 export class FirebasePaginationStateModel<T> implements IFirebasePaginationState<T>{
     pageSize: number;
     items: T[];
-    first: string | firebase.firestore.QueryDocumentSnapshot;
-    last: string | firebase.firestore.QueryDocumentSnapshot;
-    prev_start_at: (string | firebase.firestore.QueryDocumentSnapshot)[];
+    first: string | number;
+    last: string | number;
+    prev_start_at: any[];
     pagination_count: number;
     next: boolean;
     prev: boolean;
+    orderByField: string;
     constructor() {
         this.items = [];
         this.first = null;
@@ -30,6 +32,7 @@ export class FirebasePaginationStateModel<T> implements IFirebasePaginationState
         this.next = false;
         this.prev = false;
         this.pageSize = 10;
+        this.orderByField = 'createDate' ;
 
     }
 
