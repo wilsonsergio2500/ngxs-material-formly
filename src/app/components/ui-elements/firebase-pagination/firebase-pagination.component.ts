@@ -8,8 +8,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class FirebasePaginationComponent {
 
-    @Input('disable-next') disableNext: boolean;
-    @Input('disable-previous') disablePrevious: boolean;
+    @Input('enabled-next') enabledNext: boolean;
+    @Input('enabled-previous') enabledPrevious: boolean;
 
     @Output() onNextPage: EventEmitter<void> = new EventEmitter<void>();
     @Output() onPreviousPage: EventEmitter<void> = new EventEmitter<void>();
@@ -17,6 +17,13 @@ export class FirebasePaginationComponent {
     next() {
         if (this.onNextPage) {
             this.onNextPage.emit();
+
+        }
+    }
+
+    prior() {
+        if (this.onPreviousPage) {
+            this.onPreviousPage.emit();
         }
     }
 

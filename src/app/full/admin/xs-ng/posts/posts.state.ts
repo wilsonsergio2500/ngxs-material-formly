@@ -3,7 +3,7 @@ import { State, Action, StateContext, Store, Selector } from '@ngxs/store'
 import { IPostStateModel } from './posts.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PostFireStore } from '../../../../schemas/posts/post.firebase';
-import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction, PostNextPage } from './posts.actions';
+import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction, PostNextPage, PostPrevPage } from './posts.actions';
 import { SnackbarStatusService } from '../../../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 import { from, Subscription, of } from 'rxjs';
 import { tap, mergeMap, delay, catchError } from 'rxjs/operators';
@@ -46,6 +46,14 @@ export class PostState {
     @Selector()
     static getPage(state: IPostStateModel) {
         return state.paginationState.items;
+    }
+    @Selector()
+    static getNextEnabled(state: IPostStateModel) {
+        return state.paginationState.next;
+    }
+    @Selector()
+    static getPreviousEnabled(state: IPostStateModel) {
+        return state.paginationState.prev;
     }
 
     @Action(SetPostAsLoadingAction)
@@ -198,5 +206,34 @@ export class PostState {
             );
 
 
+    }
+
+    @Action(PostPrevPage)
+    onPreviousPage(ctx: StateContext<IPostStateModel>) {
+        const { paginationState } = ctx.getState();
+        let { pageSize, orderByField, first, pagination_count, prev_start_at } = paginationState;
+        return this.posts.queryCollection(ref => ref.orderBy(orderByField, 'desc').endBefore(first).limit(pageSize))
+            .get().pipe(
+                tap(models => {
+                    const prev = true;
+                    const next = true;
+                    const currentSize = models.docs.length;
+                    const first = models.docs[0].data()[orderByField];
+                    const last = models.docs[currentSize - 1].data()[orderByField];
+                    let items = [];
+                    for (let it of models.docs) {
+                        items.push(it.data());
+                    }
+                    pagination_count--;
+                    prev_start_at.pop();
+                    const newPaginationState = { ...paginationState, prev, first, last, items, pagination_count, prev_start_at };
+                    ctx.patchState({ paginationState: newPaginationState });
+                }),
+                catchError(error => {
+                    const newPaginationState = { ...paginationState, prev: false };
+                    ctx.patchState({ paginationState: newPaginationState })
+                    return of("INCORRECT_SEQUENCE_ERROR")
+                })
+            )
     }
 }

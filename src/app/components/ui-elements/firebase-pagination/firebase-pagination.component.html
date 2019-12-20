@@ -4,11 +4,11 @@
     <div class="firebase-paginator-container">
       <div class="firebase-paginator-range-actions">
 
-        <button mat-icon-button aria-label="Previous page">
+        <button mat-icon-button aria-label="Previous page" (click)="prior()" [disabled]="!enabledPrevious">
           <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
 
-        <button mat-icon-button aria-label="Next page" (click)="next()">
+        <button mat-icon-button aria-label="Next page" (click)="next()" [disabled]="!enabledNext">
           <mat-icon>keyboard_arrow_right</mat-icon>
         </button>
 

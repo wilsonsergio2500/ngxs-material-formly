@@ -46,3 +46,6 @@ testem.log
 Thumbs.db
 Fire8.njsproj.user
 /bin
+/obj/Debug/Fire8.njsproj.FileListAbsolute.txt
+/obj/Debug/Fire8.njsprojAssemblyReference.cache
+/obj/Debug/Tsc7b5d24b9.out
