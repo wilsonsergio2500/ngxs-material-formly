@@ -117,32 +117,6 @@ export class PostState {
         const { pageSize, orderByField } = paginationState;
         if (!this.GetPostSubscription) {
             ctx.dispatch(new SetPostAsLoadingAction());
-            //this.GetPostSubscription = this.posts.queryCollection(ref => ref.limit(pageSize).orderBy(orderByField, 'desc'))
-            //    .snapshotChanges().pipe(
-            //        tap(models => {
-            //            console.log('here');
-            //            if (!models.length) {
-            //                return false;
-            //            }
-
-            //            const first = models[0].payload.doc.data()[orderByField]
-            //            const last = models[models.length - 1].payload.doc.data()[orderByField];
-
-            //            let items = [];
-            //            for (let item of models) {
-            //                items.push(item.payload.doc.data());
-            //            }
-            //            console.log(items);
-            //            const prev_start_at = [first];
-            //            const pagination_count = 0;
-            //            const next = false;
-            //            const prev = false;
-            //            const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prev_start_at, items };
-            //            ctx.patchState({ paginationState: newPaginationState })
-
-            //        }),
-            //        mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
-            //    ).subscribe();
             this.GetPostSubscription = this.posts.collection$(ref => ref.limit(pageSize).orderBy(orderByField, 'desc')).pipe(
                 tap(model => {
                     if (!model.length) {
@@ -168,20 +142,17 @@ export class PostState {
 
         const { paginationState } = ctx.getState();
         let { pageSize, last, pagination_count, prev_start_at, first, orderByField } = paginationState;
-        console.log(last, first);
         return this.posts.queryCollection(ref => ref.limit(pageSize).orderBy(orderByField, 'desc').startAfter(last))
             .get().pipe(
                 tap(models => {
-                    let next = false;
                     const currentSize = models.docs.length;
-
-                    console.log(models);
+                    let next = currentSize === pageSize;
+                    const prev = true;
 
                     if (!currentSize) {
-                        next = true;
+                        next = false;
                         return;
                     }
-
                     const first = models.docs[0].data()[orderByField];
                     const last = models.docs[currentSize - 1].data()[orderByField];
                     let items = [];
@@ -190,11 +161,7 @@ export class PostState {
                     }
                     pagination_count++;
                     const prevStartAt = [...prev_start_at, first];
-                    next = false;
-
-                    console.log(items);
-                    
-                    const newPaginationState = { ...paginationState, next, first, last, items, pagination_count, prev_start_at: prevStartAt };
+                    const newPaginationState = { ...paginationState, next, first, last, items, pagination_count, prev_start_at: prevStartAt, prev };
                     ctx.patchState({ paginationState: newPaginationState })
 
                 })
@@ -225,8 +192,8 @@ export class PostState {
                         items.push(it.data());
                     }
                     pagination_count--;
-                    prev_start_at.pop();
-                    const newPaginationState = { ...paginationState, prev, first, last, items, pagination_count, prev_start_at };
+                    prev_start_at = prev_start_at.slice(0, prev_start_at.length - 1);
+                    const newPaginationState = { ...paginationState, prev, first, last, items, pagination_count, prev_start_at, next };
                     ctx.patchState({ paginationState: newPaginationState });
                 }),
                 catchError(error => {

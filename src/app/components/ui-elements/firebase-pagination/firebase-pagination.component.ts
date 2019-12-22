@@ -21,7 +21,7 @@ export class FirebasePaginationComponent {
         }
     }
 
-    prior() {
+    prev() {
         if (this.onPreviousPage) {
             this.onPreviousPage.emit();
         }
