@@ -295,6 +295,7 @@
     <TypeScriptCompile Include="src\app\shared.module.ts" />
     <TypeScriptCompile Include="src\app\utils\country-states.ts" />
     <TypeScriptCompile Include="src\app\utils\get-nested.ts" />
+    <TypeScriptCompile Include="src\app\utils\logger.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\auth\auth.actions.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\auth\auth.model.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\auth\auth.state.ts" />

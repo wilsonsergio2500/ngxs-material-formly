@@ -11,6 +11,7 @@ import { AuthState } from '../../../../xs-ng/auth/auth.state';
 import { Navigate } from '@ngxs/router-plugin';
 import { FirebasePaginationStateModel } from '../../../../firebase/types/firabes-pagination';
 import { IPostFirebaseModel } from '../../../../schemas/posts/post.model';
+import { Logger } from '../../../../utils/logger';
 
 @State({
     name: 'postState',
@@ -122,7 +123,6 @@ export class PostState {
                     if (!model.length) {
                         return false;
                     }
-
                     const first = model[0][orderByField];
                     const last = model[model.length - 1][orderByField];
                     const pagination_count = 0;
@@ -148,7 +148,6 @@ export class PostState {
                     const currentSize = models.docs.length;
                     let next = currentSize === pageSize;
                     const prev = true;
-
                     if (!currentSize) {
                         next = false;
                         return;
@@ -162,7 +161,8 @@ export class PostState {
                     pagination_count++;
                     const prevStartAt = [...prev_start_at, first];
                     const newPaginationState = { ...paginationState, next, first, last, items, pagination_count, prev_start_at: prevStartAt, prev };
-                    ctx.patchState({ paginationState: newPaginationState })
+                    ctx.patchState({ paginationState: newPaginationState });
+                    Logger.LogTable(`Firebase Paginate Post[Page:${pagination_count + 1}]`, items);
 
                 })
                 , catchError(error => {
@@ -182,7 +182,6 @@ export class PostState {
         return this.posts.queryCollection(ref => ref.orderBy(orderByField, 'desc').endBefore(first).limit(pageSize))
             .get().pipe(
                 tap(models => {
-                    const prev = true;
                     const next = true;
                     const currentSize = models.docs.length;
                     const first = models.docs[0].data()[orderByField];
@@ -192,9 +191,11 @@ export class PostState {
                         items.push(it.data());
                     }
                     pagination_count--;
+                    const prev = pagination_count != 0;
                     prev_start_at = prev_start_at.slice(0, prev_start_at.length - 1);
                     const newPaginationState = { ...paginationState, prev, first, last, items, pagination_count, prev_start_at, next };
                     ctx.patchState({ paginationState: newPaginationState });
+                    Logger.LogTable(`Firebase Paginate Post[Page:${pagination_count + 1}]`, items);
                 }),
                 catchError(error => {
                     const newPaginationState = { ...paginationState, prev: false };
