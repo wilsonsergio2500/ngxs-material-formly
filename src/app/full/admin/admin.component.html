@@ -2,71 +2,104 @@
 
   <mat-sidenav #start [opened]="mobileQuery.matches ? false : true" [mode]="mobileQuery.matches ? 'over' : 'side'">
 
+    <mat-accordion>
+
+      <mat-expansion-panel expanded="true" class="noshadow">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Menu
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-list>
+              <mat-list-item class="menu-list-item">
+                <a matLine routerLink="/admin/posts/list">
+                  <span>Blogs</span>
+                </a>
+              </mat-list-item>
+              <mat-list-item class="menu-list-item">
+                <a matLine routerLink="pages/list">
+                  <span>Pages</span>
+                </a>
+              </mat-list-item>
+            
+        </mat-list>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!--<mat-list>
+      <mat-list-item class="menu-list-item">
+        <a matLine [routerLink]="admin/posts/list">
+          <span>Blog</span>
+        </a>
+      </mat-list-item>
+    </mat-list>-->
 
     <!--<ng-container *ngIf="menuItems$ | async as elements">
-      <mat-accordion *ngIf="elements.length > 0">
-        <mat-expansion-panel expanded="true" class="noshadow">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Menu
-            </mat-panel-title>
+    <mat-accordion *ngIf="elements.length > 0">
+      <mat-expansion-panel expanded="true" class="noshadow">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Menu
+          </mat-panel-title>
 
-          </mat-expansion-panel-header>
+        </mat-expansion-panel-header>
 
-          <mat-list>
-            <ng-container *ngFor="let menu of elements">
-              <ng-container *ngIf="menu.Top_Nav_Name != 'Dashboard'; else isDashboard">
-                <mat-list-item class="menu-list-item">
+        <mat-list>
+          <ng-container *ngFor="let menu of elements">
+            <ng-container *ngIf="menu.Top_Nav_Name != 'Dashboard'; else isDashboard">
+              <mat-list-item class="menu-list-item">
+                <a matLine [routerLink]="menu.route">
+                  <span>{{menu.Top_Nav_Name}}</span>
+                </a>
+              </mat-list-item>
+            </ng-container>
+            <ng-template #isDashboard>
+              <ng-container *ngIf="dashboardTotal$ | async as dt; else noTotals">
+                <mat-list-item class="menu-list-item" [matBadge]="dt">
                   <a matLine [routerLink]="menu.route">
                     <span>{{menu.Top_Nav_Name}}</span>
                   </a>
                 </mat-list-item>
               </ng-container>
-              <ng-template #isDashboard>
-                <ng-container *ngIf="dashboardTotal$ | async as dt; else noTotals">
-                  <mat-list-item class="menu-list-item" [matBadge]="dt">
-                    <a matLine [routerLink]="menu.route">
-                      <span>{{menu.Top_Nav_Name}}</span>
-                    </a>
-                  </mat-list-item>
-                </ng-container>
-                <ng-template #noTotals>
-                  <mat-list-item class="menu-list-item">
-                    <a matLine [routerLink]="menu.route">
-                      <span>{{menu.Top_Nav_Name}}</span>
-                    </a>
-                  </mat-list-item>
-                </ng-template>
+              <ng-template #noTotals>
+                <mat-list-item class="menu-list-item">
+                  <a matLine [routerLink]="menu.route">
+                    <span>{{menu.Top_Nav_Name}}</span>
+                  </a>
+                </mat-list-item>
               </ng-template>
-            </ng-container>
+            </ng-template>
+          </ng-container>
 
-          </mat-list>
-        </mat-expansion-panel>
-      </mat-accordion>
+        </mat-list>
+      </mat-expansion-panel>
+    </mat-accordion>
 
-    </ng-container>-->
+  </ng-container>-->
     <!--<ng-container *ngIf="menuTasks$ | async as tasks">
-      <mat-accordion *ngIf="tasks.length > 0">
-        <mat-expansion-panel expanded="true" class="noshadow">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Quick Tasks
-            </mat-panel-title>
+    <mat-accordion *ngIf="tasks.length > 0">
+      <mat-expansion-panel expanded="true" class="noshadow">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Quick Tasks
+          </mat-panel-title>
 
-          </mat-expansion-panel-header>
+        </mat-expansion-panel-header>
 
-          <mat-list>
-            <mat-list-item *ngFor="let menu of tasks">
-              <a matLine [routerLink]="menu.route">{{menu.Left_Nav_LinkName}}</a>
-            </mat-list-item>
-          </mat-list>
-
-
-        </mat-expansion-panel>
-      </mat-accordion>
+        <mat-list>
+          <mat-list-item *ngFor="let menu of tasks">
+            <a matLine [routerLink]="menu.route">{{menu.Left_Nav_LinkName}}</a>
+          </mat-list-item>
+        </mat-list>
 
 
-    </ng-container>-->
+      </mat-expansion-panel>
+    </mat-accordion>
+
+
+  </ng-container>-->
 
 
 

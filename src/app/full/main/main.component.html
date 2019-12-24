@@ -2,6 +2,14 @@
 
   <mat-sidenav #start [opened]="mobileQuery.matches ? false : true" [mode]="mobileQuery.matches ? 'over' : 'side'">
 
+    <!--<mat-list>
+      <mat-list-item class="menu-list-item">
+        <a matLine [routerLink]="menu.route">
+          <span>Blog</span>
+        </a>
+      </mat-list-item>
+
+    </mat-list>-->
 
     <!--<ng-container *ngIf="menuItems$ | async as elements">
       <mat-accordion *ngIf="elements.length > 0">

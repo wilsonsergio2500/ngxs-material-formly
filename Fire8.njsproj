@@ -54,6 +54,10 @@
     <Content Include="src\app\components\ui-elements\snackbar-status\types\progress\snackbar-progress.component.html" />
     <Content Include="src\app\full\admin\admin.component.html" />
     <Content Include="src\app\full\admin\admin.component.scss" />
+    <Content Include="src\app\full\admin\pages\admin-page.component.html" />
+    <Content Include="src\app\full\admin\pages\list\admin-page-list.component.ts" />
+    <Content Include="src\app\full\admin\pages\list\admin-page-list.component.html" />
+    <Content Include="src\app\full\admin\pages\list\admin-page-list.component.scss" />
     <Content Include="src\app\full\admin\posts\admin-post.component.html" />
     <Content Include="src\app\full\admin\posts\create\admin-post-create.component.html" />
     <Content Include="src\app\full\admin\posts\create\admin-post-create.component.scss" />
@@ -119,11 +123,16 @@
     <Folder Include="src\app\decorators\" />
     <Folder Include="src\app\firebase\types\" />
     <Folder Include="src\app\firebase\services\" />
+    <Folder Include="src\app\full\admin\pages\" />
+    <Folder Include="src\app\full\admin\pages\create\" />
+    <Folder Include="src\app\full\admin\pages\edit\" />
+    <Folder Include="src\app\full\admin\pages\list\" />
     <Folder Include="src\app\full\admin\posts\" />
     <Folder Include="src\app\full\admin\posts\create\" />
     <Folder Include="src\app\full\admin\posts\list\" />
     <Folder Include="src\app\full\admin\posts\edit\" />
     <Folder Include="src\app\full\admin\xs-ng\" />
+    <Folder Include="src\app\full\admin\xs-ng\pages\" />
     <Folder Include="src\app\full\admin\xs-ng\posts\" />
     <Folder Include="src\app\full\login\" />
     <Folder Include="src\app\full\main\" />
@@ -163,6 +172,7 @@
     <Folder Include="src\app\guards\" />
     <Folder Include="src\app\resolvers\" />
     <Folder Include="src\app\schemas\" />
+    <Folder Include="src\app\schemas\pages\" />
     <Folder Include="src\app\schemas\posts\" />
     <Folder Include="src\app\xs-ng\" />
     <Folder Include="src\app\utils\" />
@@ -210,6 +220,10 @@
     <TypeScriptCompile Include="src\app\full\admin\admin.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.routing.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\elements.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.component.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.module.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.routing.module.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\pages\elements.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.routing.module.ts" />
@@ -218,6 +232,9 @@
     <TypeScriptCompile Include="src\app\full\admin\posts\elements.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\list\admin-post-list.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\list\admin-post-list.resolver.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\xs-ng\pages\pages.actions.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\xs-ng\pages\pages.model.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\xs-ng\pages\pages.state.ts" />
     <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.actions.ts" />
     <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.model.ts" />
     <TypeScriptCompile Include="src\app\full\admin\xs-ng\posts\posts.state.ts" />
@@ -290,6 +307,8 @@
     <TypeScriptCompile Include="src\app\modules\web-worker\web-worker.ts" />
     <TypeScriptCompile Include="src\app\resolvers\resolvers.ts" />
     <TypeScriptCompile Include="src\app\resolvers\load-user.resolver.ts" />
+    <TypeScriptCompile Include="src\app\schemas\pages\page.model.ts" />
+    <TypeScriptCompile Include="src\app\schemas\pages\page.firebase.ts" />
     <TypeScriptCompile Include="src\app\schemas\posts\post.firebase.ts" />
     <TypeScriptCompile Include="src\app\schemas\posts\post.model.ts" />
     <TypeScriptCompile Include="src\app\shared.module.ts" />
