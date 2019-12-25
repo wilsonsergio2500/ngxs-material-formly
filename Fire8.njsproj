@@ -178,6 +178,8 @@
     <Folder Include="src\app\utils\" />
     <Folder Include="src\app\full\" />
     <Folder Include="src\app\xs-ng\auth\" />
+    <Folder Include="src\app\xs-ng\base\" />
+    <Folder Include="src\app\xs-ng\base\loading-state-actions\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\assets\fonts\" />
     <Folder Include="src\environments\" />
@@ -216,6 +218,7 @@
     <TypeScriptCompile Include="src\app\firebase\services\firestore.service.ts" />
     <TypeScriptCompile Include="src\app\firebase\types\firabes-pagination.ts" />
     <TypeScriptCompile Include="src\app\firebase\types\firebase-entity.ts" />
+    <TypeScriptCompile Include="src\app\firebase\types\firebase-pagination-inmemory.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.routing.module.ts" />
@@ -318,6 +321,7 @@
     <TypeScriptCompile Include="src\app\xs-ng\auth\auth.actions.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\auth\auth.model.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\auth\auth.state.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\base\loading-state-actions\loading-state-actions.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\states.ts" />
     <TypeScriptCompile Include="src\environments\environment.prod.ts" />
     <TypeScriptCompile Include="src\environments\environment.ts" />
