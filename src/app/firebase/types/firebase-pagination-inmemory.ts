@@ -1,14 +1,19 @@
+export interface IPaginator {
+    pageIndex: number;
+    pageSize: number;
+
+}
 
 export interface IFirebasePaginationInMemoryState<T> {
 
     items: T[];
     page: T[];
-    pageSize: number;
     orderByField: string;
-
+    paginator: IPaginator
 }
 
 export class FirebasePaginationInMemoryStateModel<T> implements IFirebasePaginationInMemoryState<T>{
+    paginator: IPaginator;
     items: T[];
     page: T[];
     pageSize: number;
@@ -16,6 +21,7 @@ export class FirebasePaginationInMemoryStateModel<T> implements IFirebasePaginat
     constructor() {
         this.items;
         this.page = [];
+        this.paginator = <IPaginator>{ pageIndex: 0, pageSize: 10}
     }
 
 }

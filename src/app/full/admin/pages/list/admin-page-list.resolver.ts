@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { GetPostsAction, GetPostPageAction } from '../../xs-ng/posts/posts.actions';
+import { PageLoadItems } from '../../xs-ng/pages/pages.actions';
 
 @Injectable()
-export class AdminPostListResolver implements Resolve<any>{
+export class AdminPageListResolver implements Resolve<any>{
 
-    constructor(private store: Store) { }
+    constructor(
+        private store: Store
+    ) {
+    }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-
-        this.store.dispatch(new GetPostPageAction());
+        this.store.dispatch(new PageLoadItems());
         return;
-
     }
+
 }

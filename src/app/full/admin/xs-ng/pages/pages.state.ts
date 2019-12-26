@@ -4,8 +4,10 @@ import { FirebasePaginationInMemoryStateModel } from '../../../../firebase/types
 import { IPageFirebaseModel } from '../../../../schemas/pages/page.model';
 import { PageFireStore } from '../../../../schemas/pages/page.firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { PageSetAsLoadingAction, PageSetLoadingAsDoneAction } from './pages.actions';
+import { PageSetAsLoadingAction, PageSetLoadingAsDoneAction, PageLoadItems, PageSetPaginator, PagePaginateItems } from './pages.actions';
 import { LoadingStateActions } from '../../../../xs-ng/base/loading-state-actions/loading-state-actions';
+import { tap, mergeMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @State<IPageStateModel>({
     name: 'pagesState',
@@ -18,6 +20,7 @@ import { LoadingStateActions } from '../../../../xs-ng/base/loading-state-action
 export class PageState  {
 
     private pages: PageFireStore;
+    private subscription: Subscription;
     constructor(
         private angularFireStore: AngularFirestore
     )  {
@@ -35,6 +38,11 @@ export class PageState  {
     }
 
     @Select()
+    static getPageSize(state: IPageStateModel) {
+        return state.paginationState.paginator.pageSize;
+    }
+
+    @Select()
     static getCollectionTotalSize(state: IPageStateModel) {
         return state.paginationState.items.length;
     }
@@ -48,6 +56,45 @@ export class PageState  {
     onLoadingDone(ctx: StateContext<IPageStateModel>) {
         ctx.patchState({ loading: false });
     }
+
+    @Action(PageLoadItems)
+    onLoadItems(ctx: StateContext<IPageStateModel>) {
+        const { paginationState } = ctx.getState();
+        const { orderByField } = paginationState;
+        if (!this.subscription) {
+           ctx.dispatch(new PageSetAsLoadingAction());
+           this.subscription =  this.pages.collection$(ref => ref.orderBy(orderByField, 'desc')).pipe(
+                tap(items => {
+                    const newPaginationState = { ...paginationState, items };
+                    ctx.patchState({ paginationState: newPaginationState });
+                }),
+               mergeMap(() => ctx.dispatch(new PageSetPaginator({ pageIndex: 0, pageSize: 15}))),
+               mergeMap(() => ctx.dispatch(new PageSetLoadingAsDoneAction()))
+            ).subscribe();
+        }
+    }
+
+    @Action(PageSetPaginator)
+    onSetPaginate(ctx: StateContext<IPageStateModel>, action: PageSetPaginator) {
+        let { paginationState } = ctx.getState();
+        let { paginator } = action;
+
+        paginationState = { ...paginationState, paginator };
+        ctx.patchState({ paginationState });
+        return ctx.dispatch(new PagePaginateItems());
+    }
+
+    @Action(PagePaginateItems)
+    onPaginate(ctx: StateContext<IPageStateModel>) {
+        let { paginationState } = ctx.getState();
+        let { paginator } = paginationState;
+        let items = [...paginationState.items];
+        const page = items.splice(paginator.pageIndex * paginator.pageSize, paginator.pageSize);
+
+        paginationState = { ...paginationState, page };
+        ctx.patchState({ paginationState });
+    }
+
 
     //public OnLoading(ctx: StateContext<IPageStateModel>) {
     //    throw new Error("Method not implemented.");
