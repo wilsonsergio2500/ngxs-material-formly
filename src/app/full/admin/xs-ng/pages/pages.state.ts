@@ -28,7 +28,7 @@ export class PageState  {
     }
 
     @Select()
-    static getIsLoading(state: IPageStateModel) {
+    static IsLoading(state: IPageStateModel) {
         return state.loading;
     }
 

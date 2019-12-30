@@ -100,7 +100,6 @@ export class FormlyTypeGroup<T = any> implements IFormlyTypeGroup<T> {
         fields.push(formlyConfig);
       });
         this.fields = [...fields];
-        console.log(this.fields);
     }
 
   }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
+import { PageState } from '../../xs-ng/pages/pages.state';
 
 @Component({
     selector: 'admin-page-list',
@@ -8,6 +9,8 @@ import { Store } from '@ngxs/store';
 })
 export class AdminPageListComponent {
 
+    @Select(PageState.IsLoading) working$;
+    
     constructor(private store: Store) {
     }
 }

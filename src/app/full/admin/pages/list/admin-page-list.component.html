@@ -1,2 +1,70 @@
 
-Hello from listing page
+  <div fxLayout="column" fxFlex="100">
+
+    <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+      <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+      <span [ngStyle]="{'padding.px': 10}">Loading Posts...</span>
+    </div>
+
+    <ng-template #done>
+
+      <h3>Pages</h3>
+
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <div [ngStyle]="{'padding.px': 5}">
+          <a mat-button color="primary" routerLink="../create">
+            New Page
+            <mat-icon>add</mat-icon>
+          </a>
+        </div>
+      </div>
+
+      <!--<ng-container *ngIf="records$ | async as records">
+
+        <ng-container *ngIf="!records.length">
+          <mat-card>
+            No Records
+          </mat-card>
+        </ng-container>
+
+        <ng-container *ngIf="records.length">
+
+          <mat-table [dataSource]="records">
+
+            <ng-container matColumnDef="title">
+              <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+              <mat-cell *matCellDef="let row" data-label="Title">
+                <span class="mobile-label"> Title </span>
+                <span class="value">{{row['title']}}</span>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Action">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let row" data-label="Action">
+                <a mat-button color="primary" routerLink="../detail/{{row['Id']}}">View</a>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="['title', 'Action']"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: ['title', 'Action']"></mat-row>
+
+          </mat-table>
+
+          <ng-container *ngIf="true">
+
+            <firebase-pagination (onNextPage)="onNextPage()"
+                                 (onPreviousPage)="onPrevPage()"
+                                 [enabled-next]="next$ | async"
+                                 [enabled-previous]="prev$ | async"></firebase-pagination>
+
+          </ng-container>
+
+        </ng-container>
+
+      </ng-container>-->
+
+
+
+    </ng-template>
+  </div>

@@ -55,6 +55,8 @@
     <Content Include="src\app\full\admin\admin.component.html" />
     <Content Include="src\app\full\admin\admin.component.scss" />
     <Content Include="src\app\full\admin\pages\admin-page.component.html" />
+    <Content Include="src\app\full\admin\pages\create\admin-page-create.component.html" />
+    <Content Include="src\app\full\admin\pages\create\admin-page-create.component.scss" />
     <Content Include="src\app\full\admin\pages\list\admin-page-list.component.ts" />
     <Content Include="src\app\full\admin\pages\list\admin-page-list.component.html" />
     <Content Include="src\app\full\admin\pages\list\admin-page-list.component.scss" />
@@ -226,6 +228,8 @@
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.routing.module.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\pages\create\admin-page-create.component.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\pages\create\admin-page-create.contract.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\elements.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\list\admin-page-list.resolver.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\admin-post.component.ts" />
