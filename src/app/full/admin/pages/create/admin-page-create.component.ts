@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {  Store } from '@ngxs/store';
-import { Navigate } from '@ngxs/router-plugin';
-import { IAdminPageCreateForm } from './admin-page-create.contract';
 import { FormlyTypeGroup } from '../../../../modules/formly-fields-extended/base/FormlyTypeGroup';
 import { FieldTypes } from '../../../../modules/formly-fields-extended/base/fields-types-schemas';
+import { IPageFirebaseModel } from '../../../../schemas/pages/page.model';
+import { PageCreateAction } from '../../xs-ng/pages/pages.actions';
 
 @Component({
     selector: 'admin-page-create',
@@ -13,8 +13,9 @@ import { FieldTypes } from '../../../../modules/formly-fields-extended/base/fiel
   })
 export class AdminPageCreateComponent implements OnInit {
    
-    formlyGroup: FormlyTypeGroup<IAdminPageCreateForm>;
+    formlyGroup: FormlyTypeGroup<IPageFirebaseModel>;
 
+    title: string = 'New Page';
     btnReadyLabel = 'Update';
     btnLoadingLabel = 'Updating...';
     componentTitle = 'Admin Page Create Title';
@@ -31,8 +32,10 @@ export class AdminPageCreateComponent implements OnInit {
     }
 
     bindForm(){
-        this.formlyGroup = new FormlyTypeGroup<IAdminPageCreateForm>({
-        SomeField: new FieldTypes.InputField('SomeField'),
+        this.formlyGroup = new FormlyTypeGroup<IPageFirebaseModel>({
+            url: new FieldTypes.FriendlyUrlField('Url', true, 100),
+            title: new FieldTypes.TextArea('Title', true, 100),
+            body: new FieldTypes.TextArea('Body', true, 100)
       })
     }
     
@@ -45,8 +48,8 @@ export class AdminPageCreateComponent implements OnInit {
 
     formSubmit($event) {
       this.formlyGroup.markAsBusy();
-      const model = {...this.formlyGroup.model}
-      //this.store.dispatch(new NgxsAction(model));
+        const model = { ...this.formlyGroup.model }
+        this.store.dispatch(new PageCreateAction(model) )
     }
   
   } 

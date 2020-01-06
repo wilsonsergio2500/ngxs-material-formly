@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { getAdminPagesComponents } from './elements';
+import { getAdminPagesComponents, getAdminPagesProviders } from './elements';
 import { AdminPageRoutingModule } from './admin-page.routing.module';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -11,6 +11,9 @@ import { MaterialComponentsModule } from '../../../materialcomponents.module';
 @NgModule({
     declarations: [
         ...getAdminPagesComponents()
+    ],
+    providers: [
+        ...getAdminPagesProviders()
     ],
     imports: [
         CommonModule,

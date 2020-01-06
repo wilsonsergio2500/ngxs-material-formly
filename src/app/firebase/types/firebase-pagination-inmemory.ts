@@ -19,9 +19,10 @@ export class FirebasePaginationInMemoryStateModel<T> implements IFirebasePaginat
     pageSize: number;
     orderByField: string;
     constructor() {
-        this.items;
+        this.items = [];
         this.page = [];
-        this.paginator = <IPaginator>{ pageIndex: 0, pageSize: 10}
+        this.paginator = <IPaginator>{ pageIndex: 0, pageSize: 10 };
+        this.orderByField = 'createDate';
     }
 
 }

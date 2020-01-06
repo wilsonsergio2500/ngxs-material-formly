@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 export class PageFireStore extends FirestoreService<IPageFirebaseModel>{
 
-    protected basePath: "pages";
+    protected basePath = "pages";
     constructor(private angularFireStore: AngularFirestore) {
         super(angularFireStore);
     }

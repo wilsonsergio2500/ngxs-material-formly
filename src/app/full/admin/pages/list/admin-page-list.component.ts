@@ -10,7 +10,9 @@ import { PageState } from '../../xs-ng/pages/pages.state';
 export class AdminPageListComponent {
 
     @Select(PageState.IsLoading) working$;
+    @Select(PageState.getPage) records$;
     
     constructor(private store: Store) {
+       
     }
 }

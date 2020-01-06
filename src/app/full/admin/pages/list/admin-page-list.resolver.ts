@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { PageLoadItems } from '../../xs-ng/pages/pages.actions';
+import { PageLoadItemsAction } from '../../xs-ng/pages/pages.actions';
 
 @Injectable()
 export class AdminPageListResolver implements Resolve<any>{
@@ -12,7 +12,7 @@ export class AdminPageListResolver implements Resolve<any>{
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        this.store.dispatch(new PageLoadItems());
+        this.store.dispatch(new PageLoadItemsAction());
         return;
     }
 
