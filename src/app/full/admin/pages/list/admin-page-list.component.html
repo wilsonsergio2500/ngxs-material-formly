@@ -51,14 +51,12 @@
 
           </mat-table>
 
-          <!--<ng-container *ngIf="true">
-
-            <firebase-pagination (onNextPage)="onNextPage()"
-                                 (onPreviousPage)="onPrevPage()"
-                                 [enabled-next]="next$ | async"
-                                 [enabled-previous]="prev$ | async"></firebase-pagination>
-
-          </ng-container>-->
+          <ng-container *ngIf="(totalSize$ | async) > (pageSize$ | async)">
+              <mat-paginator [length]="totalSize$ | async" (page)="pageEvent = onPageEvent($event)"
+                           [pageSize]="pageSize$ | async"
+                           [pageSizeOptions]="[5, 10, 25]">
+                </mat-paginator>
+          </ng-container>
 
         </ng-container>
 

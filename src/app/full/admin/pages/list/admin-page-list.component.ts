@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { PageState } from '../../xs-ng/pages/pages.state';
+import { PageSetPaginator } from '../../xs-ng/pages/pages.actions';
 
 @Component({
     selector: 'admin-page-list',
@@ -11,8 +12,14 @@ export class AdminPageListComponent {
 
     @Select(PageState.IsLoading) working$;
     @Select(PageState.getPage) records$;
+    @Select(PageState.getCollectionTotalSize) totalSize$;
+    @Select(PageState.getPageSize) pageSize$
     
     constructor(private store: Store) {
        
+    }
+
+    onPageEvent($event) {
+        this.store.dispatch(new PageSetPaginator($event));
     }
 }
