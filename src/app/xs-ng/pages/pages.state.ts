@@ -1,26 +1,25 @@
 import { State, StateContext, Action, Store, Selector } from "@ngxs/store";
 import { IPageStateModel } from './pages.model';
-import { FirebasePaginationInMemoryStateModel } from '../../../../firebase/types/firebase-pagination-inmemory';
-import { IPageFirebaseModel } from '../../../../schemas/pages/page.model';
-import { PageFireStore } from '../../../../schemas/pages/page.firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { PageSetAsLoadingAction, PageSetLoadingAsDoneAction, PageLoadItemsAction, PageSetPaginator, PagePaginateItems, PageCreateAction } from './pages.actions';
-import { LoadingStateActions } from '../../../../xs-ng/base/loading-state-actions/loading-state-actions';
-import { tap, mergeMap } from 'rxjs/operators';
-import { Subscription, from } from 'rxjs';
-import { SnackbarStatusService } from '../../../../components/ui-elements/snackbar-status/service/snackbar-status.service';
+import { PageSetAsLoadingAction, PageSetLoadingAsDoneAction, PageLoadItemsAction, PageSetPaginator, PagePaginateItems, PageCreateAction, PageGetCurrentPageAction } from './pages.actions';
+import { tap, mergeMap, catchError } from 'rxjs/operators';
+import { Subscription, from, of } from 'rxjs';
 import { Navigate } from '@ngxs/router-plugin';
-import { AuthState } from '../../../../xs-ng/auth/auth.state';
+import { FirebasePaginationInMemoryStateModel } from '../../firebase/types/firebase-pagination-inmemory';
+import { PageFireStore } from '../../schemas/pages/page.firebase';
+import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
+import { IPageFirebaseModel } from '../../schemas/pages/page.model';
+import { AuthState } from '../auth/auth.state';
 
 @State<IPageStateModel>({
     name: 'pagesState',
     defaults: <IPageStateModel>{
         loading: false,
-        paginationState: new FirebasePaginationInMemoryStateModel<IPageFirebaseModel>()
-        
+        paginationState: new FirebasePaginationInMemoryStateModel<IPageFirebaseModel>(),
+        current: null
     }
 })
-export class PageState  {
+export class PageState {
 
     private pages: PageFireStore;
     private subscription: Subscription;
@@ -28,7 +27,7 @@ export class PageState  {
         private angularFireStore: AngularFirestore,
         private store: Store,
         private snackBarStatus: SnackbarStatusService
-    )  {
+    ) {
         this.pages = new PageFireStore(angularFireStore);
     }
 
@@ -50,6 +49,11 @@ export class PageState  {
     @Selector()
     static getCollectionTotalSize(state: IPageStateModel) {
         return state.paginationState.items.length;
+    }
+
+    @Selector()
+    static getCurrentPage(state: IPageStateModel) {
+        return state.current;
     }
 
     @Action(PageSetAsLoadingAction)
@@ -83,14 +87,14 @@ export class PageState  {
         const { paginationState } = ctx.getState();
         const { orderByField, paginator } = paginationState;
         if (!this.subscription) {
-           ctx.dispatch(new PageSetAsLoadingAction());
-           this.subscription =  this.pages.collection$(ref => ref.orderBy(orderByField, 'desc')).pipe(
+            ctx.dispatch(new PageSetAsLoadingAction());
+            this.subscription = this.pages.collection$(ref => ref.orderBy(orderByField, 'desc')).pipe(
                 tap(items => {
                     const newPaginationState = { ...paginationState, items };
                     ctx.patchState({ paginationState: newPaginationState });
                 }),
-               mergeMap(() => ctx.dispatch(new PageSetPaginator({ ...paginator}))),
-               mergeMap(() => ctx.dispatch(new PageSetLoadingAsDoneAction()))
+                mergeMap(() => ctx.dispatch(new PageSetPaginator({ ...paginator }))),
+                mergeMap(() => ctx.dispatch(new PageSetLoadingAsDoneAction()))
             ).subscribe();
         }
     }
@@ -116,11 +120,23 @@ export class PageState  {
         ctx.patchState({ paginationState });
     }
 
+    @Action(PageGetCurrentPageAction)
+    onGetPAge(ctx: StateContext<IPageStateModel>, action: PageGetCurrentPageAction) {
+        ctx.dispatch(new PageSetAsLoadingAction())
+        return from(this.pages.queryCollection(ref => ref.where('url', '==', action.pageUrl)).get()).pipe(
+            mergeMap(page => {
+                const current = page.docs[0].data() as IPageFirebaseModel;
+                ctx.patchState({ current });
+                ctx.dispatch(new PageSetLoadingAsDoneAction())
+                return of(page);
+            }),
+            catchError(() => {
 
-    //public OnLoading(ctx: StateContext<IPageStateModel>) {
-    //    throw new Error("Method not implemented.");
-    //}
-    //public OnDone(ctx: StateContext<IPageStateModel>) {
-    //    throw new Error("Method not implemented.");
-    //}
+                ctx.dispatch(new Navigate(['error/page-not-found']));
+                return of('404-Page-Not-Found');
+            })
+        )
+    }
+
+
 }

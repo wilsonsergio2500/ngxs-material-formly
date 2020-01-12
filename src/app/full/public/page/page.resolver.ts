@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { PageLoadItemsAction } from '../../../../xs-ng/pages/pages.actions';
+import { PageGetCurrentPageAction } from '../../../xs-ng/pages/pages.actions';
 
 @Injectable()
-export class AdminPageListResolver implements Resolve<any>{
+export class PageResolver implements Resolve<any> {
 
     constructor(
         private store: Store
@@ -12,8 +12,11 @@ export class AdminPageListResolver implements Resolve<any>{
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        this.store.dispatch(new PageLoadItemsAction());
+        const { url } = route.params;
+        if (url) {
+          this.store.dispatch(new PageGetCurrentPageAction(url));
+
+        }
         return;
     }
-
 }

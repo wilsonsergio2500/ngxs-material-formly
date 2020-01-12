@@ -1,5 +1,5 @@
-import { IPaginator } from '../../../../firebase/types/firebase-pagination-inmemory';
-import { IPageFirebaseModel } from '../../../../schemas/pages/page.model';
+import { IPageFirebaseModel } from '../../schemas/pages/page.model';
+import { IPaginator } from '../../firebase/types/firebase-pagination-inmemory';
 
 export class PageSetAsLoadingAction {
     static type = '[Page] Set As Loading';
@@ -26,3 +26,10 @@ export class PageSetPaginator {
 export class PagePaginateItems {
     static type = '[Page] Paginate Items';
 }
+
+export class PageGetCurrentPageAction {
+    static type = '[Page] Get Current Page';
+    constructor(public pageUrl: string) { }
+}
+
+

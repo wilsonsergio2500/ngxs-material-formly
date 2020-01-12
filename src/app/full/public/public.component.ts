@@ -1,25 +1,23 @@
-import { Component, ChangeDetectorRef, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, AfterContentInit, OnInit, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Store } from '@ngxs/store';
-import { Logout } from '../../xs-ng/auth/auth.actions';
 
 @Component({
-    selector: 'admin-view-component',
-    templateUrl: 'admin.component.html',
-    styleUrls: ['admin.component.scss']
-})
-export class AdminComponent implements OnInit, AfterViewInit, OnDestroy {
-
+    selector: 'public',
+    templateUrl: 'public.component.html',
+    styleUrls: [`public.component.scss`]
+  })
+export class PublicComponent implements OnInit, AfterViewInit, OnDestroy  {
+   
     mobileQuery: MediaQueryList;
-    examples: any[];
 
     constructor(
         private media: MediaMatcher,
         private changeDetectorRef: ChangeDetectorRef,
-        private store: Store,
+        private store: Store
     ) {
     }
-
+  
     ngOnInit() {
         this.mobileQuery = this.media.matchMedia('(max-width: 600px)');
         this.mobileQuery.addListener(this.mobileQueryListener.bind(this));
@@ -37,6 +35,9 @@ export class AdminComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     logout() {
-        this.store.dispatch(new Logout());
+        //this.store.dispatch(new Logout());
     }
-}
+  
+   
+  
+  } 

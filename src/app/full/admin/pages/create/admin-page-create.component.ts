@@ -4,7 +4,7 @@ import {  Store } from '@ngxs/store';
 import { FormlyTypeGroup } from '../../../../modules/formly-fields-extended/base/FormlyTypeGroup';
 import { FieldTypes } from '../../../../modules/formly-fields-extended/base/fields-types-schemas';
 import { IPageFirebaseModel } from '../../../../schemas/pages/page.model';
-import { PageCreateAction } from '../../xs-ng/pages/pages.actions';
+import { PageCreateAction } from '../../../../xs-ng/pages/pages.actions';
 
 @Component({
     selector: 'admin-page-create',

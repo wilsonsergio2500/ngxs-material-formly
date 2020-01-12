@@ -1,0 +1,26 @@
+<div [ngStyle]="{'padding.px': 30}" [ngStyle.xs]="{'padding.px': 10}">
+
+  <div fxLayout="column" fxFlex="100">
+
+    <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+      <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+      <span [ngStyle]="{'padding.px': 10}">Loading..</span>
+    </div>
+
+    <ng-template #done>
+
+      <ng-container *ngIf="page$ | async as page">
+
+        <ng-container *ngIf="page.body">
+
+          <div [innerHtml]="page.body | dompurify"></div>
+
+        </ng-container>
+
+      </ng-container>
+
+    </ng-template>
+
+  </div>
+
+</div>

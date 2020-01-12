@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { PageState } from '../../xs-ng/pages/pages.state';
-import { PageSetPaginator } from '../../xs-ng/pages/pages.actions';
+import { PageState } from '../../../../xs-ng/pages/pages.state';
+import { PageSetPaginator } from '../../../../xs-ng/pages/pages.actions';
 
 @Component({
     selector: 'admin-page-list',
