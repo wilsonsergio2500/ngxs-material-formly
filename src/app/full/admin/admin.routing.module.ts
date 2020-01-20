@@ -7,7 +7,8 @@ const routes: Routes = [
         path: '', component: AdminComponent,
         children: [
             <Route>{ path: 'posts', loadChildren: () => import('./posts/admin-post.module').then(m => m.AdminPostModule) },
-            <Route>{ path: 'pages', loadChildren: () => import('./pages/admin-page.module').then(m => m.AdminPageModule) }
+            <Route>{ path: 'pages', loadChildren: () => import('./pages/admin-page.module').then(m => m.AdminPageModule) },
+            <Route>{ path : 'media', loadChildren: () => import('./media/admin-media.module').then(m => m.AdminMediaModule)}
         ]
     }
 ]

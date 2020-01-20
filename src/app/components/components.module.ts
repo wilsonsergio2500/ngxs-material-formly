@@ -15,7 +15,8 @@ import { getCustomFormElements } from './form-elements/elements';
   imports: [
     CommonModule,
     FlexLayoutModule,
-    MaterialComponentsModule
+      MaterialComponentsModule,
+    
   ],
   exports: [
     ...getCustomUiElements(),

@@ -1,0 +1,18 @@
+<div fxLayout="column" fxFlex="100">
+
+    <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+      <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+      <span [ngStyle]="{'padding.px': 10}">Loading Items...</span>
+    </div>
+  
+   
+  
+    <ng-template #done>
+  
+        <h3>{Name_titlelized} Title</h3>
+  
+    </ng-template>
+  
+  
+  
+  </div>
