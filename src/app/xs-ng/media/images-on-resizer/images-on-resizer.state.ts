@@ -1,6 +1,6 @@
 import { Store, State, Selector, StateContext, Action } from '@ngxs/store';
 import { IImagesOnResizerStateModel } from './images-on-resizer.model';
-import { ImagesOnResizerDoneAction, ImagesOnResizerLoadingAction, ImagesOnResizerCreateAction, ImagesOnResizerLoadAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction } from './images-on-resizer.actions';
+import { ImagesOnResizerDoneAction, ImagesOnResizerLoadingAction, ImagesOnResizerCreateAction, ImagesOnResizerLoadAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction, ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSetAsSearchingAction, ImagesOnResizerSetSearchingAsDoneAction, ImagesOnResizerSearchAction } from './images-on-resizer.actions';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { tap, mergeMap, delay, catchError } from 'rxjs/operators';
 import { ImageResizeFireStore } from '../../../schemas/images/image-resizer.firebase';
@@ -16,7 +16,9 @@ import { Logger } from '../../../utils/logger';
     name: 'imagesOnResizer',
     defaults: <IImagesOnResizerStateModel>{
         loading: false,
-        paginationState: new FirebasePaginationStateModel<IImageResizerFirebaseModel>()
+        paginationState: new FirebasePaginationStateModel<IImageResizerFirebaseModel>(),
+        lookUpTags: [],
+        searching: false
       }
 })
 export class ImagesOnResizerState {
@@ -48,7 +50,14 @@ export class ImagesOnResizerState {
     static getPreviousEnabled(state: IImagesOnResizerStateModel) {
         return state.paginationState.prev;
     }
-  
+    @Selector()
+    static getImageLookUpTags(state: IImagesOnResizerStateModel) {
+        return state.lookUpTags;
+    }
+    @Selector()
+    static IsSearching(state: IImagesOnResizerStateModel) {
+        return state.searching;
+    }
 
     @Action(ImagesOnResizerDoneAction)
     onDone(ctx: StateContext<IImagesOnResizerStateModel>) {
@@ -171,6 +180,25 @@ export class ImagesOnResizerState {
             )
     }
 
- 
+    @Action(ImagesOnResizerLookupTagChangeAction)
+    onTagChanged(ctx: StateContext<IImagesOnResizerStateModel>, action: ImagesOnResizerLookupTagChangeAction) {
+        const { tags: lookUpTags } = action;
+        ctx.patchState({ lookUpTags });
+    }
 
+    @Action(ImagesOnResizerSetAsSearchingAction)
+    onSearching(ctx: StateContext<IImagesOnResizerStateModel>) {
+        ctx.patchState({ searching: true });
+    }
+
+    @Action(ImagesOnResizerSetSearchingAsDoneAction)
+    onSearchingDone(ctx: StateContext<IImagesOnResizerStateModel>) {
+        ctx.patchState({ searching: false})
+    }
+
+    @Action(ImagesOnResizerSearchAction)
+    onSearch(ctx: StateContext<IImagesOnResizerStateModel>) {
+        ctx.dispatch(new ImagesOnResizerSetAsSearchingAction());
+    }
+    
 }

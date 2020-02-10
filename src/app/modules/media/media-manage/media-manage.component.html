@@ -1,0 +1,41 @@
+<div fxLayout="column" fxFlex="100">
+
+    <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+      <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+      <span [ngStyle]="{'padding.px': 10}">Loading Items...</span>
+    </div>
+  
+   
+  
+    <ng-template #done>
+
+      <h3>Media</h3>
+
+      <div fxLayout="row" fxFlex="100">
+
+        <form [formGroup]="form" (ngSubmit)="search()" fxFlex fxLayout="row"  #f="ngForm">
+
+          <ngx-chips formControlName="tags" placeholder="Search Tags" fxFlex="80" fxFlex.gt-md="50" maxItems="5"></ngx-chips>
+
+          <div class="search-button-container">
+
+            <loading-button [IsBusy]="searching$ | async" mat-raised-button type="submit">
+              <loading-button-ready>
+                <mat-icon class="loading-button-icon">search</mat-icon>
+              </loading-button-ready>
+              <loading-button-busy class="loading-button-busy">
+                 
+              </loading-button-busy>
+            </loading-button>
+
+          </div>
+
+        </form>
+      </div>
+
+
+    </ng-template>
+  
+  
+  
+  </div>

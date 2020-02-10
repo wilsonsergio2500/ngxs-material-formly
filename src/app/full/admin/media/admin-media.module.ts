@@ -6,8 +6,8 @@ import { SharedModule } from '../../../shared.module';
 import { FirebaseModule } from '../../../firebase/firebase.module';
 import { MaterialComponentsModule } from '../../../materialcomponents.module';
 import { AdminMediaRoutingModule } from './admin-media.routing.module';
-import { ImageResizerModule } from '../../../modules/image-resizer-io/image-resizer-io.module';
 import { getAdminMediaComponents } from './elements';
+import { MediaModule } from '../../../modules/media/media.module';
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import { getAdminMediaComponents } from './elements';
         FirebaseModule,
         MaterialComponentsModule,
         AdminMediaRoutingModule,
-        ImageResizerModule
+        MediaModule
     ],
     providers: [
     ]

@@ -1,0 +1,14 @@
+
+.search-button-container{
+  padding:15px;
+}
+.loading-button-icon {
+  vertical-align: middle;
+}
+.loading-button-busy {
+  vertical-align: middle;
+  ::ng-deep .ng-star-inserted {
+    display: inline-block;
+  }
+}
+

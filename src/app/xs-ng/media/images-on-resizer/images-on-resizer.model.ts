@@ -3,6 +3,8 @@ import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resize
 
 export interface IImagesOnResizerStateModel {
     loading: boolean;
-    paginationState: IFirebasePaginationState<IImageResizerFirebaseModel>
+    paginationState: IFirebasePaginationState<IImageResizerFirebaseModel>;
+    lookUpTags: string[];
+    searching: boolean;
   
   }

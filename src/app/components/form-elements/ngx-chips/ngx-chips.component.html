@@ -1,3 +1,4 @@
+<mat-form-field>
   <mat-chip-list #chipList>
     <mat-chip *ngFor="let ele of _array"
               [selectable]="selectable"
@@ -14,8 +15,9 @@
            [matChipInputAddOnBlur]="addOnBlur"
            (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
-  <mat-autocomplete  #auto="matAutocomplete" (optionSelected)="selected($event)">
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
     <mat-option *ngFor="let ele of _options" [value]="ele">
       {{label(ele)}}
     </mat-option>
   </mat-autocomplete>
+</mat-form-field>

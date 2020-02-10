@@ -40,6 +40,7 @@
     <Content Include="src\app\app.component.html" />
     <Content Include="src\app\app.component.scss" />
     <Content Include="src\app\components\form-elements\ngx-chips\ngx-chips.component.html" />
+    <Content Include="src\app\components\form-elements\ngx-chips\ngx-chips.component.scss" />
     <Content Include="src\app\components\ui-elements\check-animation\check-animation.component.html" />
     <Content Include="src\app\components\ui-elements\confirmation-dialog\modal\confirmation-modal.component.html" />
     <Content Include="src\app\components\ui-elements\confirmation-dialog\modal\confirmation-modal.component.scss" />
@@ -55,8 +56,6 @@
     <Content Include="src\app\full\admin\media\admin-media.component.html" />
     <Content Include="src\app\full\admin\admin.component.html" />
     <Content Include="src\app\full\admin\admin.component.scss" />
-    <Content Include="src\app\full\admin\media\components\media-manage\media-manage.component.html" />
-    <Content Include="src\app\full\admin\media\components\media-manage\media-manage.component.scss" />
     <Content Include="src\app\full\admin\media\list\admin-media-list.component.html" />
     <Content Include="src\app\full\admin\media\list\admin-media-list.component.scss" />
     <Content Include="src\app\full\admin\pages\admin-page.component.html" />
@@ -102,6 +101,8 @@
     <Content Include="src\app\modules\image-resizer-io\uploader\image-rio-uploader.component.scss" />
     <Content Include="src\app\modules\image-resizer-io\viewer\image-rio-viewer.component.html" />
     <Content Include="src\app\modules\image-resizer-io\viewer\image-rio-viewer.component.scss" />
+    <Content Include="src\app\modules\media\media-manage\media-manage.component.html" />
+    <Content Include="src\app\modules\media\media-manage\media-manage.component.scss" />
     <Content Include="src\assets\.gitkeep" />
     <Content Include="src\assets\fonts\cindirela.ttf" />
     <Content Include="src\assets\fonts\fabolous.ttf" />
@@ -141,8 +142,6 @@
     <Folder Include="src\app\firebase\types\" />
     <Folder Include="src\app\firebase\services\" />
     <Folder Include="src\app\full\admin\media\" />
-    <Folder Include="src\app\full\admin\media\components\" />
-    <Folder Include="src\app\full\admin\media\components\media-manage\" />
     <Folder Include="src\app\full\admin\media\list\" />
     <Folder Include="src\app\full\admin\pages\" />
     <Folder Include="src\app\full\admin\pages\create\" />
@@ -161,6 +160,9 @@
     <Folder Include="src\app\modules\image-resizer-io\uploader\contracts\" />
     <Folder Include="src\app\modules\image-resizer-io\viewer\" />
     <Folder Include="src\app\modules\image-resizer-io\viewer\utils\" />
+    <Folder Include="src\app\modules\media\" />
+    <Folder Include="src\app\modules\media\media-manage\" />
+    <Folder Include="src\app\modules\media\contracts\" />
     <Folder Include="src\app\modules\ng-dompurify\" />
     <Folder Include="src\app\modules\ng-dompurify\safe-value\" />
     <Folder Include="src\app\modules\ng-dompurify\tokens\" />
@@ -265,7 +267,6 @@
     <TypeScriptCompile Include="src\app\full\admin\elements.ts" />
     <TypeScriptCompile Include="src\app\full\admin\media\admin-media.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\media\admin-media.routing.module.ts" />
-    <TypeScriptCompile Include="src\app\full\admin\media\components\media-manage\media-manage.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\media\elements.ts" />
     <TypeScriptCompile Include="src\app\full\admin\media\list\admin-media-list.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.component.ts" />
@@ -291,6 +292,9 @@
     <TypeScriptCompile Include="src\app\modules\image-resizer-io\uploader\image-rio-uploader.component.ts" />
     <TypeScriptCompile Include="src\app\modules\image-resizer-io\viewer\image-rio-viewer.component.ts" />
     <TypeScriptCompile Include="src\app\modules\image-resizer-io\viewer\utils\helpers.ts" />
+    <TypeScriptCompile Include="src\app\modules\media\contracts\image-lookup.ts" />
+    <TypeScriptCompile Include="src\app\modules\media\media-manage\media-manage.component.ts" />
+    <TypeScriptCompile Include="src\app\modules\media\media.module.ts" />
     <TypeScriptCompile Include="src\app\modules\ng-dompurify\ng-dompurify-dom.service.ts" />
     <TypeScriptCompile Include="src\app\modules\ng-dompurify\ng-dompurify.module.ts" />
     <TypeScriptCompile Include="src\app\modules\ng-dompurify\ng-dompurify.pipe.ts" />

@@ -6,10 +6,12 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material
 import { Observable, of, Subscription } from 'rxjs';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { AutoUnsubscribe } from '../../../decorators/autounsuscribe.decorator';
+import { MatFormFieldControl } from '@angular/material';
 
 @Component({
   selector: 'ngx-chips',
-  templateUrl: 'ngx-chips.component.html',
+    templateUrl: 'ngx-chips.component.html',
+    styleUrls: ['ngx-chips.component.scss'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => NgxChipsComponent),
@@ -28,7 +30,10 @@ export class NgxChipsComponent implements ControlValueAccessor, OnInit {
   @Input()
   options: Observable<any[]> = of([]);
   @Input()
-  forceOptionValue : boolean = false;
+    forceOptionValue: boolean = false;
+    @Input()
+    maxItems: number = null;
+
 
   _options: any[]
   _disable: boolean = false;
@@ -48,9 +53,7 @@ export class NgxChipsComponent implements ControlValueAccessor, OnInit {
   constructor() {
   }
 
-  add(event: MatChipInputEvent): void {
-    // Add fruit only when MatAutocomplete is not open
-    // To make sure this does not conflict with OptionSelected Event
+    add(event: MatChipInputEvent): void {
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const value = event.value;
@@ -62,7 +65,7 @@ export class NgxChipsComponent implements ControlValueAccessor, OnInit {
           if (!exist) {
             const option = this._options.find(x => (x[this.optionLabel] as string).toLowerCase() === value.toLowerCase());
             if (option) {
-              this._array.push(option);
+                this.addItem(option);
             }
           }
 
@@ -73,10 +76,10 @@ export class NgxChipsComponent implements ControlValueAccessor, OnInit {
             if (this.forceOptionValue) {
               const option = this._options.find(g => (g as string).toLowerCase() === value.toLowerCase());
               if (option) {
-                this._array.push(option);
+                  this.addItem(option);
               }
             } else {
-              this._array.push(value);
+                this.addItem(value);
             }
           }
 
@@ -87,8 +90,21 @@ export class NgxChipsComponent implements ControlValueAccessor, OnInit {
       this.propagateTouched();
       this.markInputAsEmpty();
       
+        }
+
     }
-  }
+
+    addItem(item: any) {
+        if (this.maxItems) {
+            if (this._array.length < +this.maxItems) {
+                this._array.push(item);
+            }
+        } else {
+            this._array.push(item);
+        }
+        
+    }
+
   markInputAsEmpty() {
     this.elementInput.nativeElement.value = '';
   }
@@ -170,7 +186,7 @@ export class NgxChipsComponent implements ControlValueAccessor, OnInit {
     this.removable = false;
   }
 
-  ngOnInit() {
+    ngOnInit() {
     this.onOptions$ = this.options.subscribe(x => this._options = x);
   }
 

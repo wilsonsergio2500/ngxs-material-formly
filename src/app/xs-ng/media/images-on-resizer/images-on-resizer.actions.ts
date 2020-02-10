@@ -25,3 +25,22 @@ export class ImagesOnResizerPreviousPageAction {
     static type = '[Images On Resizer] Load previous page';
 }
 
+export class ImagesOnResizerLookupTagChangeAction {
+    static type = '[Images On Resizer] Add LookUp Tags';
+    constructor(public tags: string[]) { }
+}
+
+export class ImagesOnResizerSetAsSearchingAction {
+    static type = '[Images On Resizer] Set As Searching';
+}
+
+export class ImagesOnResizerSetSearchingAsDoneAction {
+    static type = '[Images On Resizer] Set Searching As Done';
+}
+
+export class ImagesOnResizerSearchAction {
+    static type = '[Images On Resizer] Search';
+}
+
+
+
