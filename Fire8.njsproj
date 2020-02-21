@@ -101,6 +101,8 @@
     <Content Include="src\app\modules\image-resizer-io\uploader\image-rio-uploader.component.scss" />
     <Content Include="src\app\modules\image-resizer-io\viewer\image-rio-viewer.component.html" />
     <Content Include="src\app\modules\image-resizer-io\viewer\image-rio-viewer.component.scss" />
+    <Content Include="src\app\modules\media\media-image-dialog\media-image-dialog.component.html" />
+    <Content Include="src\app\modules\media\media-image-dialog\media-image-dialog.component.scss" />
     <Content Include="src\app\modules\media\media-manage\media-manage.component.html" />
     <Content Include="src\app\modules\media\media-manage\media-manage.component.scss" />
     <Content Include="src\assets\.gitkeep" />
@@ -161,6 +163,7 @@
     <Folder Include="src\app\modules\image-resizer-io\viewer\" />
     <Folder Include="src\app\modules\image-resizer-io\viewer\utils\" />
     <Folder Include="src\app\modules\media\" />
+    <Folder Include="src\app\modules\media\media-image-dialog\" />
     <Folder Include="src\app\modules\media\media-manage\" />
     <Folder Include="src\app\modules\media\contracts\" />
     <Folder Include="src\app\modules\ng-dompurify\" />
@@ -293,6 +296,8 @@
     <TypeScriptCompile Include="src\app\modules\image-resizer-io\viewer\image-rio-viewer.component.ts" />
     <TypeScriptCompile Include="src\app\modules\image-resizer-io\viewer\utils\helpers.ts" />
     <TypeScriptCompile Include="src\app\modules\media\contracts\image-lookup.ts" />
+    <TypeScriptCompile Include="src\app\modules\media\media-image-dialog\media-image-dialog.component.ts" />
+    <TypeScriptCompile Include="src\app\modules\media\media-image-dialog\media-image.contract.ts" />
     <TypeScriptCompile Include="src\app\modules\media\media-manage\media-manage.component.ts" />
     <TypeScriptCompile Include="src\app\modules\media\media.module.ts" />
     <TypeScriptCompile Include="src\app\modules\ng-dompurify\ng-dompurify-dom.service.ts" />

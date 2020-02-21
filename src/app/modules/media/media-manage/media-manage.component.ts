@@ -6,9 +6,10 @@ import { FormTypeBuilder } from '../../form-type-builder/form-type-builder.servi
 import { NgTypeFormGroup, NgTypeFormControl } from '../../form-type-builder/form-type-builder.model';
 import { IImageLookUp } from '../contracts/image-lookup';
 import { Validators } from '@angular/forms';
-import { MatChipInputEvent } from '@angular/material';
+import { MatChipInputEvent, MatDialog } from '@angular/material';
 import { ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSearchAction } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.actions';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MediaImageDialogComponent } from '../media-image-dialog/media-image-dialog.component';
 
 @Component({
     selector: 'media-manage',
@@ -27,7 +28,8 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
     constructor(
         private store: Store,
-        private formTypeBuilder: FormTypeBuilder
+        private formTypeBuilder: FormTypeBuilder,
+        private matDialog: MatDialog
     ) {
     }
 
@@ -56,6 +58,9 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
     }
     search() {
         this.store.dispatch(new ImagesOnResizerSearchAction())
+    }
+    onAdd() {
+        const dialogRef = this.matDialog.open(MediaImageDialogComponent, { panelClass: 'dialog-responsive'})
     }
 
   

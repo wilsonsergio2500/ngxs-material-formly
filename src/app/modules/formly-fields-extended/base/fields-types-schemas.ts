@@ -128,13 +128,23 @@ export namespace FieldTypes {
     }
   }
 
-  export class HiddenField extends InputBase {
-    constructor(label?: string, required: boolean = true) {
-      super(label, required, 100);
-      this.templateOptions.type = 'text';
-      this.className = 'hidden-field';
+    export class HiddenField extends InputBase {
+        constructor(label?: string, required: boolean = true) {
+            super(label, required, 100);
+            this.templateOptions.type = 'text';
+            this.className = 'hidden-field';
+        }
     }
-  }
+
+    export class ChipField extends InputBase {
+        constructor(label: string, placeholder: string, required: boolean) {
+            super(label, required);
+            this.type = 'formly-chips';
+            this.templateOptions.placeholder = placeholder;
+            this.className = 'chips-formly';
+        }
+    }
+
 
   export class EmailField extends InputBase {
     constructor(label?: string, required: boolean = true, fxFlex = 100, config?: Partial<InputBase>) {

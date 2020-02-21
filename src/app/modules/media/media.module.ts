@@ -4,8 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialComponentsModule } from '../../materialcomponents.module';
 import { SharedModule } from '../../shared.module';
-import { MediaManageComponent } from './media-manage/media-manage.component';
 import { ImageResizerModule } from '../image-resizer-io/image-resizer-io.module';
+import { MediaManageComponent } from './media-manage/media-manage.component';
+import { MediaImageDialogComponent } from './media-image-dialog/media-image-dialog.component'
 
 @NgModule({
     imports: [
@@ -17,12 +18,16 @@ import { ImageResizerModule } from '../image-resizer-io/image-resizer-io.module'
         ImageResizerModule
     ],
     declarations: [
-        ImageResizerModule,
-        MediaManageComponent
+        MediaManageComponent,
+        MediaImageDialogComponent
     ],
     exports: [
         ImageResizerModule,
-        MediaManageComponent
+        MediaManageComponent,
+        MediaImageDialogComponent
+    ],
+    entryComponents: [
+        MediaImageDialogComponent
     ]
 })
 export class MediaModule {

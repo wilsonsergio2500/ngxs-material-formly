@@ -1,6 +1,6 @@
 
 import { Component, Input } from '@angular/core';
-import { FieldType } from '@ngx-formly/core';
+import { FieldType } from '@ngx-formly/material/form-field';
 
 @Component({
   selector: 'formly-field-chips',
