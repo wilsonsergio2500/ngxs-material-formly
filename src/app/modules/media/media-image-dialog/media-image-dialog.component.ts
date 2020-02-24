@@ -19,8 +19,10 @@ import { FieldTypes } from '../../formly-fields-extended/base/fields-types-schem
 
         const name = new FieldTypes.InputField('Name', true);
         const tags = new FieldTypes.ChipField('Tags', 'Enter tags', true);
+        const image = new FieldTypes.ImageResizeIoUploader('Upload', true, 100, {previewFlexSize : 25});
         this.formlyGroup = new FormlyTypeGroup<IMediaImagePost>({
             name,
+            image,
             tags
         });
     }

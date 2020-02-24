@@ -26,13 +26,16 @@ export class ImageRioViewerComponent implements OnInit {
     private _grayscale: boolean = false;
     Loading: boolean = true;
     aspectRatioClass = 'none';
-    style = {
+    genStyle = {
         'background-position': 'center center',
         'background-size': 'cover',
-        'background-repeat': 'no-repeat'
+        'background-repeat': 'no-repeat',
     };
+   
 
-    constructor(private zone: NgZone) {}
+    constructor(
+        private zone: NgZone,
+    ) { }
   
 
     @Input('preserve-image-aspect-ratio')
@@ -89,7 +92,7 @@ export class ImageRioViewerComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.preserveAspectRatio) {
-      this.style['background-size'] = 'contain';
+        this.genStyle['background-size'] = 'contain';
     }
     this.bindAspectRatio();
   }
@@ -104,8 +107,11 @@ export class ImageRioViewerComponent implements OnInit {
       from(this.cacheImage(bimage) as PromiseLike<string>).pipe(
         delay(this.delayShow)
       ).subscribe(g => {
-        this.zone.run(() => {
-          this.style['background-image'] = `url(${bimage})`;
+          this.zone.run(() => {
+              const style = {
+                  'background-image': `url('${bimage}')`,
+              };
+              this.genStyle = { ...this.genStyle, ...style };
           this.Loading = false;
         });
       })

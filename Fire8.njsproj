@@ -93,6 +93,7 @@
     <Content Include="src\app\modules\formly-fields-extended\types\datepicker\datepicker.type.scss" />
     <Content Include="src\app\modules\formly-fields-extended\types\file-uploader\file-uploader-formly.component.html" />
     <Content Include="src\app\modules\formly-fields-extended\types\file-uploader\file-uploader-formly.component.scss" />
+    <Content Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\image-rio-uploader.component.html" />
     <Content Include="src\app\modules\formly-fields-extended\types\ngx-chip\chip.component.html" />
     <Content Include="src\app\modules\formly-fields-extended\types\number\number.component.html" />
     <Content Include="src\app\modules\formly-fields-extended\wrappers\prefix\prefix-icon.component.html" />
@@ -155,6 +156,8 @@
     <Folder Include="src\app\full\admin\posts\edit\" />
     <Folder Include="src\app\full\admin\xs-ng\" />
     <Folder Include="src\app\full\public\not-found\" />
+    <Folder Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\" />
+    <Folder Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\contracts\" />
     <Folder Include="src\app\modules\image-resizer-io\" />
     <Folder Include="src\app\modules\image-resizer-io\config\" />
     <Folder Include="src\app\modules\image-resizer-io\config\contracts\" />
@@ -288,6 +291,9 @@
     <TypeScriptCompile Include="src\app\full\admin\posts\list\admin-post-list.resolver.ts" />
     <TypeScriptCompile Include="src\app\full\public\not-found\not-found.component.ts" />
     <TypeScriptCompile Include="src\app\full\public\page\page.resolver.ts" />
+    <TypeScriptCompile Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\contracts\image-rio-uploader-options.ts" />
+    <TypeScriptCompile Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\image-rio-uploader.component.ts" />
+    <TypeScriptCompile Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\image-rio-uploader.module.ts" />
     <TypeScriptCompile Include="src\app\modules\image-resizer-io\config\contracts\dimensions.ts" />
     <TypeScriptCompile Include="src\app\modules\image-resizer-io\config\defaults.ts" />
     <TypeScriptCompile Include="src\app\modules\image-resizer-io\image-resizer-io.module.ts" />

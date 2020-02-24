@@ -1,6 +1,5 @@
 
 import { Component, ViewChild, ElementRef, Input, NgZone, AfterViewInit, Optional, Self, forwardRef, Injector } from '@angular/core';
-import { ErrorStateMatcher, mixinErrorState, CanUpdateErrorState } from '@angular/material/core';
 import { FileUploader } from 'ng2-file-upload';
 import { ControlValueAccessor, NgForm, NgControl, FormGroupDirective, NG_VALUE_ACCESSOR } from '@angular/forms';
 import ImageCompressor from 'image-compressor.js';
@@ -11,18 +10,18 @@ import { defaults } from '../config/defaults';
 
 /**
  * usage:
-      <image-rio-uploader [preview-flex-size]="20" [thumbnail-missing-image-url]="'https://im.ages.io/dSaintlp'"
+      <image-resize-io-uploader [preview-flex-size]="20" [thumbnail-missing-image-url]="'https://im.ages.io/dSaintlp'"
               [aspect-ratio-width]="2"
               [aspect-ratio-height]="1"
               [thumbnail-actual-width]="300"
               [thumbnail-actual-height]="200">
     Upload
-  </image-rio-uploader>
+  </image-resize-io-uploader>
  */
 
 
 @Component({
-  selector: 'image-rio-uploader',
+  selector: 'image-resize-io-uploader',
   templateUrl: 'image-rio-uploader.component.html',
   styleUrls: ['image-rio-uploader.component.scss'],
   providers: [{
@@ -37,7 +36,6 @@ export class ImageRioUploaderComponent implements ControlValueAccessor {
   public uploader: FileUploader = new FileUploader({
     allowedMimeType: ['image/jpeg', 'image/png'],
     allowedFileType: ['png', 'jpeg']
-
   });
 
 
@@ -61,23 +59,14 @@ export class ImageRioUploaderComponent implements ControlValueAccessor {
   private inputFile: ElementRef;
 
   $imgUrl: string;
-
   _disabled = false;
   Loading = false;
-  private HasImage = false;
-  private style = {
-    'background-position': 'center center',
-    'background-size': 'cover'
-  };
-
-  private aspectRatioClass = 'none';
+  
 
   propagateChange = (_: any) => ({});
   propagateTouched = () => ({});
 
   constructor(
-    private zone: NgZone,
-    private element: ElementRef,
   ) {
     
   }
@@ -94,7 +83,8 @@ export class ImageRioUploaderComponent implements ControlValueAccessor {
 
         this.uploadImage(response).then((imageUrl: string) => {
           this.Loading = false;
-          this.$imgUrl = imageUrl;
+            this.$imgUrl = imageUrl;
+            console.log(this.$imgUrl);
           this.propagateChange(this.$imgUrl);
         })
       }
@@ -135,7 +125,6 @@ export class ImageRioUploaderComponent implements ControlValueAccessor {
   }
 
 
-
   writeValue(value: any): void {
     if (!!value) {
       this.$imgUrl = value;
@@ -153,7 +142,7 @@ export class ImageRioUploaderComponent implements ControlValueAccessor {
   }
 
   get thumbnailImage() {
-    if (!!this.$imgUrl) {
+      if (!!this.$imgUrl) {
       return this.$imgUrl;
     }
     return this.missingImageThumbnail;

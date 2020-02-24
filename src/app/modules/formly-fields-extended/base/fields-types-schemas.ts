@@ -4,7 +4,7 @@ import { FormlyLifeCycleOptions } from '@ngx-formly/core/lib/components/formly.f
 import { IFileUploaderOptions } from '../types/file-uploader/contracts/file-uploader-formly.options';
 import { Observable } from 'rxjs';
 import { getCountryStates } from '../../../utils/country-states';
-import { extend } from 'webdriver-js-extender';
+import { IImageResizeIoUploaderOptions } from '../types/image-resize-io-upload/contracts/image-rio-uploader-options';
 
 
 export namespace FieldTypes {
@@ -42,22 +42,18 @@ export namespace FieldTypes {
 
 
 
-  export interface IFormlyAppTemplateOptions extends FormlyTemplateOptions {
-    fxFlex: string | number;
-    toolbar: any;
-    autogrow: boolean;
-    fxHideXs: boolean;
-    //searchGridSelector: ISearchGridSelector;
-    fileUploder: IFileUploaderOptions;
-    //limitSelectionControl: ILimitSelectionFormly;
-    //topReportSelectionCriteria: ITopReportSelectionCriteria;
-    //reportPickerAvailableGroups: IReportPickerAvailableGroupConfig;
-    //userContextLocationLimit: IUserContextLimitLocationFormly;
-    height: number;
-    suffixIcon: string;
-    prefixIcon: string;
-    textMask: ITextMask
-  }
+    export interface IFormlyAppTemplateOptions extends FormlyTemplateOptions {
+        fxFlex: string | number;
+        toolbar: any;
+        autogrow: boolean;
+        fxHideXs: boolean;
+        fileUploder: IFileUploaderOptions;
+        fileResizeIoUploader: IImageResizeIoUploaderOptions
+        height: number;
+        suffixIcon: string;
+        prefixIcon: string;
+        textMask: ITextMask
+    }
 
   class InputBase implements FormlyFieldConfig {
     key: string;
@@ -446,6 +442,22 @@ export namespace FieldTypes {
             }
             this.templateOptions.description = 'no slashes, spaces or special characters';
         }
+    }
+
+    export class ImageResizeIoUploader extends InputBase {
+        constructor(placeholder: string, required: boolean, fxFlex = 100, config: Partial<IImageResizeIoUploaderOptions> = { thumbnailMissingImageUrl: 'https://im.ages.io/dSaintlp' }) {
+            super('', required, fxFlex);
+            this.type = 'image-resize-io-uploader';
+            const defaults = <IImageResizeIoUploaderOptions>{
+                previewFlexSize: 100,
+                thumbnailMissingImageUrl: 'https://im.ages.io/dSaintlp',
+                thumbnailAspectRatio: { width: 2, height: 1 },
+                thumbnailDimensions: { width: 300, height: 200 }
+            }
+            this.templateOptions.fileResizeIoUploader = { ...defaults, ...config };
+            this.templateOptions.placeholder = placeholder;
+        }
+    
     }
 
   //export class LimitSelection extends InputBase {

@@ -8,6 +8,7 @@ import { MaterialComponentsModule } from '../../../materialcomponents.module';
 import { AdminMediaRoutingModule } from './admin-media.routing.module';
 import { getAdminMediaComponents } from './elements';
 import { MediaModule } from '../../../modules/media/media.module';
+import { ImageResizerModule } from '../../../modules/image-resizer-io/image-resizer-io.module';
 
 
 @NgModule({

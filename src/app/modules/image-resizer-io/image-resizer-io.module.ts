@@ -6,7 +6,7 @@ import { MaterialComponentsModule } from '../../materialcomponents.module';
 import { FileUploadModule } from 'ng2-file-upload'
 import { ImageRioViewerComponent } from './viewer/image-rio-viewer.component';
 import { ImageRioUploaderComponent } from './uploader/image-rio-uploader.component';
-import { SharedModule } from '../../shared.module';
+import { CustomComponentsModule } from '../../components/components.module';
 
 @NgModule({
     imports: [
@@ -15,13 +15,14 @@ import { SharedModule } from '../../shared.module';
         FlexLayoutModule,
         MaterialComponentsModule,
         FileUploadModule,
-        SharedModule
+        CustomComponentsModule
     ],
     declarations: [
         ImageRioViewerComponent,
         ImageRioUploaderComponent
     ],
     exports: [
+        FileUploadModule,
         ImageRioViewerComponent,
         ImageRioUploaderComponent
     ]
