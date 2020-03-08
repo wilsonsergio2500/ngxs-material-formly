@@ -368,7 +368,6 @@
     <TypeScriptCompile Include="src\app\modules\form-type-builder\form-type-builder.model.ts" />
     <TypeScriptCompile Include="src\app\modules\form-type-builder\form-type-builder.service.ts" />
     <TypeScriptCompile Include="src\app\modules\form-type-builder\form-type.builder.module.ts" />
-    <TypeScriptCompile Include="src\app\modules\formly-fields-extended\base\fields-schema.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\base\fields-types-schemas.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\base\FormlyTypeGroup.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\base\IFormlyTypeGroup.ts" />

@@ -60,7 +60,7 @@ import { MediaImageDialogComponent } from '../media-image-dialog/media-image-dia
         this.store.dispatch(new ImagesOnResizerSearchAction())
     }
     onAdd() {
-        const dialogRef = this.matDialog.open(MediaImageDialogComponent, { panelClass: 'dialog-responsive'})
+        const dialogRef = this.matDialog.open(MediaImageDialogComponent, { panelClass: 'dialog-responsive', disableClose: true });
     }
 
   

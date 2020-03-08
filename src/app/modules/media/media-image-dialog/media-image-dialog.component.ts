@@ -10,6 +10,8 @@ import { FieldTypes } from '../../formly-fields-extended/base/fields-types-schem
   })
   export class MediaImageDialogComponent implements OnInit {
 
+    btnReadyLabel = 'Upload';
+    btnLoadingLabel = 'Uploading..';
     formlyGroup: FormlyTypeGroup<IMediaImagePost>
 
     constructor() {
@@ -17,14 +19,18 @@ import { FieldTypes } from '../../formly-fields-extended/base/fields-types-schem
 
     ngOnInit() {
 
-        const name = new FieldTypes.InputField('Name', true);
         const tags = new FieldTypes.ChipField('Tags', 'Enter tags', true);
-        const image = new FieldTypes.ImageResizeIoUploader('Upload', true, 100, {previewFlexSize : 25});
+        const image = new FieldTypes.ImageResizeIoUploader('Upload', true, 100, { previewFlexSize: 25 });
+        image.className = 'upload-form-item';
         this.formlyGroup = new FormlyTypeGroup<IMediaImagePost>({
-            name,
             image,
             tags
         });
+    }
+
+    formSubmit($event) {
+        console.log(this.formlyGroup.model);
+        //console.log($event);
     }
   
   } 

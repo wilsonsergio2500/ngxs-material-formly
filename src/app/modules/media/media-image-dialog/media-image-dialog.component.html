@@ -1,11 +1,10 @@
 <div fxLayout="column" fxFlex="100">
 
-  This is a dialog
 
   <formly-form-flex-json [formlyGroup]="formlyGroup"
                          [show-revert]="false"
-                         btn-ready="Create"
-                         btn-busy="Creating..."
+                         [btn-ready]="btnReadyLabel"
+                         [btn-busy]="btnLoadingLabel"
                          [read-only]="false"
                          [is-busy]="isPosting$ | async"
                          (onFormSubmit)="formSubmit($event)">

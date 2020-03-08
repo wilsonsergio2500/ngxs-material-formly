@@ -6,6 +6,4 @@ import { FieldType } from '@ngx-formly/material/form-field';
   selector: 'formly-field-chips',
   templateUrl: 'chip.component.html'
 })
-export class FormlyChipTypeComponent extends FieldType {
-
-}
+export class FormlyChipTypeComponent extends FieldType {}
