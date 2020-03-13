@@ -1,14 +1,19 @@
 <div fxLayout="column" fxFlex="100">
 
+  <div fxFlex>
+    <h3>Media Image</h3>
+  </div>
 
-  <formly-form-flex-json [formlyGroup]="formlyGroup"
-                         [show-revert]="false"
-                         [btn-ready]="btnReadyLabel"
-                         [btn-busy]="btnLoadingLabel"
-                         [read-only]="false"
-                         [is-busy]="isPosting$ | async"
-                         (onFormSubmit)="formSubmit($event)">
-  </formly-form-flex-json>
-
+  <div fxFlex>
+    <formly-form-flex-json [formlyGroup]="formlyGroup"
+                           [show-revert]="false"
+                           [btn-ready]="btnReadyLabel"
+                           [btn-busy]="btnLoadingLabel"
+                           [read-only]="false"
+                           [is-busy]="isPosting$ | async"
+                           (onFormSubmit)="formSubmit($event)">
+      <button mat-button type="button" (click)="close()" color="warn">Cancel</button>
+    </formly-form-flex-json>
+  </div>
 
 </div>

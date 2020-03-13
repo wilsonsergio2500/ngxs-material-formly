@@ -2,6 +2,7 @@ import { Component, AfterContentInit, OnInit } from '@angular/core';
 import { FormlyTypeGroup } from '../../formly-fields-extended/base/FormlyTypeGroup';
 import { IMediaImagePost } from './media-image.contract';
 import { FieldTypes } from '../../formly-fields-extended/base/fields-types-schemas';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
     selector: 'media-image-dialog',
@@ -14,7 +15,7 @@ import { FieldTypes } from '../../formly-fields-extended/base/fields-types-schem
     btnLoadingLabel = 'Uploading..';
     formlyGroup: FormlyTypeGroup<IMediaImagePost>
 
-    constructor() {
+    constructor(private matDialogRef: MatDialogRef<MediaImageDialogComponent>) {
     }
 
     ngOnInit() {
@@ -31,6 +32,10 @@ import { FieldTypes } from '../../formly-fields-extended/base/fields-types-schem
     formSubmit($event) {
         console.log(this.formlyGroup.model);
         //console.log($event);
+    }
+
+    close() {
+        this.matDialogRef.close();   
     }
   
   } 
