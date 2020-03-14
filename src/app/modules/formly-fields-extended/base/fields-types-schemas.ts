@@ -450,8 +450,8 @@ export namespace FieldTypes {
     }
 
     export class ImageResizeIoUploader extends InputBase {
-        constructor(placeholder: string, required: boolean, fxFlex = 100, templateConfig: Partial<IImageResizeIoUploaderOptions> = { thumbnailMissingImageUrl: 'https://im.ages.io/dSaintlp' }, config?: Partial<InputBase>) {
-            super('', required, fxFlex, config);
+        constructor(label: string, required: boolean, fxFlex = 100, templateConfig: Partial<IImageResizeIoUploaderOptions> = { thumbnailMissingImageUrl: 'https://im.ages.io/dSaintlp' }, config?: Partial<InputBase>) {
+            super(label, required, fxFlex, config);
             this.type = 'image-resize-io-uploader';
             const defaults = <IImageResizeIoUploaderOptions>{
                 previewFlexSize: 100,
@@ -460,7 +460,7 @@ export namespace FieldTypes {
                 thumbnailDimensions: { width: 300, height: 200 }
             }
             this.templateOptions.fileResizeIoUploader = { ...defaults, ...templateConfig };
-            this.templateOptions.placeholder = placeholder;
+            this.templateOptions.placeholder = label;
         }
     
     }
