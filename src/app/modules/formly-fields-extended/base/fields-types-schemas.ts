@@ -95,13 +95,18 @@ export namespace FieldTypes {
         required: (error, field: FormlyFieldConfig) => {
           return `${field.templateOptions.label} is required`;
         }
-      }
+        }
+
+        if (config && config.templateOptions) {
+            config.templateOptions = { ...this.templateOptions, ...config.templateOptions}
+        }
 
       if (!!config) {
-        const configp = { ...config };
-        configp.templateOptions.label =  configp.templateOptions.label || label;
-        configp.templateOptions.required = configp.templateOptions.required || required;
-        configp.templateOptions.fxFlex = config.templateOptions.fxFlex || fxFlex;
+          const configp = { ...config };
+        //  const configTemplateOptions = configp.templateOptions;
+        //  configTemplateOptions.label = configTemplateOptions ? configTemplateOptions.label : label;
+        //  configTemplateOptions.required = configTemplateOptions ? configTemplateOptions.required : required;
+        //configp.templateOptions.fxFlex = config.templateOptions.fxFlex || fxFlex;
         
 
         Object.keys(configp).forEach((key) => {
@@ -133,8 +138,8 @@ export namespace FieldTypes {
     }
 
     export class ChipField extends InputBase {
-        constructor(label: string, placeholder: string, required: boolean) {
-            super(label, required);
+        constructor(label: string, placeholder: string, required: boolean, fxFlex = 100, config?: Partial<InputBase>) {
+            super(label, required, fxFlex, config);
             this.type = 'formly-chips';
             this.templateOptions.placeholder = placeholder;
             this.className = 'chips-formly';
@@ -413,11 +418,11 @@ export namespace FieldTypes {
   }
 
   export class FileUploader extends InputBase {
-    constructor(required: boolean = true, fxFlex: number = 100, config: Partial<IFileUploaderOptions> = { placeholder: 'Upload Document'}) {
-      super(config.placeholder, required, fxFlex)
+      constructor(required: boolean = true, fxFlex: number = 100, templateConfig: Partial<IFileUploaderOptions> = { placeholder: 'Upload Document'}) {
+          super(templateConfig.placeholder, required, fxFlex)
       this.type = 'formly-file-uploader';
       this.className = 'formly-file-uploader';
-      this.templateOptions.fileUploder = { ...config };
+          this.templateOptions.fileUploder = { ...templateConfig };
       this.templateOptions.label = 'Document';
     }
     }
@@ -445,8 +450,8 @@ export namespace FieldTypes {
     }
 
     export class ImageResizeIoUploader extends InputBase {
-        constructor(placeholder: string, required: boolean, fxFlex = 100, config: Partial<IImageResizeIoUploaderOptions> = { thumbnailMissingImageUrl: 'https://im.ages.io/dSaintlp' }) {
-            super('', required, fxFlex);
+        constructor(placeholder: string, required: boolean, fxFlex = 100, templateConfig: Partial<IImageResizeIoUploaderOptions> = { thumbnailMissingImageUrl: 'https://im.ages.io/dSaintlp' }, config?: Partial<InputBase>) {
+            super('', required, fxFlex, config);
             this.type = 'image-resize-io-uploader';
             const defaults = <IImageResizeIoUploaderOptions>{
                 previewFlexSize: 100,
@@ -454,7 +459,7 @@ export namespace FieldTypes {
                 thumbnailAspectRatio: { width: 2, height: 1 },
                 thumbnailDimensions: { width: 300, height: 200 }
             }
-            this.templateOptions.fileResizeIoUploader = { ...defaults, ...config };
+            this.templateOptions.fileResizeIoUploader = { ...defaults, ...templateConfig };
             this.templateOptions.placeholder = placeholder;
         }
     

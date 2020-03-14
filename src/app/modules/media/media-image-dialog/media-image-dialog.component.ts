@@ -19,10 +19,23 @@ import { MatDialogRef } from '@angular/material';
     }
 
     ngOnInit() {
+        const tagsMaxSize = 5
+        const maxSize = {
+            expression: (formGroup) => {
+                const a: string[] = formGroup ? formGroup.value : null;
+                if (a && a.length && a.length > tagsMaxSize) {
+                    return false;
+                }
+                return true;
+            },
+            message: () => {
+                return `Exceded the maximu limit ${tagsMaxSize}`;
+            }
+        }
 
-        const tags = new FieldTypes.ChipField('Tags', 'Enter tags', true);
-        const image = new FieldTypes.ImageResizeIoUploader('Upload', true, 100, { previewFlexSize: 25 });
-        image.className = 'upload-form-item';
+        const tags = new FieldTypes.ChipField('Tags', 'Enter tags', true, 100, { validators: { maxSize } });
+        const image = new FieldTypes.ImageResizeIoUploader('Upload', true, 100, { previewFlexSize: 25 }, { className: 'upload-form-item'});
+       
         this.formlyGroup = new FormlyTypeGroup<IMediaImagePost>({
             image,
             tags
@@ -31,7 +44,6 @@ import { MatDialogRef } from '@angular/material';
 
     formSubmit($event) {
         console.log(this.formlyGroup.model);
-        //console.log($event);
     }
 
     close() {
