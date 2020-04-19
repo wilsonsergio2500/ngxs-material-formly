@@ -8,12 +8,16 @@ import { MaterialComponentsModule } from '../../../materialcomponents.module';
 import { AdminMediaRoutingModule } from './admin-media.routing.module';
 import { getAdminMediaComponents } from './elements';
 import { MediaModule } from '../../../modules/media/media.module';
-import { ImageResizerModule } from '../../../modules/image-resizer-io/image-resizer-io.module';
+//import { ImageResizerModule } from '../../../modules/image-resizer-io/image-resizer-io.module';
+import { AdminMediaListResolver } from './list/admin-media-list.resolver';
 
 
 @NgModule({
     declarations: [
         ...getAdminMediaComponents()
+    ],
+    providers: [
+        AdminMediaListResolver
     ],
     imports: [
         CommonModule,
@@ -24,8 +28,6 @@ import { ImageResizerModule } from '../../../modules/image-resizer-io/image-resi
         MaterialComponentsModule,
         AdminMediaRoutingModule,
         MediaModule
-    ],
-    providers: [
     ]
 })
 export class AdminMediaModule {

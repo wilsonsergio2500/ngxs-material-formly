@@ -1,3 +1,13 @@
 :host formly-form-flex-json ::ng-deep .upload-form-item .mat-form-field-label {
   display: none;
 }
+
+
+:host formly-form-flex-json ::ng-deep .mat-form-field-type-image-resize-io-uploader {
+  .mat-error{
+    text-align:center;
+  }
+  .mat-form-field-underline {
+    display: none;
+  }
+}

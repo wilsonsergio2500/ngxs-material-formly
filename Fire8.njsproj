@@ -104,6 +104,8 @@
     <Content Include="src\app\modules\image-resizer-io\viewer\image-rio-viewer.component.scss" />
     <Content Include="src\app\modules\media\media-image-dialog\media-image-dialog.component.html" />
     <Content Include="src\app\modules\media\media-image-dialog\media-image-dialog.component.scss" />
+    <Content Include="src\app\modules\media\media-image-item\media-image-item.component.html" />
+    <Content Include="src\app\modules\media\media-image-item\media-image-item.component.scss" />
     <Content Include="src\app\modules\media\media-manage\media-manage.component.html" />
     <Content Include="src\app\modules\media\media-manage\media-manage.component.scss" />
     <Content Include="src\assets\.gitkeep" />
@@ -167,6 +169,7 @@
     <Folder Include="src\app\modules\image-resizer-io\viewer\utils\" />
     <Folder Include="src\app\modules\media\" />
     <Folder Include="src\app\modules\media\media-image-dialog\" />
+    <Folder Include="src\app\modules\media\media-image-item\" />
     <Folder Include="src\app\modules\media\media-manage\" />
     <Folder Include="src\app\modules\media\contracts\" />
     <Folder Include="src\app\modules\ng-dompurify\" />
@@ -275,6 +278,7 @@
     <TypeScriptCompile Include="src\app\full\admin\media\admin-media.routing.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\media\elements.ts" />
     <TypeScriptCompile Include="src\app\full\admin\media\list\admin-media-list.component.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\media\list\admin-media-list.resolver.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.routing.module.ts" />
@@ -303,7 +307,7 @@
     <TypeScriptCompile Include="src\app\modules\image-resizer-io\viewer\utils\helpers.ts" />
     <TypeScriptCompile Include="src\app\modules\media\contracts\image-lookup.ts" />
     <TypeScriptCompile Include="src\app\modules\media\media-image-dialog\media-image-dialog.component.ts" />
-    <TypeScriptCompile Include="src\app\modules\media\media-image-dialog\media-image.contract.ts" />
+    <TypeScriptCompile Include="src\app\modules\media\media-image-item\media-image-item.component.ts" />
     <TypeScriptCompile Include="src\app\modules\media\media-manage\media-manage.component.ts" />
     <TypeScriptCompile Include="src\app\modules\media\media.module.ts" />
     <TypeScriptCompile Include="src\app\modules\ng-dompurify\ng-dompurify-dom.service.ts" />

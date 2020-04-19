@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared.module';
 import { ImageResizerModule } from '../image-resizer-io/image-resizer-io.module';
 import { MediaManageComponent } from './media-manage/media-manage.component';
 import { MediaImageDialogComponent } from './media-image-dialog/media-image-dialog.component'
+import { NgxsModule } from '@ngxs/store';
 
 @NgModule({
     imports: [
@@ -15,6 +16,7 @@ import { MediaImageDialogComponent } from './media-image-dialog/media-image-dial
         FlexLayoutModule,
         MaterialComponentsModule,
         SharedModule,
+        NgxsModule,
         ImageResizerModule
     ],
     declarations: [

@@ -1,21 +1,30 @@
-import { Component, AfterContentInit, OnInit } from '@angular/core';
+import { Component,  OnInit, OnDestroy } from '@angular/core';
 import { FormlyTypeGroup } from '../../formly-fields-extended/base/FormlyTypeGroup';
-import { IMediaImagePost } from './media-image.contract';
 import { FieldTypes } from '../../formly-fields-extended/base/fields-types-schemas';
 import { MatDialogRef } from '@angular/material';
+import { Store, Actions, ofActionSuccessful } from '@ngxs/store';
+import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
+import { ImagesOnResizerCreateAction } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.actions';
+import { Subscription } from 'rxjs';
+import { delay, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'media-image-dialog',
     templateUrl: 'media-image-dialog.component.html',
     styleUrls: [`media-image-dialog.component.scss`]
   })
-  export class MediaImageDialogComponent implements OnInit {
+  export class MediaImageDialogComponent implements OnInit, OnDestroy {
 
     btnReadyLabel = 'Upload';
     btnLoadingLabel = 'Uploading..';
-    formlyGroup: FormlyTypeGroup<IMediaImagePost>
+    formlyGroup: FormlyTypeGroup<IImageResizerFirebaseModel>;
+    formSubmitted$: Subscription
 
-    constructor(private matDialogRef: MatDialogRef<MediaImageDialogComponent>) {
+    constructor(
+        private store: Store,
+        private actions: Actions,
+        private matDialogRef: MatDialogRef<MediaImageDialogComponent>
+    ) {
     }
 
     ngOnInit() {
@@ -34,20 +43,37 @@ import { MatDialogRef } from '@angular/material';
         }
 
         const tags = new FieldTypes.ChipField('Tags', 'Enter tags', true, 100, { validators: { maxSize } });
-        const image = new FieldTypes.ImageResizeIoUploader('Upload', true, 100, { previewFlexSize: 25 }, { className: 'upload-form-item'});
+        const imageUrl = new FieldTypes.ImageResizeIoUploader('Upload', true, 100, { previewFlexSize: 25 }, { className: 'upload-form-item'});
        
-        this.formlyGroup = new FormlyTypeGroup<IMediaImagePost>({
-            image,
+        this.formlyGroup = new FormlyTypeGroup<IImageResizerFirebaseModel>({
+            imageUrl,
             tags
         });
+
+        this.formSubmitted$ = this.actions.pipe(ofActionSuccessful(ImagesOnResizerCreateAction)).pipe(
+            delay(250),
+            tap(_ => this.onFormSubmitted())
+        ).subscribe();
+
+    }
+
+    onFormSubmitted() {
+        this.close();
     }
 
     formSubmit($event) {
-        console.log(this.formlyGroup.model);
+        this.formlyGroup.markAsBusy();
+        this.store.dispatch(new ImagesOnResizerCreateAction(this.formlyGroup.model))
     }
 
     close() {
         this.matDialogRef.close();   
+    }
+
+    ngOnDestroy() {
+        if (this.formSubmitted$) {
+            this.formSubmitted$.unsubscribe();
+        }
     }
   
   } 

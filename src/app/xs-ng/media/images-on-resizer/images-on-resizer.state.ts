@@ -43,11 +43,11 @@ export class ImagesOnResizerState {
         return state.paginationState.items;
     }
     @Selector()
-    static getNextEnabled(state: IImagesOnResizerStateModel) {
+    static getNextEnabled(state: IImagesOnResizerStateModel) : boolean {
         return state.paginationState.next;
     }
     @Selector()
-    static getPreviousEnabled(state: IImagesOnResizerStateModel) {
+    static getPreviousEnabled(state: IImagesOnResizerStateModel) : boolean {
         return state.paginationState.prev;
     }
     @Selector()

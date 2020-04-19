@@ -5,7 +5,7 @@ import { IImageResizerFirebaseModel } from './image-resizer.model';
 
 export class ImageResizeFireStore extends FirestoreService<IImageResizerFirebaseModel> {
 
-    protected basePath: 'images-on-resizer';
+    protected basePath: string = 'images-on-resizer';
     constructor(private angularFireStore: AngularFirestore) {
         super(angularFireStore);
     }
