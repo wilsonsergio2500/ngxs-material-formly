@@ -41,8 +41,15 @@
         </form>
       </div>
 
-      <div fxFlex fxLayout="row">
-        image content goes here
+      <div fxFlex fxLayout="row wrap">
+        <ng-container *ngIf="pageItems$ | async as pageItems">
+
+          <ng-container *ngFor="let item of pageItems">
+            <media-image-item fxFlex="50" fxFlex.gt-lg="10" fxFlex.gt-md="20" fxFlex.gt-sm="25" [image]="item.imageUrl" [tags]="item.tags"></media-image-item>
+          </ng-container>
+          
+
+        </ng-container>
       </div>
 
     </ng-template>

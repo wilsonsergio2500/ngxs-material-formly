@@ -26,9 +26,10 @@ export class ImagesOnResizerState {
     private schema: ImageResizeFireStore;
     private subscription: Subscription;
     constructor(
-      private angularFireStore: AngularFirestore,
       private store: Store,
-      private snackBarStatus: SnackbarStatusService
+      private snackBarStatus: SnackbarStatusService,
+      private angularFireStore: AngularFirestore
+
     ){
         this.schema = new ImageResizeFireStore(angularFireStore);
     }

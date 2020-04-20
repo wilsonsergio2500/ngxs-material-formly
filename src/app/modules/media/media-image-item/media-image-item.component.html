@@ -1,1 +1,30 @@
+<div class="media-image-rio-item" fxFlex="100" fxLayout="column">
+  <div>
 
+    <image-rio-viewer [image-url]="image"  [actual-dimensions]="thumbnailDimensions" [aspect-ratio]="thumbnailAspectRatio" 
+                      delay-show="50"></image-rio-viewer>
+  </div>
+  <div class="media-image-meta" fxFlex="100" fxLayout="row">
+
+    <div class="meta-description" fxFlex="80">
+      <ng-container *ngFor="let tag of tags">
+        <div class="tag-container">
+          <span class="tag-item">{{tag}}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="meta-actions">
+
+      <button mat-mini-fab color="primary" aria-label="menu" [matMenuTriggerFor]="imgMenu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #imgMenu="matMenu" xPosition="before" yPosition="above" class="meta-action-menu">
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+      </mat-menu>
+
+    </div>
+
+  </div>
+</div>

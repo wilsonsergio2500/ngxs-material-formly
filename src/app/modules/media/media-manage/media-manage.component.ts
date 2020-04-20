@@ -10,6 +10,7 @@ import { MatChipInputEvent, MatDialog } from '@angular/material';
 import { ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSearchAction } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.actions';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MediaImageDialogComponent } from '../media-image-dialog/media-image-dialog.component';
+import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
 
 @Component({
     selector: 'media-manage',
@@ -20,7 +21,8 @@ import { MediaImageDialogComponent } from '../media-image-dialog/media-image-dia
 
     @Select(ImagesOnResizerState.IsLoading) working$: Observable<boolean>;
     @Select(ImagesOnResizerState.getImageLookUpTags) tags$: Observable<string[]>
-    @Select(ImagesOnResizerState.IsSearching) searching$ :Observable<string[]>
+    @Select(ImagesOnResizerState.IsSearching) searching$: Observable<string[]>
+    @Select(ImagesOnResizerState.getPage) pageItems$: Observable<IImageResizerFirebaseModel[]>;
     form: NgTypeFormGroup<IImageLookUp>;
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
     removable = true;

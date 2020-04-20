@@ -8,6 +8,7 @@ import { ImageResizerModule } from '../image-resizer-io/image-resizer-io.module'
 import { MediaManageComponent } from './media-manage/media-manage.component';
 import { MediaImageDialogComponent } from './media-image-dialog/media-image-dialog.component'
 import { NgxsModule } from '@ngxs/store';
+import { MediaImageItemComponent } from './media-image-item/media-image-item.component';
 
 @NgModule({
     imports: [
@@ -21,11 +22,13 @@ import { NgxsModule } from '@ngxs/store';
     ],
     declarations: [
         MediaManageComponent,
+        MediaImageItemComponent,
         MediaImageDialogComponent
     ],
     exports: [
         ImageResizerModule,
         MediaManageComponent,
+        MediaImageItemComponent,
         MediaImageDialogComponent
     ],
     entryComponents: [
