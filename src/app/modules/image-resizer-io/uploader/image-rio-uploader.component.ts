@@ -6,6 +6,7 @@ import ImageCompressor from 'image-compressor.js';
 import { IImageResizerIOResponse } from './contracts/image-resize-io-response';
 import { ISizeDimensions } from '../config/contracts/dimensions';
 import { defaults } from '../config/defaults';
+import { ImageResizeIoAPI } from '../lib-api/image-resizer-io-api';
 
 
 /**
@@ -92,36 +93,8 @@ export class ImageRioUploaderComponent implements ControlValueAccessor {
 
   }
 
-  uploadImage(image: File) {
-
-    return new Promise((resolve, reject) => {
-
-      const key = defaults.uploader.key;
-      const INTEGRATION_PATH = `https://api.imageresizer.io/v1/images?key=${key}`;
-      const data = new FormData();
-      data.append('image', image);
-
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', INTEGRATION_PATH, true);
-      xhr.onreadystatechange = () => {
-
-        if (xhr.readyState === 4) {
-          const response = JSON.parse(xhr.responseText) as IImageResizerIOResponse;
-          if (response.success) {
-            const id = response.response.id;
-            const img = `https://im.ages.io/${id}`
-            resolve(img);
-
-          } else {
-            reject();
-          }
-
-        }
-      }
-      xhr.send(data);
-
-    });
-
+  uploadImage(file: File) {
+      return ImageResizeIoAPI.Upload(file);
   }
 
 

@@ -1,4 +1,5 @@
 import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
+import { IImagesOnResizerRemoveRequest } from './images-on-resizer.model';
 
 export class ImagesOnResizerLoadingAction {
   static type = '[Images On Resizer] Set As Working';
@@ -44,7 +45,7 @@ export class ImagesOnResizerSearchAction {
 
 export class ImagesOnResizerRemoveImageAction {
     static type = '[Images On Resizer] Remove Image';
-    constructor(public Id: string) { }
+    constructor(public request: IImagesOnResizerRemoveRequest) { }
 }
 
 

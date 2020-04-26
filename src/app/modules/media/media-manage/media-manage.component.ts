@@ -11,6 +11,7 @@ import { ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSearchAction, Imag
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MediaImageDialogComponent } from '../media-image-dialog/media-image-dialog.component';
 import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
+import { IImagesOnResizerRemoveRequest } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.model';
 
 @Component({
     selector: 'media-manage',
@@ -77,8 +78,8 @@ import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resize
     onPrevPage() {
         this.store.dispatch(new ImagesOnResizerPreviousPageAction());
     }
-    onRemove(Id: string) {
-        this.store.dispatch(new ImagesOnResizerRemoveImageAction(Id))
+    onRemove(request: IImagesOnResizerRemoveRequest) {
+        this.store.dispatch(new ImagesOnResizerRemoveImageAction(request))
     }
   
   } 

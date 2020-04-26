@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { IImagesOnResizerRemoveRequest } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.model';
 
 @Component({
     selector: 'media-image-item',
@@ -13,12 +14,13 @@ export class MediaImageItemComponent {
     @Input() tags: string[];
     thumbnailAspectRatio = { width: 6, height: 4 };
     thumbnailDimensions = { width: 350, height: 200 };
-    @Output() remove = new EventEmitter<string>();
+    @Output() remove = new EventEmitter<IImagesOnResizerRemoveRequest>();
 
 
     onRemove() {
         if (this.remove) {
-            this.remove.emit(this.key);
+            const request = <IImagesOnResizerRemoveRequest>{ Id: this.key, Image: this.image}
+            this.remove.emit(request);
         }
     }
   
