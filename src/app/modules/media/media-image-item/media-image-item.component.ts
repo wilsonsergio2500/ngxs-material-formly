@@ -18,7 +18,6 @@ export class MediaImageItemComponent {
 
     onRemove() {
         if (this.remove) {
-            console.log('onRemove', this.key);
             this.remove.emit(this.key);
         }
     }

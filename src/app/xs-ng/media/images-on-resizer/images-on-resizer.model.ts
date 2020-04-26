@@ -7,4 +7,9 @@ export interface IImagesOnResizerStateModel {
     lookUpTags: string[];
     searching: boolean;
   
-  }
+}
+
+export interface IImagesOnResizerRemoveRequest {
+    Id: string;
+    Image: string;
+}

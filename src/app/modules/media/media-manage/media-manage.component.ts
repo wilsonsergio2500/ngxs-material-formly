@@ -7,7 +7,7 @@ import { NgTypeFormGroup, NgTypeFormControl } from '../../form-type-builder/form
 import { IImageLookUp } from '../contracts/image-lookup';
 import { Validators } from '@angular/forms';
 import { MatChipInputEvent, MatDialog } from '@angular/material';
-import { ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSearchAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.actions';
+import { ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSearchAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction, ImagesOnResizerRemoveImageAction } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.actions';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MediaImageDialogComponent } from '../media-image-dialog/media-image-dialog.component';
 import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
@@ -78,6 +78,7 @@ import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resize
         this.store.dispatch(new ImagesOnResizerPreviousPageAction());
     }
     onRemove(Id: string) {
+        this.store.dispatch(new ImagesOnResizerRemoveImageAction(Id))
     }
   
   } 

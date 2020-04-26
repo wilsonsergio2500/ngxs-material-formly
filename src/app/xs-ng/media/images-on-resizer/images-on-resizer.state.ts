@@ -211,6 +211,7 @@ export class ImagesOnResizerState {
 
     @Action(ImagesOnResizerRemoveImageAction)
     onRemoveImage(ctx: StateContext<IImagesOnResizerStateModel>, action: ImagesOnResizerRemoveImageAction) {
+        const { Id } = action;
         return this.confirmationDialog.OnConfirm('Are you sure you would like to delete this image').pipe(
             tap(() => {
                 console.log('do the action');
