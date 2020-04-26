@@ -44,5 +44,8 @@
   .mat-menu-item {
     height: 30px;
     line-height: 30px;
+    .mat-icon{
+      margin-right:5px;
+    }
   }
 }

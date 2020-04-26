@@ -12,9 +12,8 @@ export interface IFirebasePaginationState<T> {
     orderByField: string;
 
 }
-
+const orderByField = 'createDate';
 export class FirebasePaginationStateModel<T> implements IFirebasePaginationState<T>{
-    pageSize: number;
     items: T[];
     first: string | number;
     last: string | number;
@@ -23,7 +22,7 @@ export class FirebasePaginationStateModel<T> implements IFirebasePaginationState
     next: boolean;
     prev: boolean;
     orderByField: string;
-    constructor() {
+    constructor(public pageSize = 10) {
         this.items = [];
         this.first = null;
         this.last = null;
@@ -31,8 +30,7 @@ export class FirebasePaginationStateModel<T> implements IFirebasePaginationState
         this.pagination_count = 0;
         this.next = false;
         this.prev = false;
-        this.pageSize = 10;
-        this.orderByField = 'createDate' ;
+        this.orderByField = orderByField;
 
     }
 

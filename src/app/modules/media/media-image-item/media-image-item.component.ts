@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'media-image-item',
@@ -8,10 +8,19 @@ import { Component, Input } from '@angular/core';
   })
 export class MediaImageItemComponent {
 
+    @Input() key: string;
     @Input() image: string;
     @Input() tags: string[];
     thumbnailAspectRatio = { width: 6, height: 4 };
     thumbnailDimensions = { width: 350, height: 200 };
+    @Output() remove = new EventEmitter<string>();
 
+
+    onRemove() {
+        if (this.remove) {
+            console.log('onRemove', this.key);
+            this.remove.emit(this.key);
+        }
+    }
   
   } 

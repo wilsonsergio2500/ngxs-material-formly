@@ -7,7 +7,7 @@ import { NgTypeFormGroup, NgTypeFormControl } from '../../form-type-builder/form
 import { IImageLookUp } from '../contracts/image-lookup';
 import { Validators } from '@angular/forms';
 import { MatChipInputEvent, MatDialog } from '@angular/material';
-import { ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSearchAction } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.actions';
+import { ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSearchAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.actions';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MediaImageDialogComponent } from '../media-image-dialog/media-image-dialog.component';
 import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
@@ -23,6 +23,12 @@ import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resize
     @Select(ImagesOnResizerState.getImageLookUpTags) tags$: Observable<string[]>
     @Select(ImagesOnResizerState.IsSearching) searching$: Observable<string[]>
     @Select(ImagesOnResizerState.getPage) pageItems$: Observable<IImageResizerFirebaseModel[]>;
+
+    @Select(ImagesOnResizerState.getNextEnabled) next$: Observable<boolean>;
+    @Select(ImagesOnResizerState.getPreviousEnabled) prev$: Observable<boolean>;
+    @Select(ImagesOnResizerState.IsPaginatorEnabled) paginationEnabled$: Observable<boolean>;
+
+
     form: NgTypeFormGroup<IImageLookUp>;
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
     removable = true;
@@ -65,5 +71,13 @@ import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resize
         const dialogRef = this.matDialog.open(MediaImageDialogComponent, { panelClass: 'dialog-responsive', disableClose: true });
     }
 
+    onNextPage() {
+        this.store.dispatch(new ImagesOnResizerNextPageAction());
+    }
+    onPrevPage() {
+        this.store.dispatch(new ImagesOnResizerPreviousPageAction());
+    }
+    onRemove(Id: string) {
+    }
   
   } 

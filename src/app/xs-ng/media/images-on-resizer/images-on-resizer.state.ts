@@ -1,8 +1,8 @@
 import { Store, State, Selector, StateContext, Action } from '@ngxs/store';
 import { IImagesOnResizerStateModel } from './images-on-resizer.model';
-import { ImagesOnResizerDoneAction, ImagesOnResizerLoadingAction, ImagesOnResizerCreateAction, ImagesOnResizerLoadAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction, ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSetAsSearchingAction, ImagesOnResizerSetSearchingAsDoneAction, ImagesOnResizerSearchAction } from './images-on-resizer.actions';
+import { ImagesOnResizerDoneAction, ImagesOnResizerLoadingAction, ImagesOnResizerCreateAction, ImagesOnResizerLoadAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction, ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSetAsSearchingAction, ImagesOnResizerSetSearchingAsDoneAction, ImagesOnResizerSearchAction, ImagesOnResizerRemoveImageAction } from './images-on-resizer.actions';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { tap, mergeMap, delay, catchError } from 'rxjs/operators';
+import { tap, mergeMap, catchError } from 'rxjs/operators';
 import { ImageResizeFireStore } from '../../../schemas/images/image-resizer.firebase';
 import { Subscription, from, of } from 'rxjs';
 import { SnackbarStatusService } from '../../../components/ui-elements/snackbar-status/service/snackbar-status.service';
@@ -10,13 +10,14 @@ import { AuthState } from '../../auth/auth.state';
 import { FirebasePaginationStateModel } from '../../../firebase/types/firabes-pagination';
 import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
 import { Logger } from '../../../utils/logger';
+import { ConfirmationDialogService } from '../../../components/ui-elements/confirmation-dialog/confirmation-dialog.service';
 
 
 @State<IImagesOnResizerStateModel>({
     name: 'imagesOnResizer',
     defaults: <IImagesOnResizerStateModel>{
         loading: false,
-        paginationState: new FirebasePaginationStateModel<IImageResizerFirebaseModel>(),
+        paginationState: new FirebasePaginationStateModel<IImageResizerFirebaseModel>(20),
         lookUpTags: [],
         searching: false
       }
@@ -27,7 +28,8 @@ export class ImagesOnResizerState {
     private subscription: Subscription;
     constructor(
       private store: Store,
-      private snackBarStatus: SnackbarStatusService,
+        private snackBarStatus: SnackbarStatusService,
+      private confirmationDialog: ConfirmationDialogService,
       private angularFireStore: AngularFirestore
 
     ){
@@ -51,6 +53,11 @@ export class ImagesOnResizerState {
     static getPreviousEnabled(state: IImagesOnResizerStateModel) : boolean {
         return state.paginationState.prev;
     }
+    @Selector()
+    static IsPaginatorEnabled(state: IImagesOnResizerStateModel): boolean {
+        return state.paginationState.prev || state.paginationState.next;
+    }
+
     @Selector()
     static getImageLookUpTags(state: IImagesOnResizerStateModel) {
         return state.lookUpTags;
@@ -201,5 +208,14 @@ export class ImagesOnResizerState {
     onSearch(ctx: StateContext<IImagesOnResizerStateModel>) {
         ctx.dispatch(new ImagesOnResizerSetAsSearchingAction());
     }
-    
+
+    @Action(ImagesOnResizerRemoveImageAction)
+    onRemoveImage(ctx: StateContext<IImagesOnResizerStateModel>, action: ImagesOnResizerRemoveImageAction) {
+        return this.confirmationDialog.OnConfirm('Are you sure you would like to delete this image').pipe(
+            tap(() => {
+                console.log('do the action');
+            })
+        )
+    }
+
 }

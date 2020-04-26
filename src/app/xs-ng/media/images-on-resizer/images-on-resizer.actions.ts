@@ -42,5 +42,10 @@ export class ImagesOnResizerSearchAction {
     static type = '[Images On Resizer] Search';
 }
 
+export class ImagesOnResizerRemoveImageAction {
+    static type = '[Images On Resizer] Remove Image';
+    constructor(public Id: string) { }
+}
+
 
 

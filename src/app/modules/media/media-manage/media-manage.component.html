@@ -10,7 +10,7 @@
     <ng-template #done>
 
       <h3>Media</h3>
-      <div fxLayout="row" fxFlex="100" fxLayoutAlign="end center" >
+      <div fxLayout="row" fxFlex fxLayoutAlign="end center">
 
         <button mat-button color="primary" (click)="onAdd()">
           Add
@@ -45,7 +45,11 @@
         <ng-container *ngIf="pageItems$ | async as pageItems">
 
           <ng-container *ngFor="let item of pageItems">
-            <media-image-item fxFlex="50" fxFlex.gt-lg="10" fxFlex.gt-md="20" fxFlex.gt-sm="25" [image]="item.imageUrl" [tags]="item.tags"></media-image-item>
+            <media-image-item fxFlex="50" fxFlex.gt-lg="10" fxFlex.gt-md="20" fxFlex.gt-sm="25"
+                              (remove)="onRemove($event)"
+                              [image]="item.imageUrl"
+                              [tags]="item.tags"
+                              [key]="item.Id" ></media-image-item>
           </ng-container>
           
 
@@ -53,7 +57,18 @@
       </div>
 
     </ng-template>
-  
+
+    <div fxFlex>
+
+      <ng-container *ngIf="paginationEnabled$ | async">
+        <firebase-pagination (onNextPage)="onNextPage()"
+                             (onPreviousPage)="onPrevPage()"
+                             [enabled-next]="next$ | async"
+                             [enabled-previous]="prev$ | async"></firebase-pagination>
+
+      </ng-container>
+
+    </div>
   
   
   </div>
