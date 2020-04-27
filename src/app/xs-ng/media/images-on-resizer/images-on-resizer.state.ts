@@ -12,7 +12,7 @@ import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resize
 import { Logger } from '../../../utils/logger';
 import { ConfirmationDialogService } from '../../../components/ui-elements/confirmation-dialog/confirmation-dialog.service';
 import { StringHelpers } from '../../../utils/string-helpers';
-import { FILE_BASE_PATH } from '../../../modules/image-resizer-io/lib-api/image-resizer-io-api';
+import { FILE_BASE_PATH, ImageResizeIoAPI } from '../../../modules/image-resizer-io/lib-api/image-resizer-io-api';
 
 
 @State<IImagesOnResizerStateModel>({
@@ -211,22 +211,19 @@ export class ImagesOnResizerState {
         ctx.dispatch(new ImagesOnResizerSetAsSearchingAction());
     }
 
-
     @Action(ImagesOnResizerRemoveImageAction)
     onRemoveImage(ctx: StateContext<IImagesOnResizerStateModel>, action: ImagesOnResizerRemoveImageAction) {
         const { Id, Image } = action.request;
         return this.confirmationDialog.OnConfirm('Are you sure you would like to delete this image').pipe(
             mergeMap(() => from(this.schema.delete(Id))),
-            //mergeMap(() => {
-            //    const Id = StringHelpers.ExtractSubstring(Image, FILE_BASE_PATH);
-            //})
-            //tap(() => {
-            //    //this.schema.delete(Id).
-            //    //const resizerIoId = StringHelpers.ExtractSubstring(Image, FILE_BASE_PATH);
-            //    //console.log(resizerIoId);
-
-            //    //console.log('do the action');
-            //})
+            mergeMap(() => {
+                const resizeIoId = StringHelpers.ExtractSubstring(Image, FILE_BASE_PATH);
+                return from(ImageResizeIoAPI.Delete(resizeIoId));
+            }),
+            tap(() => {
+                this.snackBarStatus.OpenComplete('Image has been removed');
+            })
+           
         )
     }
 

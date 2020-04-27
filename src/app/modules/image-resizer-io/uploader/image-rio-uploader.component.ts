@@ -40,8 +40,8 @@ export class ImageRioUploaderComponent implements ControlValueAccessor {
   });
 
 
-  @Input('preview-flex-size')
-  PreviewFlexSize = 100;
+    @Input('preview-flex-size')
+    PreviewFlexSize = 100;
 
     @Input('thumbnail-missing-image-url')
     missingImageThumbnail = 'https://im.ages.io/dSaintlp';
@@ -52,8 +52,8 @@ export class ImageRioUploaderComponent implements ControlValueAccessor {
     @Input('thumbnail-aspect-ratio')
     aspectRatio: ISizeDimensions = defaults.viewer.aspectRatio;
 
-  @Input('viewer-preserve-aspect-ratio')
-  viewerPreserveAspectRatio: boolean = false;
+    @Input('viewer-preserve-aspect-ratio')
+    viewerPreserveAspectRatio: boolean = false;
 
 
   @ViewChild('inputFile', { static: false})
@@ -85,7 +85,6 @@ export class ImageRioUploaderComponent implements ControlValueAccessor {
         this.uploadImage(response).then((imageUrl: string) => {
           this.Loading = false;
             this.$imgUrl = imageUrl;
-            console.log(this.$imgUrl);
           this.propagateChange(this.$imgUrl);
         })
       }
