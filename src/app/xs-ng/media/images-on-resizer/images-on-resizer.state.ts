@@ -1,6 +1,6 @@
 import { Store, State, Selector, StateContext, Action } from '@ngxs/store';
 import { IImagesOnResizerStateModel } from './images-on-resizer.model';
-import { ImagesOnResizerDoneAction, ImagesOnResizerLoadingAction, ImagesOnResizerCreateAction, ImagesOnResizerLoadAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction, ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSetAsSearchingAction, ImagesOnResizerSetSearchingAsDoneAction, ImagesOnResizerSearchAction, ImagesOnResizerRemoveImageAction } from './images-on-resizer.actions';
+import { ImagesOnResizerDoneAction, ImagesOnResizerLoadingAction, ImagesOnResizerCreateAction, ImagesOnResizerLoadAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction, ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSetAsSearchingAction, ImagesOnResizerSetSearchingAsDoneAction, ImagesOnResizerSearchAction, ImagesOnResizerRemoveImageAction,  ImagesOnResizerFirstPageAction } from './images-on-resizer.actions';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { tap, mergeMap, catchError } from 'rxjs/operators';
 import { ImageResizeFireStore } from '../../../schemas/images/image-resizer.firebase';
@@ -110,19 +110,45 @@ export class ImagesOnResizerState {
                     if (!model.length) {
                         return false;
                     }
+                    const begining = model[0][orderByField];;
                     const first = model[0][orderByField];
                     const last = model[model.length - 1][orderByField];
                     const pagination_count = 0;
                     const next = model.length === pageSize;
                     const prev = false;
                     const prevStartAt = [first];
-                    const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prevStartAt, items: model };
+                    const newPaginationState = { ...paginationState, begining, first, last, pagination_count, next, prev, prev_start_at: prevStartAt, items: model };
                     ctx.patchState({ paginationState: newPaginationState })
                 }),
                 mergeMap(() => ctx.dispatch(new ImagesOnResizerDoneAction()))
             ).subscribe();
         }
 
+    }
+
+    @Action(ImagesOnResizerFirstPageAction)
+    onGoToFirstPage(ctx: StateContext<IImagesOnResizerStateModel>) {
+        const { paginationState } = ctx.getState();
+        const { pageSize, orderByField, begining } = paginationState;
+        return this.schema.queryCollection(ref => ref.limit(pageSize).orderBy(orderByField, 'desc').startAt(begining))
+            .get().pipe(
+                tap(models => {
+                    const currentSize = models.docs.length;
+                    const next = currentSize === pageSize;
+                    const first = models.docs[0].data()[orderByField];
+                    const last = models.docs[currentSize - 1].data()[orderByField];
+                    let items = [];
+                    for (let it of models.docs) {
+                        items.push(it.data());
+                    }
+                    const pagination_count = 0;
+                    const prev = pagination_count != 0;
+                    const prev_start_at = [first];
+                    const newPaginationState = { ...paginationState, prev, first, last, items, pagination_count, prev_start_at, next };
+                    ctx.patchState({ paginationState: newPaginationState });
+                    Logger.LogTable(`Firebase Paginate Post[Page:${pagination_count + 1}]`, items);
+                })
+            )
     }
 
     @Action(ImagesOnResizerNextPageAction)
@@ -222,6 +248,9 @@ export class ImagesOnResizerState {
             }),
             tap(() => {
                 this.snackBarStatus.OpenComplete('Image has been removed');
+            }),
+            mergeMap(() => {
+                return ctx.dispatch(new  ImagesOnResizerFirstPageAction())
             })
            
         )

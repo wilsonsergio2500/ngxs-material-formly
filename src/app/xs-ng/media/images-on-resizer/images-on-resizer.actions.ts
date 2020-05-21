@@ -17,6 +17,9 @@ export class ImagesOnResizerCreateAction {
 export class ImagesOnResizerLoadAction {
     static type = '[Images On Resizer] Load';
 }
+export class ImagesOnResizerFirstPageAction {
+    static type = '[Images On Resizer] Load first page';
+}
 
 export class ImagesOnResizerNextPageAction {
     static type = '[Images On Resizer] Load next page';
