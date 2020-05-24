@@ -8,7 +8,8 @@ const routes: Routes = [
         children: [
             <Route>{ path: 'posts', loadChildren: () => import('./posts/admin-post.module').then(m => m.AdminPostModule) },
             <Route>{ path: 'pages', loadChildren: () => import('./pages/admin-page.module').then(m => m.AdminPageModule) },
-            <Route>{ path : 'media', loadChildren: () => import('./media/admin-media.module').then(m => m.AdminMediaModule)}
+            <Route>{ path: 'media', loadChildren: () => import('./media/admin-media.module').then(m => m.AdminMediaModule) },
+            <Route>{ path: 'navigation-builder', loadChildren: () => import('./navigation/admin-navigation.module').then(m => m.AdminNavigationBuilderModule)}
         ]
     }
 ]

@@ -53,11 +53,14 @@
     <Content Include="src\app\components\ui-elements\snackbar-status\types\completed\snackbar-completed.component.html" />
     <Content Include="src\app\components\ui-elements\snackbar-status\types\error\snackbar-error.component.html" />
     <Content Include="src\app\components\ui-elements\snackbar-status\types\progress\snackbar-progress.component.html" />
+    <Content Include="src\app\full\admin\navigation\admin-navigation.component.html" />
     <Content Include="src\app\full\admin\media\admin-media.component.html" />
     <Content Include="src\app\full\admin\admin.component.html" />
     <Content Include="src\app\full\admin\admin.component.scss" />
     <Content Include="src\app\full\admin\media\list\admin-media-list.component.html" />
     <Content Include="src\app\full\admin\media\list\admin-media-list.component.scss" />
+    <Content Include="src\app\full\admin\navigation\list\admin-navigation-list.component.html" />
+    <Content Include="src\app\full\admin\navigation\list\admin-navigation-list.component.scss" />
     <Content Include="src\app\full\admin\pages\admin-page.component.html" />
     <Content Include="src\app\full\admin\pages\create\admin-page-create.component.html" />
     <Content Include="src\app\full\admin\pages\create\admin-page-create.component.scss" />
@@ -146,8 +149,10 @@
     <Folder Include="src\app\decorators\" />
     <Folder Include="src\app\firebase\types\" />
     <Folder Include="src\app\firebase\services\" />
+    <Folder Include="src\app\full\admin\navigation\" />
     <Folder Include="src\app\full\admin\media\" />
     <Folder Include="src\app\full\admin\media\list\" />
+    <Folder Include="src\app\full\admin\navigation\list\" />
     <Folder Include="src\app\full\admin\pages\" />
     <Folder Include="src\app\full\admin\pages\create\" />
     <Folder Include="src\app\full\admin\pages\edit\" />
@@ -270,6 +275,8 @@
     <TypeScriptCompile Include="src\app\firebase\types\firabes-pagination.ts" />
     <TypeScriptCompile Include="src\app\firebase\types\firebase-entity.ts" />
     <TypeScriptCompile Include="src\app\firebase\types\firebase-pagination-inmemory.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\navigation\admin-nagivation.routing.module.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\navigation\admin-navigation.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\media\admin-media.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\admin.module.ts" />
@@ -280,6 +287,8 @@
     <TypeScriptCompile Include="src\app\full\admin\media\elements.ts" />
     <TypeScriptCompile Include="src\app\full\admin\media\list\admin-media-list.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\media\list\admin-media-list.resolver.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\navigation\admin-navigation.module.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\navigation\list\admin-navigation-list.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.routing.module.ts" />

@@ -34,6 +34,8 @@ import { IImagesOnResizerRemoveRequest } from '../../../xs-ng/media/images-on-re
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
     removable = true;
     onSearchTags$: Subscription;
+    // perhaps implemnt in next version
+    enableSearch = false;
 
     constructor(
         private store: Store,

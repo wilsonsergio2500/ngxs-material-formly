@@ -19,7 +19,7 @@
 
       </div>
 
-      <div fxLayout="row" fxFlex="100">
+      <div fxLayout="row" fxFlex="100" *ngIf="enableSearch">
 
         <form [formGroup]="form" (ngSubmit)="search()" fxFlex fxLayout="row"  #f="ngForm">
 
