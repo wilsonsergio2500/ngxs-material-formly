@@ -32,4 +32,12 @@ export class PageGetCurrentPageAction {
     constructor(public pageUrl: string) { }
 }
 
+export class PageSearchItemsByTitleAction {
+    static type = '[Page] Search Pages By Title';
+    constructor(public searchTitle: string) { }
+}
+export class PageSearchClearItemsAction {
+    static type = '[Page] Search Pages Clear';
+}
+
 

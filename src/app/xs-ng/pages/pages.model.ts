@@ -5,6 +5,7 @@ export interface IPageStateModel {
     loading: boolean;
     paginationState: IFirebasePaginationInMemoryState<IPageFirebaseModel>
     current: IPageFirebaseModel;
+    naviationTreeMatches:IPageFirebaseModel[]
 }
 
 

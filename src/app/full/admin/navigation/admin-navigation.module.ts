@@ -9,11 +9,19 @@ import { FirebaseModule } from '../../../firebase/firebase.module';
 import { MaterialComponentsModule } from '../../../materialcomponents.module';
 import { AdminNavigationListComponent } from './list/admin-navigation-list.component';
 import { AdminNavigationComponent } from './admin-navigation.component';
+import { NavigationBuilderDb } from './components/navigation-builder/tree-navigation-builder.provider';
+import { TreeNavigationBuilderComponent } from './components/navigation-builder/tree-navigation-builder.component';
+import { PageFinderComponent } from './components/page-finder/page-finder.component';
 
 @NgModule({
+    providers: [
+        NavigationBuilderDb
+    ],
     declarations: [
         AdminNavigationComponent,
-        AdminNavigationListComponent
+        AdminNavigationListComponent,
+        TreeNavigationBuilderComponent,
+        PageFinderComponent
     ],
     imports: [
         CommonModule,

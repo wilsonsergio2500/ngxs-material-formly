@@ -1,22 +1,24 @@
 import { State, StateContext, Action, Store, Selector } from "@ngxs/store";
 import { IPageStateModel } from './pages.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { PageSetAsLoadingAction, PageSetLoadingAsDoneAction, PageLoadItemsAction, PageSetPaginator, PagePaginateItems, PageCreateAction, PageGetCurrentPageAction } from './pages.actions';
+import { PageSetAsLoadingAction, PageSetLoadingAsDoneAction, PageLoadItemsAction, PageSetPaginator, PagePaginateItems, PageCreateAction, PageGetCurrentPageAction, PageSearchItemsByTitleAction, PageSearchClearItemsAction } from './pages.actions';
 import { tap, mergeMap, catchError } from 'rxjs/operators';
-import { Subscription, from, of } from 'rxjs';
+import { Subscription, from, of, observable, Observable, empty } from 'rxjs';
 import { Navigate } from '@ngxs/router-plugin';
 import { FirebasePaginationInMemoryStateModel } from '../../firebase/types/firebase-pagination-inmemory';
 import { PageFireStore } from '../../schemas/pages/page.firebase';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 import { IPageFirebaseModel } from '../../schemas/pages/page.model';
 import { AuthState } from '../auth/auth.state';
+import { searchLike } from '../../firebase/utils/search-like';
 
 @State<IPageStateModel>({
     name: 'pagesState',
     defaults: <IPageStateModel>{
         loading: false,
         paginationState: new FirebasePaginationInMemoryStateModel<IPageFirebaseModel>(),
-        current: null
+        current: null,
+        naviationTreeMatches: []
     }
 })
 export class PageState {
@@ -137,5 +139,26 @@ export class PageState {
         )
     }
 
+    @Action(PageSearchItemsByTitleAction)
+    onFindPage(ctx: StateContext<IPageStateModel>, action: PageSearchItemsByTitleAction) {
+        const { searchTitle } = action;
+        return from(this.pages.queryCollection(ref => searchLike(ref, 'title', searchTitle)).get()).pipe(
+            mergeMap(models => {
+                const has = models.docs.length;
+                if (has) {
+                    const naviationTreeMatches = models.docs.map(g => g.data() as IPageFirebaseModel);
+                    ctx.patchState({ naviationTreeMatches });
+                    return empty();
+                }
+                return ctx.dispatch(new PageSearchClearItemsAction())
+            })
+
+        )
+    }
+
+    @Action(PageSearchClearItemsAction)
+    onClearSearch(ctx: StateContext<IPageStateModel>) {
+        ctx.patchState({ naviationTreeMatches: [] })
+    }
 
 }
