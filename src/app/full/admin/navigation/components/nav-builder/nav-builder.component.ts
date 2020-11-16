@@ -1,70 +1,72 @@
-import { Component, NgZone} from '@angular/core';
-import { NavigationItemNode } from './contracts/navigation-item';
-import { NavigationItemFlatNode } from './contracts/navigation-tem-flatnode';
+import { Component, AfterContentInit, OnInit, NgZone, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { NavItemFlatNode } from './contracts/nav-item-flatnode';
+import { NavItemNode } from './contracts/nav-item';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { NavigationBuilderDb } from './tree-navigation-builder.provider';
-import { tap } from 'rxjs/operators';
 
 @Component({
-    selector: 'tree-navigation-builder',
-    templateUrl: 'tree-navigation-builder.component.html',
-    styleUrls: [`tree-navigation-builder.component.scss`]
+    selector: 'nav-builder',
+    templateUrl: 'nav-builder.component.html',
+    styleUrls: [`nav-builder.component.scss`]
   })
-  export class TreeNavigationBuilderComponent {
+export class NavBuilderComponent implements OnChanges {
+    
 
-    flatNodeMap = new Map<NavigationItemFlatNode, NavigationItemNode>();
+
+    @Input() items: any;
+
+    flatNodeMap = new Map<NavItemFlatNode, NavItemNode>();
 
     /** Map from nested node to flattened node. This helps us to keep the same object for selection */
-    nestedNodeMap = new Map<NavigationItemNode, NavigationItemFlatNode>();
+    nestedNodeMap = new Map<NavItemNode, NavItemFlatNode>();
 
     /** A selected parent node to be inserted */
-    selectedParent: NavigationItemFlatNode | null = null;
+    selectedParent: NavItemFlatNode | null = null;
 
     /** The new item's name */
     newItemName = '';
 
-    treeControl: FlatTreeControl<NavigationItemFlatNode>;
+    treeControl: FlatTreeControl<NavItemFlatNode>;
 
-    treeFlattener: MatTreeFlattener<NavigationItemNode, NavigationItemFlatNode>;
+    treeFlattener: MatTreeFlattener<NavItemNode, NavItemFlatNode>;
 
-    dataSource: MatTreeFlatDataSource<NavigationItemNode, NavigationItemFlatNode>;
+    dataSource: MatTreeFlatDataSource<NavItemNode, NavItemFlatNode>;
 
     /** The selection for checklist */
-    checklistSelection = new SelectionModel<NavigationItemFlatNode>(true /* multiple */);
+    checklistSelection = new SelectionModel<NavItemFlatNode>(true /* multiple */);
 
-    constructor(private _database: NavigationBuilderDb, private zone: NgZone) {
-        this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
-        this.treeControl = new FlatTreeControl<NavigationItemFlatNode>(this.getLevel, this.isExpandable);
-        this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    //constructor(private _database: NavigationBuilderDb, private zone: NgZone) {
+    //    this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
+    //    this.treeControl = new FlatTreeControl<NavItemFlatNode>(this.getLevel, this.isExpandable);
+    //    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-        _database.dataChange.pipe(
-            tap(data => this.dataSource.data = data),
-        ).subscribe();
-        
-    }
+    //    _database.dataChange.pipe(
+    //        tap(data => this.dataSource.data = data),
+    //    ).subscribe();
 
-    getLevel = (node: NavigationItemFlatNode) => node.level;
+    //}
 
-    isExpandable = (node: NavigationItemFlatNode) => node.expandable;
+    getLevel = (node: NavItemFlatNode) => node.level;
 
-    getChildren = (node: NavigationItemNode): NavigationItemNode[] => node.children;
+    isExpandable = (node: NavItemFlatNode) => node.expandable;
 
-    hasChild = (_: number, _nodeData: NavigationItemFlatNode) =>  _nodeData.expandable;
+    getChildren = (node: NavItemNode): NavItemNode[] => node.children;
 
-    hasNoContent = (_: number, _nodeData: NavigationItemFlatNode) => _nodeData.item === '';
+    hasChild = (_: number, _nodeData: NavItemFlatNode) => _nodeData.expandable;
+
+    hasNoContent = (_: number, _nodeData: NavItemFlatNode) => _nodeData.Label === '';
 
 
     /**
      * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
      */
-    transformer = (node: NavigationItemNode, level: number) => {
+    transformer = (node: NavItemNode, level: number) => {
         const existingNode = this.nestedNodeMap.get(node);
-        const flatNode = existingNode && existingNode.item === node.item
+        const flatNode = existingNode && existingNode.Label === node.Label
             ? existingNode
-            : new NavigationItemFlatNode();
-        flatNode.item = node.item;
+            : new NavItemFlatNode();
+        flatNode.Label = node.Label;
         flatNode.level = level;
         flatNode.expandable = !!node.children;
         this.flatNodeMap.set(flatNode, node);
@@ -73,7 +75,7 @@ import { tap } from 'rxjs/operators';
     }
 
     /** Whether all the descendants of the node are selected. */
-    descendantsAllSelected(node: NavigationItemFlatNode): boolean {
+    descendantsAllSelected(node: NavItemFlatNode): boolean {
         const descendants = this.treeControl.getDescendants(node);
         const descAllSelected = descendants.every(child =>
             this.checklistSelection.isSelected(child)
@@ -82,14 +84,14 @@ import { tap } from 'rxjs/operators';
     }
 
     /** Whether part of the descendants are selected */
-    descendantsPartiallySelected(node: NavigationItemFlatNode): boolean {
+    descendantsPartiallySelected(node: NavItemFlatNode): boolean {
         const descendants = this.treeControl.getDescendants(node);
         const result = descendants.some(child => this.checklistSelection.isSelected(child));
         return result && !this.descendantsAllSelected(node);
     }
 
     /** Toggle the to-do item selection. Select/deselect all the descendants node */
-    todoItemSelectionToggle(node: NavigationItemFlatNode): void {
+    todoItemSelectionToggle(node: NavItemFlatNode): void {
         this.checklistSelection.toggle(node);
         const descendants = this.treeControl.getDescendants(node);
         this.checklistSelection.isSelected(node)
@@ -104,14 +106,14 @@ import { tap } from 'rxjs/operators';
     }
 
     /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
-    todoLeafItemSelectionToggle(node: NavigationItemFlatNode): void {
+    todoLeafItemSelectionToggle(node: NavItemFlatNode): void {
         this.checklistSelection.toggle(node);
         this.checkAllParentsSelection(node);
     }
 
     /* Checks all the parents when a leaf node is selected/unselected */
-    checkAllParentsSelection(node: NavigationItemFlatNode): void {
-        let parent: NavigationItemFlatNode | null = this.getParentNode(node);
+    checkAllParentsSelection(node: NavItemFlatNode): void {
+        let parent: NavItemFlatNode | null = this.getParentNode(node);
         while (parent) {
             this.checkRootNodeSelection(parent);
             parent = this.getParentNode(parent);
@@ -119,7 +121,7 @@ import { tap } from 'rxjs/operators';
     }
 
     /** Check root node checked state and change it accordingly */
-    checkRootNodeSelection(node: NavigationItemFlatNode): void {
+    checkRootNodeSelection(node: NavItemFlatNode): void {
         const nodeSelected = this.checklistSelection.isSelected(node);
         const descendants = this.treeControl.getDescendants(node);
         const descAllSelected = descendants.every(child =>
@@ -133,7 +135,7 @@ import { tap } from 'rxjs/operators';
     }
 
     /* Get the parent node of a node */
-    getParentNode(node: NavigationItemFlatNode): NavigationItemFlatNode | null {
+    getParentNode(node: NavItemFlatNode): NavItemFlatNode | null {
         const currentLevel = this.getLevel(node);
 
         if (currentLevel < 1) {
@@ -153,18 +155,18 @@ import { tap } from 'rxjs/operators';
     }
 
     /** Select the category so we can insert the new item. */
-    addNewItem(node: NavigationItemFlatNode) {
+    addNewItem(node: NavItemFlatNode) {
         const navItemNode = this.flatNodeMap.get(node);
         let parent = null;
         if (!navItemNode.children) {
             navItemNode.children = [];
             parent = this.getParentNode(node);
         }
-        this._database.insertItem(navItemNode!, '');
+        //this._database.insertItem(navItemNode!, '');
         setTimeout(() => this.refreshToggle(node, parent));
     }
 
-    refreshToggle(node: NavigationItemFlatNode, parent: NavigationItemFlatNode) {
+    refreshToggle(node: NavItemFlatNode, parent: NavItemFlatNode) {
         this.treeControl.expand(node);
         if (!!parent) {
             this.treeControl.collapse(parent);
@@ -173,9 +175,26 @@ import { tap } from 'rxjs/operators';
     }
 
     /** Save the node to database */
-    saveNode(node: NavigationItemFlatNode, itemValue: string) {
+    saveNode(node: NavItemFlatNode, itemValue: string) {
         const nestedNode = this.flatNodeMap.get(node);
-        this._database.updateItem(nestedNode!, itemValue);
+        //this._database.updateItem(nestedNode!, itemValue);
     }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['items'].currentValue) {
+
+        }
+    }
+   
   
-  } 
+}
+
+
+export class NavigationBuilderHelper {
+
+
+    constructor(
+
+    ) {
+    }
+}

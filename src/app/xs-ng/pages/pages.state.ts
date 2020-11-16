@@ -18,7 +18,7 @@ import { searchLike } from '../../firebase/utils/search-like';
         loading: false,
         paginationState: new FirebasePaginationInMemoryStateModel<IPageFirebaseModel>(),
         current: null,
-        naviationTreeMatches: []
+        pageFilterByTitle: []
     }
 })
 export class PageState {
@@ -56,6 +56,10 @@ export class PageState {
     @Selector()
     static getCurrentPage(state: IPageStateModel) {
         return state.current;
+    }
+    @Selector()
+    static getPageFilterByTitle(state: IPageStateModel) {
+        return state.pageFilterByTitle;
     }
 
     @Action(PageSetAsLoadingAction)
@@ -142,12 +146,14 @@ export class PageState {
     @Action(PageSearchItemsByTitleAction)
     onFindPage(ctx: StateContext<IPageStateModel>, action: PageSearchItemsByTitleAction) {
         const { searchTitle } = action;
+        console.log(searchTitle);
         return from(this.pages.queryCollection(ref => searchLike(ref, 'title', searchTitle)).get()).pipe(
             mergeMap(models => {
                 const has = models.docs.length;
                 if (has) {
-                    const naviationTreeMatches = models.docs.map(g => g.data() as IPageFirebaseModel);
-                    ctx.patchState({ naviationTreeMatches });
+                    const pageFilterByTitle = models.docs.map(g => g.data() as IPageFirebaseModel);
+                    console.log(pageFilterByTitle);
+                    ctx.patchState({ pageFilterByTitle });
                     return empty();
                 }
                 return ctx.dispatch(new PageSearchClearItemsAction())
@@ -158,7 +164,7 @@ export class PageState {
 
     @Action(PageSearchClearItemsAction)
     onClearSearch(ctx: StateContext<IPageStateModel>) {
-        ctx.patchState({ naviationTreeMatches: [] })
+        ctx.patchState({ pageFilterByTitle: [] })
     }
 
 }

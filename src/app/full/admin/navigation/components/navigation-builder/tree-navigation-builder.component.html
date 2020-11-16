@@ -14,6 +14,7 @@
       <input matInput #itemValue placeholder="Ex. Lettuce">
     </mat-form-field>
     <button mat-button (click)="saveNode(node, itemValue.value)">Add</button>
+    <navigation-page-entry></navigation-page-entry>
   </mat-tree-node>
 
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>

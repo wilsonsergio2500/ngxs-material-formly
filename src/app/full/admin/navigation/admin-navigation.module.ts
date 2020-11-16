@@ -12,6 +12,7 @@ import { AdminNavigationComponent } from './admin-navigation.component';
 import { NavigationBuilderDb } from './components/navigation-builder/tree-navigation-builder.provider';
 import { TreeNavigationBuilderComponent } from './components/navigation-builder/tree-navigation-builder.component';
 import { PageFinderComponent } from './components/page-finder/page-finder.component';
+import { NavigationPageEntryComponent } from './components/page-entry/navigation-page-entry.component';
 
 @NgModule({
     providers: [
@@ -21,7 +22,8 @@ import { PageFinderComponent } from './components/page-finder/page-finder.compon
         AdminNavigationComponent,
         AdminNavigationListComponent,
         TreeNavigationBuilderComponent,
-        PageFinderComponent
+        PageFinderComponent,
+        NavigationPageEntryComponent
     ],
     imports: [
         CommonModule,
