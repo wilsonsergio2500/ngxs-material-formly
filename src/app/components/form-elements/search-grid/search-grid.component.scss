@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+
+  .search-icon {
+    cursor: pointer;
+  }
+}
+
+mat-icon {
+  width: 20px;
+  height: 18px;
+}
+
+mat-icon[disabled] {
+  cursor: none;
+  color: #777 !important;
+  opacity: 0.5;
+  pointer-events: none;
+}

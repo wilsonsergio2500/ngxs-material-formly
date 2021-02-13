@@ -1,0 +1,56 @@
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-label {
+  display: none;
+}
+
+mat-cell:last-of-type .mobile-label {
+  display: none;
+}
+
+mat-cell span.mobile-value {
+  display: flex;
+  justify-items: flex-start;
+  flex: 100%;
+}
+
+  .mobile-label {
+    display: flex;
+    flex: 20%;
+    font-weight: bold;
+  }
+
+  .mobile-value {
+    width: 100%;
+    text-align: start;
+    font-size: 14px;
+  }
+
+  .mat-header-row {
+    display: none;
+  }
+
+  .mat-row {
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 24px;
+  }
+
+  mat-cell:first-of-type {
+    padding-left: 0;
+  }
+
+  mat-cell {
+    min-width: 100%;
+  }
+
+  .cdk-column-Action {
+    max-width: 100%;
+  }
+  .mat-row{
+      min-height:5px;
+  }

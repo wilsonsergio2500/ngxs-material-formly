@@ -52,6 +52,10 @@ export class PageState {
     static getCollectionTotalSize(state: IPageStateModel) {
         return state.paginationState.items.length;
     }
+    @Selector()
+    static getAllPages(state: IPageStateModel) {
+        return state.paginationState.items;
+    }
 
     @Selector()
     static getCurrentPage(state: IPageStateModel) {

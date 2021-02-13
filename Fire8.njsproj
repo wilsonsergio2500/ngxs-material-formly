@@ -41,6 +41,10 @@
     <Content Include="src\app\app.component.scss" />
     <Content Include="src\app\components\form-elements\ngx-chips\ngx-chips.component.html" />
     <Content Include="src\app\components\form-elements\ngx-chips\ngx-chips.component.scss" />
+    <Content Include="src\app\components\form-elements\search-grid\search-grid-modal\search-grid-modal.component.html" />
+    <Content Include="src\app\components\form-elements\search-grid\search-grid-modal\search-grid-modal.component.scss" />
+    <Content Include="src\app\components\form-elements\search-grid\search-grid.component.html" />
+    <Content Include="src\app\components\form-elements\search-grid\search-grid.component.scss" />
     <Content Include="src\app\components\ui-elements\check-animation\check-animation.component.html" />
     <Content Include="src\app\components\ui-elements\confirmation-dialog\modal\confirmation-modal.component.html" />
     <Content Include="src\app\components\ui-elements\confirmation-dialog\modal\confirmation-modal.component.scss" />
@@ -140,6 +144,9 @@
     <Folder Include="src\app\" />
     <Folder Include="src\app\components\form-elements\" />
     <Folder Include="src\app\components\form-elements\ngx-chips\" />
+    <Folder Include="src\app\components\form-elements\search-grid\" />
+    <Folder Include="src\app\components\form-elements\search-grid\search-grid-column\" />
+    <Folder Include="src\app\components\form-elements\search-grid\search-grid-modal\" />
     <Folder Include="src\app\components\ui-elements\" />
     <Folder Include="src\app\components\ui-elements\check-animation\" />
     <Folder Include="src\app\components\ui-elements\confirmation-dialog\" />
@@ -265,6 +272,13 @@
     <TypeScriptCompile Include="src\app\components\components.module.ts" />
     <TypeScriptCompile Include="src\app\components\form-elements\elements.ts" />
     <TypeScriptCompile Include="src\app\components\form-elements\ngx-chips\ngx-chips.component.ts" />
+    <TypeScriptCompile Include="src\app\components\form-elements\search-grid\search-grid-column\search-grid-column.component.ts" />
+    <TypeScriptCompile Include="src\app\components\form-elements\search-grid\search-grid-column\search-grid-column.contract.ts" />
+    <TypeScriptCompile Include="src\app\components\form-elements\search-grid\search-grid-modal\search-grid-modal.component.ts" />
+    <TypeScriptCompile Include="src\app\components\form-elements\search-grid\search-grid-modal\search-grid.input.ts" />
+    <TypeScriptCompile Include="src\app\components\form-elements\search-grid\search-grid.component.ts" />
+    <TypeScriptCompile Include="src\app\components\form-elements\search-grid\search-grid.contract.ts" />
+    <TypeScriptCompile Include="src\app\components\form-elements\search-grid\search-grid.elements.ts" />
     <TypeScriptCompile Include="src\app\components\ui-elements\check-animation\check-animation.component.ts" />
     <TypeScriptCompile Include="src\app\components\ui-elements\confirmation-dialog\confirmation-dialog.service.ts" />
     <TypeScriptCompile Include="src\app\components\ui-elements\confirmation-dialog\elements.ts" />
@@ -316,6 +330,7 @@
     <TypeScriptCompile Include="src\app\full\admin\navigation\components\page-entry\navigation-page-entry.contract.ts" />
     <TypeScriptCompile Include="src\app\full\admin\navigation\components\page-finder\page-finder.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\navigation\list\admin-navigation-list.component.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\navigation\list\admin-navigation-list.resolver.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.module.ts" />
     <TypeScriptCompile Include="src\app\full\admin\pages\admin-page.routing.module.ts" />
