@@ -1,6 +1,6 @@
-import { Component, OnInit, HostBinding, Input, ViewChild, ElementRef, ContentChildren, QueryList, Optional, Injector, DoCheck, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostBinding, Input, ViewChild, ElementRef, ContentChildren, QueryList, Optional, Injector, DoCheck, OnDestroy, AfterViewInit, forwardRef } from '@angular/core';
 import { Observable, Subject, Subscription, fromEvent, of } from 'rxjs';
-import { ControlValueAccessor, NgControl, FormGroupDirective } from '@angular/forms';
+import { ControlValueAccessor, NgControl, FormGroupDirective, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatFormFieldControl, ErrorStateMatcher, MatDialog } from '@angular/material';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ISearchGridValue } from './search-grid.contract';
@@ -14,7 +14,11 @@ import { ISearchGridInput } from './search-grid-modal/search-grid.input';
 @Component({
     selector: 'search-grid',
     templateUrl: 'search-grid.component.html',
-    styleUrls: [`search-grid.component.scss`]
+    styleUrls: [`search-grid.component.scss`],
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SearchGridComponent), multi: true },
+        { provide: MatFormFieldControl, useExisting: SearchGridComponent }
+    ],
 })
 export class SearchGridComponent implements ControlValueAccessor, OnInit, DoCheck, AfterViewInit, OnDestroy, MatFormFieldControl<any> {
 
@@ -97,11 +101,21 @@ export class SearchGridComponent implements ControlValueAccessor, OnInit, DoChec
         }
     };
 
-    setDescribedByIds(ids: string[]): void {
-        throw new Error("Method not implemented.");
-    }
-    onContainerClick(event: MouseEvent): void {
-        throw new Error("Method not implemented.");
+    _ariaDescribedby: string;
+    setDescribedByIds(ids: string[]) { this._ariaDescribedby = ids.join(' '); }
+
+    onContainerClick(event: MouseEvent) {
+        if (this.disabled) {
+            this.focused = false;
+            event.stopPropagation();
+            event.preventDefault();
+        } else {
+            if ((event.target as Element).tagName.toLowerCase() != 'input') {
+                this.elRef.nativeElement.querySelector('input')!.focus();
+                this.focused = true;
+                this.stateChanges.next();
+            }
+        }
     }
 
 

@@ -16,12 +16,13 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
     templateUrl: 'navigation-page-entry.component.html',
     styleUrls: [`navigation-page-entry.component.scss`]
   })
-  export class NavigationPageEntryComponent implements OnDestroy {
+  export class NavigationPageEntryComponent implements OnDestroy, OnInit {
   
 
     formGroup: NgTypeFormGroup<IPageNavigation>;
     filter$: Subscription;
     @Select(PageState.getPageFilterByTitle) pages$: Observable<IPageFirebaseModel[]>
+    pageRecords: () => Observable<IPageFirebaseModel[]>
 
     constructor(
         private store: Store,
@@ -30,12 +31,13 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
         this.createForm();
     }
 
+
     createForm() {
 
         this.formGroup = this.formTypeBuilder.group<IPageNavigation>({
             isLabelOnly: [null],
             label: [null, [Validators.required]],
-            title: [null, (c: NgTypeFormControl<string, IPageNavigation>) => {
+            pageFinder: [null, (c: NgTypeFormControl<string, IPageNavigation>) => {
                 if (!!c && !!c.parent && c.parent.value.isLabelOnly == false && !!!c.value) {
                     return { required: true };
                 }
@@ -43,32 +45,39 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
             }]
         })
 
-        const initial = { isLabelOnly: false, label: null, title: null };
+        const initial = { isLabelOnly: false, label: null, pageFinder: null };
 
         this.formGroup.patchValue(initial);
 
-        const title$ = this.formGroup.get('title').valueChanges.pipe(
-            startWith(''),
-            debounceTime(250),
-            throttleTime(300),
-            tap(title => {
-                console.log('fired');
-                console.log(title);
-                if (!!title && title.length >= 3) {
-                    console.log('entered');
-                    this.store.dispatch(new PageSearchItemsByTitleAction(title));
-                } else {
-                    console.log('entered 2')
-                    this.store.dispatch(new PageSearchClearItemsAction());
-                }
-            })
+        //const title$ = this.formGroup.get('title').valueChanges.pipe(
+        //    startWith(''),
+        //    debounceTime(250),
+        //    throttleTime(300),
+        //    tap(title => {
+        //        console.log('fired');
+        //        console.log(title);
+        //        if (!!title && title.length >= 3) {
+        //            console.log('entered');
+        //            this.store.dispatch(new PageSearchItemsByTitleAction(title));
+        //        } else {
+        //            console.log('entered 2')
+        //            this.store.dispatch(new PageSearchClearItemsAction());
+        //        }
+        //    })
 
-        );
+        //);
 
-        this.filter$ = title$.subscribe();
+        //this.filter$ = title$.subscribe();
 
         
     }
+
+    ngOnInit() {
+
+        this.pageRecords = () => this.store.select(PageState.getAllPages);
+
+    }
+
     addNavItem() {
         console.log('add item', this.formGroup.value);
     }

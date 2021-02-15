@@ -1,6 +1,6 @@
-<div fxLayout="column" fxFlex="100">
+<div fxLayout="column" fxFlex>
 
-  <div fxLayout="row" fxFlex="100">
+  <div fxLayout="row" fxFlex>
 
     <form [formGroup]="formGroup" (ngSubmit)="addNavItem()" fxFlex="100" fxLayout="column" fxLayout.gt-sm="row">
 
@@ -11,15 +11,15 @@
       <mat-form-field fxFlex="30" class="form-element">
         <input type="text" placeholder="Enter Label" aria-label="Label" matInput formControlName="label" autocomplete="off">
       </mat-form-field>
-      <mat-form-field *ngIf="displayUrlEntry" fxFlex="50" class="form-element">
+      <!--<mat-form-field *ngIf="displayUrlEntry" fxFlex="50" class="form-element">
         <input type="text" placeholder="Find Title" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="title">
         <mat-hint align="start"><strong>Search activated after 3 characters</strong> </mat-hint>
-        <!--<mat-error *ngIf="FilterForm.controls['option'].hasError('required')">
+        <mat-error *ngIf="FilterForm.controls['option'].hasError('required')">
           A selection is <strong>required</strong>
         </mat-error>
         <mat-error *ngIf="FilterForm.controls['option'].hasError('notFound')">
           Selection <strong>Not Found</strong>
-        </mat-error>-->
+        </mat-error>
 
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
           <cdk-virtual-scroll-viewport itemSize="50" class="autocomplete-virtual-scroll-viewport" minBufferPx="240" maxBufferPx="480">
@@ -28,6 +28,16 @@
             </mat-option>
           </cdk-virtual-scroll-viewport>
         </mat-autocomplete>
+
+      </mat-form-field>-->
+
+
+      <mat-form-field *ngIf="displayUrlEntry" fxFlex="50" class="form-element">
+
+        <search-grid placeholder="Search Page" [recordsFunc]="pageRecords" formControlName="pageFinder" TextField="url" ValueField="url">
+          <search-grid-column DisplayColumn="title" HeaderText="Title"></search-grid-column>
+          <search-grid-column DisplayColumn="url" HeaderText="Path"></search-grid-column>
+        </search-grid>
 
       </mat-form-field>
       <!--<mat-form-field *ngIf="displayValuePicker" [ngStyle.gt-sm]="{'padding-left.px': 10}" [fxFlex.gt-sm]="40">
