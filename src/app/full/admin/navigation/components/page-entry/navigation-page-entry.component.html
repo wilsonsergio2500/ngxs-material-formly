@@ -2,7 +2,7 @@
 
   <div fxLayout="row" fxFlex>
 
-    <form [formGroup]="formGroup" (ngSubmit)="addNavItem()" fxFlex="100" fxLayout="column" fxLayout.gt-sm="row">
+    <form [formGroup]="formGroup" (ngSubmit)="addNavItem()" fxFlex fxLayout="column" fxLayout.gt-sm="row">
 
       <div fxFlex="20" [ngStyle.gt-sm]="{'padding.px': 25}" >
         <mat-slide-toggle formControlName="isLabelOnly">Is Label</mat-slide-toggle>
@@ -32,7 +32,7 @@
       </mat-form-field>-->
 
 
-      <mat-form-field *ngIf="displayUrlEntry" fxFlex="50" class="form-element">
+      <mat-form-field *ngIf="displayUrlEntry" fxFlex="30" class="form-element">
 
         <search-grid placeholder="Search Page" [recordsFunc]="pageRecords" formControlName="pageFinder" TextField="url" ValueField="url">
           <search-grid-column DisplayColumn="title" HeaderText="Title"></search-grid-column>
@@ -40,6 +40,11 @@
         </search-grid>
 
       </mat-form-field>
+
+      <div fxflex="20">
+        <button mat-button color="primary" type="submit">Add</button>
+        <button mat-button color="warn" type="button">Cancel</button>
+      </div>
       <!--<mat-form-field *ngIf="displayValuePicker" [ngStyle.gt-sm]="{'padding-left.px': 10}" [fxFlex.gt-sm]="40">
         <input type="text" placeholder="Pick Value" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="option">
         <mat-hint align="start"><strong>Search activated after 3 characters</strong> </mat-hint>

@@ -1,4 +1,4 @@
-import { Component, AfterContentInit, OnInit, OnDestroy } from '@angular/core';
+import { Component, AfterContentInit, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { IPageNavigation } from './navigation-page-entry.contract';
 import { FieldTypes } from '../../../../../modules/formly-fields-extended/base/fields-types-schemas';
 import { NgTypeFormGroup, NgTypeFormControl } from '../../../../../modules/form-type-builder/form-type-builder.model';
@@ -6,7 +6,6 @@ import { FormTypeBuilder } from '../../../../../modules/form-type-builder/form-t
 import { Validators } from '@angular/forms';
 import { startWith, debounceTime, throttleTime, tap } from 'rxjs/operators';
 import { Store, Select } from '@ngxs/store';
-import { PageSearchItemsByTitleAction, PageSearchClearItemsAction } from '../../../../../xs-ng/pages/pages.actions';
 import { Subscription, Observable } from 'rxjs';
 import { PageState } from '../../../../../xs-ng/pages/pages.state';
 import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
@@ -23,6 +22,9 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
     filter$: Subscription;
     @Select(PageState.getPageFilterByTitle) pages$: Observable<IPageFirebaseModel[]>
     pageRecords: () => Observable<IPageFirebaseModel[]>
+
+    @Output() OnAdd = new EventEmitter<IPageNavigation>();
+    @Output() OnCancel = new EventEmitter<void>();
 
     constructor(
         private store: Store,
@@ -48,27 +50,6 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
         const initial = { isLabelOnly: false, label: null, pageFinder: null };
 
         this.formGroup.patchValue(initial);
-
-        //const title$ = this.formGroup.get('title').valueChanges.pipe(
-        //    startWith(''),
-        //    debounceTime(250),
-        //    throttleTime(300),
-        //    tap(title => {
-        //        console.log('fired');
-        //        console.log(title);
-        //        if (!!title && title.length >= 3) {
-        //            console.log('entered');
-        //            this.store.dispatch(new PageSearchItemsByTitleAction(title));
-        //        } else {
-        //            console.log('entered 2')
-        //            this.store.dispatch(new PageSearchClearItemsAction());
-        //        }
-        //    })
-
-        //);
-
-        //this.filter$ = title$.subscribe();
-
         
     }
 
@@ -79,7 +60,11 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
     }
 
     addNavItem() {
-        console.log('add item', this.formGroup.value);
+
+        if (this.OnAdd) {
+            this.OnAdd.emit({ ...this.formGroup.value });
+        }
+        //console.log('add item', this.formGroup.value);
     }
 
     get displayUrlEntry() {

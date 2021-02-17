@@ -3,21 +3,27 @@ import { NavigationItemNode } from './contracts/navigation-item';
 import { BehaviorSubject } from 'rxjs'
 
 const TREE_DATA = {
-    Groceries: {
-        'Almond Meal flour': null,
-        'Organic eggs': null,
-        'Protein Powder': null,
-        Fruits: {
-            Apple: null,
-            Berries: ['Blueberry', 'Raspberry'],
-            Orange: null
-        }
-    },
+    //Groceries: {
+    //    'Almond Meal flour': null,
+    //    'Organic eggs': null,
+    //    'Protein Powder': null,
+    //    Fruits: {
+    //        Apple: null,
+    //        Berries: ['Blueberry', 'Raspberry'],
+    //        Orange: null
+    //    }
+    //},
+    //Reminders: [
+    //    'Cook dinner',
+    //    'Read the Material Design spec',
+    //    'Upgrade Application to Angular'
+    //]
     Reminders: [
-        'Cook dinner',
-        'Read the Material Design spec',
-        'Upgrade Application to Angular'
+        { Label: 'Cook dinner', Url: '', children: [] },
+        { Label: 'Read the Material Design spec', Url: '', children: [] },
+        { Label: 'Upgrade Application to Angular', Url: '', children: [] }
     ]
+
 };
 
 @Injectable()
@@ -44,28 +50,38 @@ export class NavigationBuilderDb {
      * The return value is the list of `TodoItemNode`.
      */
     buildFileTree(obj: { [key: string]: any }, level: number): NavigationItemNode[] {
-        return Object.keys(obj).reduce<NavigationItemNode[]>((accumulator, key) => {
-            const value = obj[key];
-            const node = new NavigationItemNode();
-            node.item = key;
+        return obj.Reminders;
+        //return Object.keys(obj).reduce<NavigationItemNode[]>((accumulator, key) => {
+        //    const value = obj[key];
+        //    const node = new NavigationItemNode();
+        //    node.item = key;
 
-            if (value != null) {
-                if (typeof value === 'object') {
-                    node.children = this.buildFileTree(value, level + 1);
-                } else {
-                    node.item = value;
-                }
-            }
+        //    if (value != null) {
+        //        if (typeof value === 'object') {
+        //            node.children = this.buildFileTree(value, level + 1);
+        //        } else {
+        //            node.item = value;
+        //        }
+        //    }
 
-            return accumulator.concat(node);
-        }, []);
+        //    return accumulator.concat(node);
+        //}, []);
     }
 
     /** Add an item to to-do list */
-    insertItem(parent: NavigationItemNode, name: string) {
+    //insertItem(parent: NavigationItemNode, name: string) {
+    //    if (parent.children) {
+    //            parent.children.push({ item: name } as NavigationItemNode);
+    //        this.dataChange.next(this.data);
+    //        console.log(this.data);
+    //    }
+    //}
+
+    insertItem(parent: NavigationItemNode, newItem: NavigationItemNode) {
         if (parent.children) {
-                parent.children.push({ item: name } as NavigationItemNode);
-                this.dataChange.next(this.data);
+            parent.children.push({...newItem});
+            this.dataChange.next(this.data);
+            console.log(this.data);
         }
     }
 

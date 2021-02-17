@@ -11,6 +11,7 @@ import { SnackbarStatusService } from '../../components/ui-elements/snackbar-sta
 import { IPageFirebaseModel } from '../../schemas/pages/page.model';
 import { AuthState } from '../auth/auth.state';
 import { searchLike } from '../../firebase/utils/search-like';
+import { Injectable } from '@angular/core';
 
 @State<IPageStateModel>({
     name: 'pagesState',
@@ -21,6 +22,7 @@ import { searchLike } from '../../firebase/utils/search-like';
         pageFilterByTitle: []
     }
 })
+@Injectable()
 export class PageState {
 
     private pages: PageFireStore;

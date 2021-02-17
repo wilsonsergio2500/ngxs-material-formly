@@ -53,20 +53,21 @@ import { tap } from 'rxjs/operators';
 
     hasChild = (_: number, _nodeData: NavigationItemFlatNode) =>  _nodeData.expandable;
 
-    hasNoContent = (_: number, _nodeData: NavigationItemFlatNode) => _nodeData.item === '';
+    hasNoContent = (_: number, _nodeData: NavigationItemFlatNode) => _nodeData.Label === '';
 
 
     /**
      * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
      */
     transformer = (node: NavigationItemNode, level: number) => {
+        console.log(node);
         const existingNode = this.nestedNodeMap.get(node);
-        const flatNode = existingNode && existingNode.item === node.item
+        const flatNode = existingNode && existingNode.Label === node.Label
             ? existingNode
             : new NavigationItemFlatNode();
-        flatNode.item = node.item;
+        flatNode.Label = node.Label;
         flatNode.level = level;
-        flatNode.expandable = !!node.children;
+        flatNode.expandable = !!node.children && !!node.children.length;
         this.flatNodeMap.set(flatNode, node);
         this.nestedNodeMap.set(node, flatNode);
         return flatNode;
@@ -154,13 +155,16 @@ import { tap } from 'rxjs/operators';
 
     /** Select the category so we can insert the new item. */
     addNewItem(node: NavigationItemFlatNode) {
+        console.log('node',node);
         const navItemNode = this.flatNodeMap.get(node);
         let parent = null;
         if (!navItemNode.children) {
             navItemNode.children = [];
             parent = this.getParentNode(node);
+            console.log('parent',parent);
         }
-        this._database.insertItem(navItemNode!, '');
+        const newItem: NavigationItemNode = { Label: '' };
+        this._database.insertItem(navItemNode!, newItem);
         setTimeout(() => this.refreshToggle(node, parent));
     }
 

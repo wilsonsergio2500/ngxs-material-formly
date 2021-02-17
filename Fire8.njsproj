@@ -208,8 +208,10 @@
     <Folder Include="src\app\modules\ng-dompurify\types\" />
     <Folder Include="src\app\modules\ng-dompurify\utils\" />
     <Folder Include="src\app\schemas\images\" />
+    <Folder Include="src\app\schemas\navigations\" />
     <Folder Include="src\app\xs-ng\media\" />
     <Folder Include="src\app\xs-ng\media\images-on-resizer\" />
+    <Folder Include="src\app\xs-ng\navigation\" />
     <Folder Include="src\app\xs-ng\pages\" />
     <Folder Include="src\app\full\admin\xs-ng\posts\" />
     <Folder Include="src\app\full\login\" />
@@ -387,11 +389,16 @@
     <TypeScriptCompile Include="src\app\modules\ng-dompurify\utils\validateStyles.ts" />
     <TypeScriptCompile Include="src\app\schemas\images\image-resizer.firebase.ts" />
     <TypeScriptCompile Include="src\app\schemas\images\image-resizer.model.ts" />
+    <TypeScriptCompile Include="src\app\schemas\navigations\navigation.firebase.ts" />
+    <TypeScriptCompile Include="src\app\schemas\navigations\navigation.model.ts" />
     <TypeScriptCompile Include="src\app\utils\string-helpers.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\media\images-on-resizer\images-on-resizer.actions.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\media\images-on-resizer\images-on-resizer.model.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\media\images-on-resizer\images-on-resizer.state.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\media\states.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\navigation\navigation.actions.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\navigation\navigation.model.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\navigation\navigation.state.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\pages\pages.actions.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\pages\pages.model.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\pages\pages.state.ts" />

@@ -13,8 +13,8 @@ import { PageState } from '../../../../xs-ng/pages/pages.state';
   })
 export class AdminNavigationListComponent implements OnInit {
 
-    pageRecords: () => Observable<IPageFirebaseModel[]>
-    form: NgTypeFormGroup<any>;
+    //pageRecords: () => Observable<IPageFirebaseModel[]>
+    //form: NgTypeFormGroup<any>;
 
     constructor(
         private store: Store,
@@ -24,11 +24,11 @@ export class AdminNavigationListComponent implements OnInit {
 
     ngOnInit() {
 
-        this.pageRecords = () => this.store.select(PageState.getAllPages);
+        //this.pageRecords = () => this.store.select(PageState.getAllPages);
 
-        this.form = this.formTypeBuilder.group({
-            pageFinder: [null]
-        });
+        //this.form = this.formTypeBuilder.group({
+        //    pageFinder: [null]
+        //});
 
     }
 
