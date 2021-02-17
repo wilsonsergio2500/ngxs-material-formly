@@ -6,6 +6,7 @@ import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NavigationBuilderDb } from './tree-navigation-builder.provider';
 import { tap } from 'rxjs/operators';
+import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
 
 @Component({
     selector: 'tree-navigation-builder',
@@ -180,6 +181,10 @@ import { tap } from 'rxjs/operators';
     saveNode(node: NavigationItemFlatNode, itemValue: string) {
         const nestedNode = this.flatNodeMap.get(node);
         this._database.updateItem(nestedNode!, itemValue);
+    }
+
+    onSaveNode($event: IPageNavigation) {
+        console.log($event);
     }
   
   } 

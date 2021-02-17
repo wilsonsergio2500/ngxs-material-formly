@@ -41,9 +41,9 @@
 
       </mat-form-field>
 
-      <div fxflex="20">
+      <div fxflex="20" class="form-element">
         <button mat-button color="primary" type="submit">Add</button>
-        <button mat-button color="warn" type="button">Cancel</button>
+        <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
       </div>
       <!--<mat-form-field *ngIf="displayValuePicker" [ngStyle.gt-sm]="{'padding-left.px': 10}" [fxFlex.gt-sm]="40">
         <input type="text" placeholder="Pick Value" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="option">

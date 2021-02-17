@@ -23,8 +23,8 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
     @Select(PageState.getPageFilterByTitle) pages$: Observable<IPageFirebaseModel[]>
     pageRecords: () => Observable<IPageFirebaseModel[]>
 
-    @Output() OnAdd = new EventEmitter<IPageNavigation>();
-    @Output() OnCancel = new EventEmitter<void>();
+    @Output() onAdd = new EventEmitter<IPageNavigation>();
+    @Output() onCancel = new EventEmitter<void>();
 
     constructor(
         private store: Store,
@@ -61,10 +61,15 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
 
     addNavItem() {
 
-        if (this.OnAdd) {
-            this.OnAdd.emit({ ...this.formGroup.value });
+        if (this.onAdd) {
+            this.onAdd.emit({ ...this.formGroup.value });
         }
-        //console.log('add item', this.formGroup.value);
+    }
+
+    cancel() {
+        if (this.onCancel) {
+            this.onCancel.emit();
+        }
     }
 
     get displayUrlEntry() {
