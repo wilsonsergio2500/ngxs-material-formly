@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NavigationItemNode } from './contracts/navigation-item';
+import { NavigationItemNode, NavigationItemDb } from './contracts/navigation-item';
 import { BehaviorSubject } from 'rxjs'
 
 const TREE_DATA = {
@@ -39,7 +39,7 @@ export class NavigationBuilderDb {
     initialize() {
         // Build the tree nodes from Json object. The result is a list of `TodoItemNode` with nested
         //     file node as children.
-        const data = this.buildFileTree(TREE_DATA, 0);
+        const data = this.buildFileTree(TREE_DATA.Reminders, 0);
 
         // Notify the change.
         this.dataChange.next(data);
@@ -49,44 +49,47 @@ export class NavigationBuilderDb {
      * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
      * The return value is the list of `TodoItemNode`.
      */
-    buildFileTree(obj: { [key: string]: any }, level: number): NavigationItemNode[] {
-        return obj.Reminders;
-        //return Object.keys(obj).reduce<NavigationItemNode[]>((accumulator, key) => {
-        //    const value = obj[key];
-        //    const node = new NavigationItemNode();
-        //    node.item = key;
+    buildFileTree(elements: NavigationItemDb[], level: number): NavigationItemNode[] {
 
-        //    if (value != null) {
-        //        if (typeof value === 'object') {
-        //            node.children = this.buildFileTree(value, level + 1);
-        //        } else {
-        //            node.item = value;
-        //        }
-        //    }
+        let counter = 1;
+        return elements.reduce((acc, item) => {
+            const node = new NavigationItemNode();
 
-        //    return accumulator.concat(node);
-        //}, []);
+            node.Label = item.Label;
+            node.Url = item.Url;
+            node.IsLabelOnly = false;
+            node.Level = level;
+            node.Idx = counter++;
+
+            if (item.children && item.children.length) {
+                node.children = this.buildFileTree(item.children, level + 1);
+            } else {
+                node.children = [];
+            }
+
+            return acc.concat(node);
+        }, []);
+
     }
-
-    /** Add an item to to-do list */
-    //insertItem(parent: NavigationItemNode, name: string) {
-    //    if (parent.children) {
-    //            parent.children.push({ item: name } as NavigationItemNode);
-    //        this.dataChange.next(this.data);
-    //        console.log(this.data);
-    //    }
-    //}
 
     insertItem(parent: NavigationItemNode, newItem: NavigationItemNode) {
         if (parent.children) {
-            parent.children.push({...newItem});
-            this.dataChange.next(this.data);
-            console.log(this.data);
+            parent.children.push({ ...newItem });
+            this.dataChanged();
+            //this.dataChange.next(this.data);
+            //console.log(this.data);
         }
     }
 
-    updateItem(node: NavigationItemNode, name: string) {
-        node.item = name;
+    //updateItem(node: NavigationItemNode) {
+    //    //node.item = name;
+    //    console.log(this.data);
+    //    this.dataChange.next(this.data);
+    //}
+
+    dataChanged() {
         this.dataChange.next(this.data);
     }
+
+    
 }

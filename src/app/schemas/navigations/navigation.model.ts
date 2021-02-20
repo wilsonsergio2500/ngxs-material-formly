@@ -4,4 +4,5 @@ export interface INavigationFirebaseModel extends IFireBaseEntity {
     label: string;
     url: string;
     children: INavigationFirebaseModel[]
+    IsLabelOnly: boolean;
 }

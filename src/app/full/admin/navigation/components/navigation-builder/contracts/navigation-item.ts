@@ -1,10 +1,22 @@
 export class NavigationItemNode {
-    children?: NavigationItemNode[];
-    //item: string;
 
+    children?: NavigationItemNode[];
     Label: string;
     Url?: string;
+    IsLabelOnly?: boolean;
+
+    Level?: number;
+    Idx?: number;
     
+}
+
+export class NavigationItemDb {
+
+    children?: NavigationItemNode[];
+    Label: string;
+    Url?: string;
+    IsLabelOnly?: boolean;
+
 }
 
 

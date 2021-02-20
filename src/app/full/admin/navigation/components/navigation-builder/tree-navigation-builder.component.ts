@@ -180,11 +180,30 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
     /** Save the node to database */
     saveNode(node: NavigationItemFlatNode, itemValue: string) {
         const nestedNode = this.flatNodeMap.get(node);
-        this._database.updateItem(nestedNode!, itemValue);
+        console.log(nestedNode);
+        //this._database.updateItem(nestedNode!, itemValue);
     }
 
-    onSaveNode($event: IPageNavigation) {
-        console.log($event);
+    onSaveNode($event: IPageNavigation, node: NavigationItemFlatNode) {
+
+        const nestedNode = this.flatNodeMap.get(node);
+
+        const { label : Label, pageFinder: Url, isLabelOnly : IsLabelOnly } = $event;
+
+        nestedNode.Label = Label;
+        nestedNode.Url = Url;
+        nestedNode.IsLabelOnly = IsLabelOnly
+        this._database.dataChanged();
+
+    }
+
+    onCancelAdd(node: NavigationItemFlatNode) {
+
+        const parent = this.getParentNode(node);
+        const parentNavItem = this.flatNodeMap.get(parent);
+        parentNavItem.children = [...parentNavItem.children.filter(g => g.Label != '')]
+        this._database.dataChanged();
+      
     }
   
   } 
