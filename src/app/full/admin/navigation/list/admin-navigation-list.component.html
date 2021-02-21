@@ -1,46 +1,60 @@
 <div fxLayout="column" fxFlex>
 
-
-
-  <h3>Navigation</h3>
-
-
-  <div fxLayout="column" fxFlex>
-
-    <div fxFlex class="panel-add-root">
-      <mat-accordion fxFlex>
-        <mat-expansion-panel [expanded]="forceExpand" (opened)="OnOpenPanel()">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <mat-icon>add</mat-icon>
-              <span class="panel-heading">Add</span>
-            </mat-panel-title>
-            <mat-panel-description>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-
-          <div fxLayout="row" fxFlex>
-
-            <navigation-page-entry (onAdd)="addTop($event)" (onCancel)="cancelTop()"></navigation-page-entry>
-
-          </div>
-
-
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
-
-
-
-    <div fxFlex>
-      <tree-navigation-builder>Loading</tree-navigation-builder>
-    </div>
-
-    <div fxFlex>
-      <button mat-button color="warn" (click)="onRemoveSelectedNodes()">Remove Nodes</button>
-    </div>
-
+  <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+    <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+    <span [ngStyle]="{'padding.px': 10}">Loading Navigation...</span>
   </div>
+
+  <ng-template #done>
+
+    <h3>Navigation</h3>
+
+    <div fxLayout="column" fxFlex>
+
+      <div fxFlex class="panel-add-root">
+        <mat-accordion fxFlex>
+          <mat-expansion-panel [expanded]="forceExpand" (opened)="OnOpenPanel()">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>add</mat-icon>
+                <span class="panel-heading">Add</span>
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div fxLayout="row" fxFlex>
+
+              <navigation-page-entry (onAdd)="addTop($event)" (onCancel)="cancelTop()"></navigation-page-entry>
+
+            </div>
+
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+
+
+      <div fxFlex>
+        <tree-navigation-builder>Loading</tree-navigation-builder>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end center" class="action-section">
+        <div class="action-button-container">
+          <button mat-raised-button color="primary" type="button" (click)="onSaveNavigations()">Save</button>
+        </div>
+        <div class="action-button-container">
+          <button mat-raised-button color="warn" (click)="onRemoveSelectedNodes()" type="button">Remove Selected Nodes</button>
+        </div>
+      </div>
+
+    </div>
+
+  </ng-template>
+
+
+  
 
 
 

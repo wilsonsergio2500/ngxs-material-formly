@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { NavigationItemNode, NavigationItemDb } from './contracts/navigation-item';
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, Subscription } from 'rxjs'
+import { Store } from '@ngxs/store';
+import { NavigationState } from '../../../../../xs-ng/navigation/navigation.state';
+import { tap } from 'rxjs/operators';
 
 const TREE_DATA = {
     Reminders: [
@@ -17,18 +20,29 @@ const TREE_DATA = {
 
 @Injectable()
 export class NavigationBuilderDb {
+
     dataChange = new BehaviorSubject<NavigationItemNode[]>([]);
-    root : NavigationItemDb[]
+    root: NavigationItemDb[]
+    private subscription: Subscription;
 
     get data(): NavigationItemNode[] { return this.dataChange.value; }
 
-    constructor() {
+    constructor(private store: Store) {
         this.initialize();
     }
 
     initialize() {
         // Build the tree nodes from Json object. The result is a list of `TodoItemNode` with nested
         //     file node as children.
+
+        this.subscription = this.store.selectOnce(NavigationState.getNavigationItem).pipe(
+            tap(navItems => {
+                console.log(navItems);
+            })
+        ).subscribe();
+
+        
+
         this.root = TREE_DATA.Reminders;
         const data = this.buildFileTree(this.root, 0);
 

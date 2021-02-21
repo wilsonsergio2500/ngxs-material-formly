@@ -1,14 +1,15 @@
 import { Store, State, Selector, StateContext, Action } from '@ngxs/store';
 import { INavigationStateModel } from './navigation.model';
-import { NavigationDoneAction, NavigationLoadingAction, NavigationGetElements } from './navigation.actions';
+import { NavigationLoadItemsAction, NavigationSetLoadingAsDoneAction, NavigationSetAsLoadingAction, NavigationCreateAction } from './navigation.actions';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { tap, timeout, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { FirebasePaginationInMemoryStateModel } from '../../firebase/types/firebase-pagination-inmemory';
 import { INavigationFirebaseModel } from '../../schemas/navigations/navigation.model';
 import { NavigationFireStore } from '../../schemas/navigations/navigation.firebase';
-import { Subscription } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
+import { AuthState } from '../auth/auth.state';
 
 
 @State<INavigationStateModel>({
@@ -22,14 +23,15 @@ import { SnackbarStatusService } from '../../components/ui-elements/snackbar-sta
  @Injectable()
 export class NavigationState {
 
-    private pages: NavigationFireStore;
+    private navigations: NavigationFireStore;
     private subscription: Subscription;
+    NAVIGATION_ROOT_DOC_ID = "naviation-root";
     constructor(
       private angularFireStore: AngularFirestore,
       private store: Store,
       private snackBarStatus: SnackbarStatusService
     ){
-      this.pages = new NavigationFireStore(angularFireStore);
+        this.navigations = new NavigationFireStore(angularFireStore);
     }
 
     @Selector()
@@ -55,36 +57,69 @@ export class NavigationState {
     static getAllPages(state: INavigationStateModel) {
         return state.paginationState.items;
     }
+    @Selector()
+    static getNavigationItem(state: INavigationStateModel) {
+        return state.paginationState.items;
+    }
 
     @Selector()
     static getCurrentPage(state: INavigationStateModel) {
         return state.current;
     }
 
-  @Action(NavigationDoneAction)
+  @Action(NavigationSetLoadingAsDoneAction)
   onDone(ctx: StateContext<INavigationStateModel>) {
-    ctx.patchState({
-      loading: false
-    });
-  }
-  @Action(NavigationLoadingAction)
-  onLoading(ctx: StateContext<INavigationStateModel>) {
-    ctx.patchState({
-      loading: true
-    });
-  }
+    ctx.patchState({ loading: false });
+    }
 
-  //@Action(NavigationGetElements)
-  //getElements(ctx: StateContext<INavigationStateModel>){
-  //  return ctx.dispatch(new NavigationLoading()).pipe(
-  //      mergeMap(() => this.httpClient.get(`${environment.api.target}name/items`)),
-  //      tap((records : any[]) => {
-  //          ctx.patchState({
-  //              records
-  //            });
-  //      }),
-  //      mergeMap(() => ctx.dispatch(new  NavigationDoneAction()))
-  //  )
-  //}
+  @Action(NavigationSetAsLoadingAction)
+  onLoading(ctx: StateContext<INavigationStateModel>) {
+    ctx.patchState({ loading: true });
+    }
+
+    @Action(NavigationCreateAction)
+    onCreateNavigation(ctx: StateContext<INavigationStateModel>, action: NavigationCreateAction) {
+        const { paginationState } = ctx.getState();
+        const hasAny = paginationState.items.length == 1;
+        //if (hasAny) {
+
+        //    return this.store.selectOnce(AuthState.getUser).pipe(
+        //        mergeMap((user) => {
+        //            const form = { ...action.request };
+        //            form.createDate = Date.now();
+        //            form.createdBy = user;
+        //            return from(this.navigations.create(form))
+        //        })
+        //    )
+        //}
+
+        return this.store.selectOnce(AuthState.getUser).pipe(
+            mergeMap((user) => {
+                const form = { ...action.request };
+                form.createDate = Date.now();
+                form.createdBy = user;
+                return from(this.navigations.createWithId(this.NAVIGATION_ROOT_DOC_ID, form))
+            }),
+            tap(() => {
+                this.snackBarStatus.OpenComplete('Page Succesfully Created');
+            })
+        );
+    }
+
+    @Action(NavigationLoadItemsAction)
+    onLoadItems(ctx: StateContext<INavigationStateModel>) {
+        const { paginationState } = ctx.getState();
+        const { orderByField, paginator } = paginationState;
+        if (!this.subscription) {
+            ctx.dispatch(new NavigationSetAsLoadingAction());
+            this.subscription = this.navigations.collection$(ref => ref.orderBy(orderByField, 'desc')).pipe(
+                tap(items => {
+                    const newPaginationState = { ...paginationState, items };
+                    ctx.patchState({ paginationState: newPaginationState });
+                }),
+                mergeMap(() => ctx.dispatch(new NavigationSetLoadingAsDoneAction()))
+            ).subscribe();
+        }
+    }
 
 }
