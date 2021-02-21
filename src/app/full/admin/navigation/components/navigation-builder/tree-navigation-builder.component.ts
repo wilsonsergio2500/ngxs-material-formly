@@ -36,6 +36,7 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
     checklistSelection = new SelectionModel<NavigationItemFlatNode>(true /* multiple */);
 
     constructor(private _database: NavigationBuilderDb, private zone: NgZone) {
+
         this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
         this.treeControl = new FlatTreeControl<NavigationItemFlatNode>(this.getLevel, this.isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
@@ -92,6 +93,12 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
 
     /** Toggle the to-do item selection. Select/deselect all the descendants node */
     todoItemSelectionToggle(node: NavigationItemFlatNode): void {
+
+        const selected = this.checklistSelection.isSelected(node);
+        const navItem = this.flatNodeMap.get(node);
+        navItem.Selected = (selected) ? false : true;
+
+
         this.checklistSelection.toggle(node);
         const descendants = this.treeControl.getDescendants(node);
         this.checklistSelection.isSelected(node)
@@ -103,12 +110,27 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
             this.checklistSelection.isSelected(child)
         );
         this.checkAllParentsSelection(node);
+        this._database.dataChanged();
+    }
+
+    onSelectNode(node: NavigationItemFlatNode) {
+
+        const selected = this.checklistSelection.isSelected(node);
+        const navItem = this.flatNodeMap.get(node);
+        navItem.Selected = (selected) ? false : true;
+
+        this._database.dataChanged();
+
     }
 
     /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
     todoLeafItemSelectionToggle(node: NavigationItemFlatNode): void {
+        const selected = this.checklistSelection.isSelected(node);
+        const navItem = this.flatNodeMap.get(node);
+
         this.checklistSelection.toggle(node);
         this.checkAllParentsSelection(node);
+        this._database.dataChanged();
     }
 
     /* Checks all the parents when a leaf node is selected/unselected */
@@ -122,6 +144,7 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
 
     /** Check root node checked state and change it accordingly */
     checkRootNodeSelection(node: NavigationItemFlatNode): void {
+        //console.log('here');
         const nodeSelected = this.checklistSelection.isSelected(node);
         const descendants = this.treeControl.getDescendants(node);
         const descAllSelected = descendants.every(child =>
@@ -161,15 +184,15 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
     /** Select the category so we can insert the new item. */
     addNewItem(node: NavigationItemFlatNode) {
         console.log('node',node);
-        const navItemNode = this.flatNodeMap.get(node);
+        const parentNavItemNode = this.flatNodeMap.get(node);
         let parent = null;
-        if (!navItemNode.children) {
-            navItemNode.children = [];
+        if (!parentNavItemNode.children) {
+            parentNavItemNode.children = [];
             parent = this.getParentNode(node);
             console.log('parent',parent);
         }
-        const newItem: NavigationItemNode = { Label: '' };
-        this._database.insertItem(navItemNode!, newItem);
+        const newItem: NavigationItemNode = { Label: '', Level : parentNavItemNode.Level+1 };
+        this._database.insertItem(parentNavItemNode!, newItem);
         setTimeout(() => this.refreshToggle(node, parent));
     }
 
@@ -181,12 +204,6 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
         }
     }
 
-    /** Save the node to database */
-    //saveNode(node: NavigationItemFlatNode, itemValue: string) {
-    //    const nestedNode = this.flatNodeMap.get(node);
-    //    console.log(nestedNode);
-    //    //this._database.updateItem(nestedNode!, itemValue);
-    //}
 
     onSaveNode($event: IPageNavigation, node: NavigationItemFlatNode) {
 
@@ -196,7 +213,8 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
 
         nestedNode.Label = Label;
         nestedNode.Url = Url;
-        nestedNode.IsLabelOnly = IsLabelOnly
+        nestedNode.IsLabelOnly = IsLabelOnly;
+
         this._database.dataChanged();
 
     }

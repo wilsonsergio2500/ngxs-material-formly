@@ -32,55 +32,5 @@
 
   </div>
 
-  <!--<div fxFlex fxLayout="column">
-
-    <mat-accordion fxFlex>
-      <mat-expansion-panel [expanded]="forceExpand" (opened)="OnOpenPanel()">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <mat-icon>add</mat-icon>
-            <span class="panel-heading">Add</span>
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <div fxLayout="row" fxFlex>
-
-          <form [formGroup]="formGroup" (ngSubmit)="addNavItem()" fxFlex fxLayout="column" fxLayout.gt-sm="row">
-
-            <div fxFlex="20" [ngStyle.gt-sm]="{'padding.px': 25}">
-              <mat-slide-toggle formControlName="isLabelOnly">Is Label</mat-slide-toggle>
-            </div>
-
-            <mat-form-field fxFlex="30" class="form-element">
-              <input type="text" placeholder="Enter Label" aria-label="Label" matInput formControlName="label" autocomplete="off">
-            </mat-form-field>
-
-
-            <mat-form-field *ngIf="displayUrlEntry" fxFlex="30" class="form-element">
-
-              <search-grid placeholder="Search Page" [recordsFunc]="pageRecords" formControlName="pageFinder" TextField="url" ValueField="url">
-                <search-grid-column DisplayColumn="title" HeaderText="Title"></search-grid-column>
-                <search-grid-column DisplayColumn="url" HeaderText="Path"></search-grid-column>
-              </search-grid>
-
-            </mat-form-field>
-
-            <div fxflex="20" class="form-element">
-              <button mat-button color="primary" type="submit">Add</button>
-              <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
-            </div>
-
-          </form>
-
-        </div>
-
-
-      </mat-expansion-panel>
-    </mat-accordion>
-
-  </div>-->
-
 
 </div>

@@ -69,6 +69,9 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
 
         const value = { isLabelOnly: false, label: null, pageFinder: null };
         this.formGroup.patchValue(value);
+
+        this.formGroup.markAsPristine();
+        this.formGroup.markAsUntouched();
     }
 
     cancel() {

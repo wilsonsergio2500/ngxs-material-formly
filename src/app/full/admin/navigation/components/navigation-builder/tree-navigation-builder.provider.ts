@@ -4,7 +4,11 @@ import { BehaviorSubject } from 'rxjs'
 
 const TREE_DATA = {
     Reminders: [
-        { Label: 'Cook dinner', Url: '', children: [] },
+        {
+            Label: 'Cook dinner', Url: '', children: [
+                { Label: "Apple", Url: "", children: [] },
+            ]
+        },
         { Label: 'Read the Material Design spec', Url: '', children: [] },
         { Label: 'Upgrade Application to Angular', Url: '', children: [] }
     ]
@@ -72,6 +76,22 @@ export class NavigationBuilderDb {
         this.dataChanged();
         
     }
+
+    removeSelected() {
+        console.log(this.data);
+    }
+
+    //removeSelectedNavs(nodes: NavigationItemNode[]) {
+
+    //    nodes = nodes.filter(e => e.Selected == true);
+    //    nodes.forEach(node => {
+    //        if (node.children && node.children.length) {
+    //            node.children = this.removeSelectedNavs(node.children);
+    //        }
+    //    })
+
+    //    return [...nodes];
+    //}
 
 
     dataChanged() {

@@ -46,14 +46,16 @@ export class AdminNavigationListComponent implements OnInit {
 
     onRemoveSelectedNodes() {
 
+        //console.log('entery');
         const onConfirmationClick = this.confirmationDialog.OnConfirm('Are you sure you would like to remove the selected Nodes').pipe(
             tap(_ => {
+                this.navigationDb.removeSelected();
                 // remove nodes
             })
         );
 
         const confirmationSubscription = onConfirmationClick.subscribe();
-        confirmationSubscription.unsubscribe();
+        //confirmationSubscription.unsubscribe();
 
 
     }
