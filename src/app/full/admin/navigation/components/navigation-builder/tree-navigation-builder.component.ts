@@ -128,8 +128,12 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
             this.checklistSelection.isSelected(child)
         );
         if (nodeSelected && !descAllSelected) {
+            const navItem = this.flatNodeMap.get(node);
+            console.log(navItem);
             this.checklistSelection.deselect(node);
         } else if (!nodeSelected && descAllSelected) {
+            const navItem = this.flatNodeMap.get(node);
+            console.log(navItem);
             this.checklistSelection.select(node);
         }
     }

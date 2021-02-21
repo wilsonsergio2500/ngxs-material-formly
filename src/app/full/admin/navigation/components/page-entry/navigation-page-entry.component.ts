@@ -22,7 +22,6 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
     filter$: Subscription;
     @Select(PageState.getPageFilterByTitle) pages$: Observable<IPageFirebaseModel[]>;
     pageRecords: () => Observable<IPageFirebaseModel[]>;
-    forceExpand: boolean = false;
 
     @Output() onAdd = new EventEmitter<IPageNavigation>();
     @Output() onCancel = new EventEmitter<void>();
@@ -75,7 +74,6 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
     cancel() {
         if (this.onCancel) {
             this.emptyForm();
-            this.forceExpand = false;
             this.onCancel.emit();
         }
     }
@@ -89,8 +87,6 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
             this.filter$.unsubscribe();
         }
     }
-    OnOpenPanel() {
-        this.forceExpand = true;
-    }
+  
   
   } 

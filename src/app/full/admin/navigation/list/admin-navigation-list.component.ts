@@ -17,8 +17,7 @@ import { tap } from 'rxjs/operators';
   })
 export class AdminNavigationListComponent implements OnInit {
 
-    //pageRecords: () => Observable<IPageFirebaseModel[]>
-    //form: NgTypeFormGroup<any>;
+    forceExpand = false;
 
     constructor(
         private store: Store,
@@ -42,6 +41,7 @@ export class AdminNavigationListComponent implements OnInit {
     }
 
     cancelTop() {
+        this.forceExpand = false;
     }
 
     onRemoveSelectedNodes() {
@@ -56,6 +56,9 @@ export class AdminNavigationListComponent implements OnInit {
         confirmationSubscription.unsubscribe();
 
 
+    }
+    OnOpenPanel() {
+        this.forceExpand = true;
     }
 
 
