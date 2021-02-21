@@ -7,7 +7,8 @@ export class NavigationItemNode {
 
     Level?: number;
     Idx?: number;
-    
+
+    Selected?: boolean;
 }
 
 export class NavigationItemDb {

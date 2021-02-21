@@ -20,15 +20,16 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
 
     formGroup: NgTypeFormGroup<IPageNavigation>;
     filter$: Subscription;
-    @Select(PageState.getPageFilterByTitle) pages$: Observable<IPageFirebaseModel[]>
-    pageRecords: () => Observable<IPageFirebaseModel[]>
+    @Select(PageState.getPageFilterByTitle) pages$: Observable<IPageFirebaseModel[]>;
+    pageRecords: () => Observable<IPageFirebaseModel[]>;
+    forceExpand: boolean = false;
 
     @Output() onAdd = new EventEmitter<IPageNavigation>();
     @Output() onCancel = new EventEmitter<void>();
 
     constructor(
         private store: Store,
-        private formTypeBuilder: FormTypeBuilder
+        private formTypeBuilder: FormTypeBuilder,
     ) {
         this.createForm();
     }
@@ -47,9 +48,7 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
             }]
         })
 
-        const initial = { isLabelOnly: false, label: null, pageFinder: null };
-
-        this.formGroup.patchValue(initial);
+        this.emptyForm();
         
     }
 
@@ -64,10 +63,19 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
         if (this.onAdd) {
             this.onAdd.emit({ ...this.formGroup.value });
         }
+        setTimeout(() => this.emptyForm())
+    }
+
+    emptyForm() {
+
+        const value = { isLabelOnly: false, label: null, pageFinder: null };
+        this.formGroup.patchValue(value);
     }
 
     cancel() {
         if (this.onCancel) {
+            this.emptyForm();
+            this.forceExpand = false;
             this.onCancel.emit();
         }
     }
@@ -80,6 +88,9 @@ import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
         if (this.filter$) {
             this.filter$.unsubscribe();
         }
+    }
+    OnOpenPanel() {
+        this.forceExpand = true;
     }
   
   } 

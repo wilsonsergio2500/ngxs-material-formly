@@ -2,7 +2,7 @@
 
 
 
-  Form Naviation Page
+  <h3>Navigation</h3>
 
   <!--<form [formGroup]="form">
 
@@ -13,9 +13,24 @@
 
   </form>-->
 
-  <navigation-page-entry></navigation-page-entry>
+  <div fxLayout="column" fxFlex>
 
-  <tree-navigation-builder>Loading</tree-navigation-builder>
+    <div fxFlex>
+      <navigation-page-entry (onAdd)="addTop($event)" (onCancel)="cancelTop()"></navigation-page-entry>
+    </div>
+
+    <div fxFlex>
+      <tree-navigation-builder>Loading</tree-navigation-builder>
+    </div>
+
+    <div fxFlex>
+      <button mat-button color="warn" (click)="onRemoveSelectedNodes()">Remove Nodes</button>
+    </div>
+
+  </div>
+
+
+
 
   <!--<page-finder></page-finder>-->
   <!--

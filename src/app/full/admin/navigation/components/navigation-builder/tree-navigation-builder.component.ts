@@ -61,7 +61,7 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
      * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
      */
     transformer = (node: NavigationItemNode, level: number) => {
-        console.log(node);
+        //console.log(node);
         const existingNode = this.nestedNodeMap.get(node);
         const flatNode = existingNode && existingNode.Label === node.Label
             ? existingNode
@@ -178,11 +178,11 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
     }
 
     /** Save the node to database */
-    saveNode(node: NavigationItemFlatNode, itemValue: string) {
-        const nestedNode = this.flatNodeMap.get(node);
-        console.log(nestedNode);
-        //this._database.updateItem(nestedNode!, itemValue);
-    }
+    //saveNode(node: NavigationItemFlatNode, itemValue: string) {
+    //    const nestedNode = this.flatNodeMap.get(node);
+    //    console.log(nestedNode);
+    //    //this._database.updateItem(nestedNode!, itemValue);
+    //}
 
     onSaveNode($event: IPageNavigation, node: NavigationItemFlatNode) {
 
@@ -205,5 +205,7 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
         this._database.dataChanged();
       
     }
+
+    
   
   } 

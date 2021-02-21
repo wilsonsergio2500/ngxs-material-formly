@@ -1,35 +1,17 @@
 <div fxLayout="column" fxFlex>
 
-  <div fxLayout="row" fxFlex>
+
+  <!--<div fxLayout="row" fxFlex>
 
     <form [formGroup]="formGroup" (ngSubmit)="addNavItem()" fxFlex fxLayout="column" fxLayout.gt-sm="row">
 
-      <div fxFlex="20" [ngStyle.gt-sm]="{'padding.px': 25}" >
+      <div fxFlex="20" [ngStyle.gt-sm]="{'padding.px': 25}">
         <mat-slide-toggle formControlName="isLabelOnly">Is Label</mat-slide-toggle>
       </div>
 
       <mat-form-field fxFlex="30" class="form-element">
         <input type="text" placeholder="Enter Label" aria-label="Label" matInput formControlName="label" autocomplete="off">
       </mat-form-field>
-      <!--<mat-form-field *ngIf="displayUrlEntry" fxFlex="50" class="form-element">
-        <input type="text" placeholder="Find Title" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="title">
-        <mat-hint align="start"><strong>Search activated after 3 characters</strong> </mat-hint>
-        <mat-error *ngIf="FilterForm.controls['option'].hasError('required')">
-          A selection is <strong>required</strong>
-        </mat-error>
-        <mat-error *ngIf="FilterForm.controls['option'].hasError('notFound')">
-          Selection <strong>Not Found</strong>
-        </mat-error>
-
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <cdk-virtual-scroll-viewport itemSize="50" class="autocomplete-virtual-scroll-viewport" minBufferPx="240" maxBufferPx="480">
-            <mat-option *cdkVirtualFor="let option of pages$ | async" [value]="option">
-              {{option.url}}
-            </mat-option>
-          </cdk-virtual-scroll-viewport>
-        </mat-autocomplete>
-
-      </mat-form-field>-->
 
 
       <mat-form-field *ngIf="displayUrlEntry" fxFlex="30" class="form-element">
@@ -45,28 +27,58 @@
         <button mat-button color="primary" type="submit">Add</button>
         <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
       </div>
-      <!--<mat-form-field *ngIf="displayValuePicker" [ngStyle.gt-sm]="{'padding-left.px': 10}" [fxFlex.gt-sm]="40">
-        <input type="text" placeholder="Pick Value" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="option">
-        <mat-hint align="start"><strong>Search activated after 3 characters</strong> </mat-hint>
-        <mat-error *ngIf="FilterForm.controls['option'].hasError('required')">
-          A selection is <strong>required</strong>
-        </mat-error>
-        <mat-error *ngIf="FilterForm.controls['option'].hasError('notFound')">
-          Selection <strong>Not Found</strong>
-        </mat-error>
-
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <cdk-virtual-scroll-viewport itemSize="50" class="autocomplete-virtual-scroll-viewport" minBufferPx="240" maxBufferPx="480">
-            <mat-option *cdkVirtualFor="let option of columnOptions" [value]="option">
-              {{option}}
-            </mat-option>
-          </cdk-virtual-scroll-viewport>
-        </mat-autocomplete>
-
-      </mat-form-field>-->
-
 
     </form>
+
+  </div>-->
+
+  <div fxFlex fxLayout="column">
+
+    <mat-accordion fxFlex>
+      <mat-expansion-panel [expanded]="forceExpand" (opened)="OnOpenPanel()">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>add</mat-icon>
+            <span class="panel-heading">Add</span>
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxLayout="row" fxFlex>
+
+          <form [formGroup]="formGroup" (ngSubmit)="addNavItem()" fxFlex fxLayout="column" fxLayout.gt-sm="row">
+
+            <div fxFlex="20" [ngStyle.gt-sm]="{'padding.px': 25}">
+              <mat-slide-toggle formControlName="isLabelOnly">Is Label</mat-slide-toggle>
+            </div>
+
+            <mat-form-field fxFlex="30" class="form-element">
+              <input type="text" placeholder="Enter Label" aria-label="Label" matInput formControlName="label" autocomplete="off">
+            </mat-form-field>
+
+
+            <mat-form-field *ngIf="displayUrlEntry" fxFlex="30" class="form-element">
+
+              <search-grid placeholder="Search Page" [recordsFunc]="pageRecords" formControlName="pageFinder" TextField="url" ValueField="url">
+                <search-grid-column DisplayColumn="title" HeaderText="Title"></search-grid-column>
+                <search-grid-column DisplayColumn="url" HeaderText="Path"></search-grid-column>
+              </search-grid>
+
+            </mat-form-field>
+
+            <div fxflex="20" class="form-element">
+              <button mat-button color="primary" type="submit">Add</button>
+              <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
+            </div>
+
+          </form>
+
+        </div>
+
+
+      </mat-expansion-panel>
+    </mat-accordion>
 
   </div>
 

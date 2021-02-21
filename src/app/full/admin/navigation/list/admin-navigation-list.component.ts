@@ -5,6 +5,10 @@ import { NgTypeFormGroup } from '../../../../modules/form-type-builder/form-type
 import { Store } from '@ngxs/store';
 import { FormTypeBuilder } from '../../../../modules/form-type-builder/form-type-builder.service';
 import { PageState } from '../../../../xs-ng/pages/pages.state';
+import { NavigationBuilderDb } from '../components/navigation-builder/tree-navigation-builder.provider';
+import { IPageNavigation } from '../components/page-entry/navigation-page-entry.contract';
+import { ConfirmationDialogService } from '../../../../components/ui-elements/confirmation-dialog/confirmation-dialog.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'admin-navigation-list',
@@ -18,17 +22,39 @@ export class AdminNavigationListComponent implements OnInit {
 
     constructor(
         private store: Store,
-        private formTypeBuilder: FormTypeBuilder
+        private formTypeBuilder: FormTypeBuilder,
+        private navigationDb: NavigationBuilderDb,
+        private confirmationDialog: ConfirmationDialogService
     ) {
     }
 
     ngOnInit() {
 
-        //this.pageRecords = () => this.store.select(PageState.getAllPages);
 
-        //this.form = this.formTypeBuilder.group({
-        //    pageFinder: [null]
-        //});
+    }
+
+    addTop($event: IPageNavigation) {
+
+        const { label: Label, pageFinder: Url, isLabelOnly: IsLabelOnly } = $event;
+        const newItem = { Label, Url, IsLabelOnly };
+        console.log(newItem);
+        this.navigationDb.insertToRoot(newItem);
+    }
+
+    cancelTop() {
+    }
+
+    onRemoveSelectedNodes() {
+
+        const onConfirmationClick = this.confirmationDialog.OnConfirm('Are you sure you would like to remove the selected Nodes').pipe(
+            tap(_ => {
+                // remove nodes
+            })
+        );
+
+        const confirmationSubscription = onConfirmationClick.subscribe();
+        confirmationSubscription.unsubscribe();
+
 
     }
 
