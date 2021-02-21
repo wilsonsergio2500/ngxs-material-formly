@@ -78,20 +78,19 @@ export class NavigationBuilderDb {
     }
 
     removeSelected() {
-        console.log(this.data);
+        const data = this.removeSelectedNavs(this.data);
+        this.dataChange.next(data);
     }
 
-    //removeSelectedNavs(nodes: NavigationItemNode[]) {
-
-    //    nodes = nodes.filter(e => e.Selected == true);
-    //    nodes.forEach(node => {
-    //        if (node.children && node.children.length) {
-    //            node.children = this.removeSelectedNavs(node.children);
-    //        }
-    //    })
-
-    //    return [...nodes];
-    //}
+    removeSelectedNavs(nodes: NavigationItemNode[]) {
+        nodes = nodes.filter(e => e.Selected == false);
+        nodes.forEach(node => {
+            if (node.children && node.children.length) {
+               node.children =  this.removeSelectedNavs(node.children);
+            }
+        });
+        return [...nodes];
+    }
 
 
     dataChanged() {
