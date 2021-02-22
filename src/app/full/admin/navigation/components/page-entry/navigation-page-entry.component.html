@@ -3,7 +3,7 @@
 
   <div fxLayout="row" fxFlex>
 
-    <form [formGroup]="formGroup" (ngSubmit)="addNavItem()" fxFlex fxLayout="column" fxLayout.gt-sm="row">
+    <form [formGroup]="formGroup" (ngSubmit)="addNavItem(f)" fxFlex fxLayout="column" fxLayout.gt-sm="row" #f="ngForm">
 
       <div fxFlex="20" [ngStyle.gt-sm]="{'padding.px': 25}">
         <mat-slide-toggle formControlName="isLabelOnly">Is Label</mat-slide-toggle>
@@ -14,7 +14,7 @@
       </mat-form-field>
 
 
-      <mat-form-field *ngIf="displayUrlEntry" fxFlex="30" class="form-element">
+      <mat-form-field [hidden]="!displayUrlEntry" fxFlex="30" class="form-element">
 
         <search-grid placeholder="Search Page" [recordsFunc]="pageRecords" formControlName="pageFinder" TextField="url" ValueField="url">
           <search-grid-column DisplayColumn="title" HeaderText="Title"></search-grid-column>
@@ -24,7 +24,7 @@
       </mat-form-field>
 
       <div fxflex="20" class="form-element">
-        <button mat-button color="primary" type="submit">Add</button>
+        <button mat-button color="primary" type="submit" [disabled]="formGroup.invalid">Add</button>
         <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
       </div>
 

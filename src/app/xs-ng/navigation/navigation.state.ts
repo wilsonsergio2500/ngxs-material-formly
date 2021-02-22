@@ -80,18 +80,6 @@ export class NavigationState {
     @Action(NavigationCreateAction)
     onCreateNavigation(ctx: StateContext<INavigationStateModel>, action: NavigationCreateAction) {
         const { paginationState } = ctx.getState();
-        const hasAny = paginationState.items.length == 1;
-        //if (hasAny) {
-
-        //    return this.store.selectOnce(AuthState.getUser).pipe(
-        //        mergeMap((user) => {
-        //            const form = { ...action.request };
-        //            form.createDate = Date.now();
-        //            form.createdBy = user;
-        //            return from(this.navigations.create(form))
-        //        })
-        //    )
-        //}
 
         return this.store.selectOnce(AuthState.getUser).pipe(
             mergeMap((user) => {
@@ -101,7 +89,7 @@ export class NavigationState {
                 return from(this.navigations.createWithId(this.NAVIGATION_ROOT_DOC_ID, form))
             }),
             tap(() => {
-                this.snackBarStatus.OpenComplete('Page Succesfully Created');
+                this.snackBarStatus.OpenComplete('Navigation Updated Succesfully');
             })
         );
     }
@@ -109,7 +97,7 @@ export class NavigationState {
     @Action(NavigationLoadItemsAction)
     onLoadItems(ctx: StateContext<INavigationStateModel>) {
         const { paginationState } = ctx.getState();
-        const { orderByField, paginator } = paginationState;
+        const { orderByField } = paginationState;
         if (!this.subscription) {
             ctx.dispatch(new NavigationSetAsLoadingAction());
             this.subscription = this.navigations.collection$(ref => ref.orderBy(orderByField, 'desc')).pipe(

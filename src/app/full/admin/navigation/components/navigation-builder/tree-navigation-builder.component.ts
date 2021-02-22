@@ -191,7 +191,7 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
             parent = this.getParentNode(node);
             console.log('parent',parent);
         }
-        const newItem: NavigationItemNode = { Label: '', Level : parentNavItemNode.Level+1 };
+        const newItem: NavigationItemNode = { Label: '', Level : parentNavItemNode.Level+1, children: [] };
         this._database.insertItem(parentNavItemNode!, newItem);
         setTimeout(() => this.refreshToggle(node, parent));
     }

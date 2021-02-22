@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { NavigationItemNode, NavigationItemDb } from './contracts/navigation-item';
-import { BehaviorSubject, Subscription } from 'rxjs'
-import { Store } from '@ngxs/store';
+import { BehaviorSubject, Subscription, Observable } from 'rxjs'
+import { Store, Select } from '@ngxs/store';
 import { NavigationState } from '../../../../../xs-ng/navigation/navigation.state';
 import { tap } from 'rxjs/operators';
+import { INavigationFirebaseModel } from '../../../../../schemas/navigations/navigation.model';
 
 const TREE_DATA = {
     Reminders: [
@@ -25,6 +26,7 @@ export class NavigationBuilderDb {
     root: NavigationItemDb[]
     private subscription: Subscription;
 
+    @Select(NavigationState.getNavigationItem) navigations$: Observable<INavigationFirebaseModel[]>
     get data(): NavigationItemNode[] { return this.dataChange.value; }
 
     constructor(private store: Store) {
@@ -34,10 +36,13 @@ export class NavigationBuilderDb {
     initialize() {
         // Build the tree nodes from Json object. The result is a list of `TodoItemNode` with nested
         //     file node as children.
+        
+        this.subscription = this.navigations$.pipe(
+            tap((navItems) => {
+                if (navItems.length) {
+                    console.log(navItems)
 
-        this.subscription = this.store.selectOnce(NavigationState.getNavigationItem).pipe(
-            tap(navItems => {
-                console.log(navItems);
+                }
             })
         ).subscribe();
 

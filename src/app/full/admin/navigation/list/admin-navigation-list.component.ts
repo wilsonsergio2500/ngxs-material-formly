@@ -42,8 +42,7 @@ export class AdminNavigationListComponent implements OnInit, OnDestroy {
     addTop($event: IPageNavigation) {
 
         const { label: Label, pageFinder: Url, isLabelOnly: IsLabelOnly } = $event;
-        const newItem = { Label, Url, IsLabelOnly };
-        console.log(newItem);
+        const newItem = { Label, Url, IsLabelOnly, children:[]  };
         this.navigationDb.insertToRoot(newItem);
     }
 
