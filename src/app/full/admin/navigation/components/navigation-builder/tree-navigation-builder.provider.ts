@@ -4,7 +4,7 @@ import { BehaviorSubject, Subscription, Observable } from 'rxjs'
 import { Store, Select } from '@ngxs/store';
 import { NavigationState } from '../../../../../xs-ng/navigation/navigation.state';
 import { tap } from 'rxjs/operators';
-import { INavigationFirebaseModel } from '../../../../../schemas/navigations/navigation.model';
+import { INavigationFirebaseModel, INavigationModel } from '../../../../../schemas/navigations/navigation.model';
 
 const TREE_DATA = {
     Reminders: [
@@ -23,11 +23,11 @@ const TREE_DATA = {
 export class NavigationBuilderDb {
 
     dataChange = new BehaviorSubject<NavigationItemNode[]>([]);
-    root: NavigationItemDb[]
     private subscription: Subscription;
 
     @Select(NavigationState.getNavigationItem) navigations$: Observable<INavigationFirebaseModel[]>
     get data(): NavigationItemNode[] { return this.dataChange.value; }
+    get hasAnyRecords(): boolean { return this.dataChange.value.length > 0; }
 
     constructor(private store: Store) {
         this.initialize();
@@ -40,7 +40,14 @@ export class NavigationBuilderDb {
         this.subscription = this.navigations$.pipe(
             tap((navItems) => {
                 if (navItems.length) {
+
+                    const rec = navItems[0];
+                    const { navigationRoot } = rec;
+
                     console.log(navItems)
+
+                    const data = this.buildFileTree(navigationRoot, 0);
+                    this.dataChange.next(data);
 
                 }
             })
@@ -48,18 +55,16 @@ export class NavigationBuilderDb {
 
         
 
-        this.root = TREE_DATA.Reminders;
-        const data = this.buildFileTree(this.root, 0);
-
-        // Notify the change.
-        this.dataChange.next(data);
+        //this.root = TREE_DATA.Reminders;
+        //const data = this.buildFileTree(this.root, 0);
+        //this.dataChange.next(data);
     }
 
     /**
      * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
      * The return value is the list of `TodoItemNode`.
      */
-    buildFileTree(elements: NavigationItemDb[], level: number): NavigationItemNode[] {
+    buildFileTree(elements: INavigationModel[], level: number): NavigationItemNode[] {
 
         let counter = 1;
         return elements.reduce((acc, item) => {

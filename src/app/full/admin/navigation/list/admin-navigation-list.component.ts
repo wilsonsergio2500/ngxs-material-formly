@@ -89,11 +89,11 @@ export class AdminNavigationListComponent implements OnInit, OnDestroy {
 
         nodes.forEach(node => {
 
-            let { Url : url, Label: label, IsLabelOnly : isLabelOnly, children } = node;
+            let { Url , Label, IsLabelOnly, children } = node;
 
             const model : INavigationModel = {
-                url, label,
-                isLabelOnly,
+                Url, Label,
+                IsLabelOnly,
                 children: children.length ? this.normalizeNavigation(children) : []
                 
             }
@@ -103,6 +103,10 @@ export class AdminNavigationListComponent implements OnInit, OnDestroy {
 
         return items;
 
+    }
+
+    hasAnyRecords() {
+        return this.navigationDb.hasAnyRecords;
     }
 
 
