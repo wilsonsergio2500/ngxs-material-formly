@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Store, Select } from '@ngxs/store';
-import { FormTypeBuilder } from '../../../../modules/form-type-builder/form-type-builder.service';
 import { NavigationBuilderDb } from '../components/navigation-builder/tree-navigation-builder.provider';
 import { IPageNavigation } from '../components/page-entry/navigation-page-entry.contract';
 import { ConfirmationDialogService } from '../../../../components/ui-elements/confirmation-dialog/confirmation-dialog.service';

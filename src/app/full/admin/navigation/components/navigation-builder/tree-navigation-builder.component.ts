@@ -90,6 +90,18 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
         return result && !this.descendantsAllSelected(node);
     }
 
+    getHasSelection(): boolean {
+
+        for (let map of this.flatNodeMap) {
+            const nodeItem = map[1];
+            if (nodeItem.Selected) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /** Toggle the to-do item selection. Select/deselect all the descendants node */
     todoItemSelectionToggle(node: NavigationItemFlatNode): void {
 
@@ -110,22 +122,12 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
         );
         this.checkAllParentsSelection(node);
         this.navigationDb.dataChanged();
+        this.navigationDb.toggleAsHasSelected(this.getHasSelection());
     }
 
-    onSelectNode(node: NavigationItemFlatNode) {
-
-        const selected = this.checklistSelection.isSelected(node);
-        const navItem = this.flatNodeMap.get(node);
-        navItem.Selected = (selected) ? false : true;
-
-        this.navigationDb.dataChanged();
-
-    }
 
     /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
     todoLeafItemSelectionToggle(node: NavigationItemFlatNode): void {
-        //const selected = this.checklistSelection.isSelected(node);
-        //const navItem = this.flatNodeMap.get(node);
 
         this.checklistSelection.toggle(node);
         this.checkAllParentsSelection(node);
@@ -149,10 +151,8 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
             this.checklistSelection.isSelected(child)
         );
         if (nodeSelected && !descAllSelected) {
-            const navItem = this.flatNodeMap.get(node);
             this.checklistSelection.deselect(node);
         } else if (!nodeSelected && descAllSelected) {
-            const navItem = this.flatNodeMap.get(node);
             this.checklistSelection.select(node);
         }
     }

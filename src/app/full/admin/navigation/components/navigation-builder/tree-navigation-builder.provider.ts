@@ -23,12 +23,13 @@ const TREE_DATA = {
 export class NavigationBuilderDb {
 
     dataChange = new BehaviorSubject<NavigationItemNode[]>([]);
+    private dataHasSelection = new BehaviorSubject<boolean>(false);
     private subscription: Subscription;
 
     @Select(NavigationState.getNavigationItem) navigations$: Observable<INavigationFirebaseModel[]>
     get data(): NavigationItemNode[] { return this.dataChange.value; }
     get hasAnyRecords(): boolean { return this.dataChange.value.length > 0; }
-    get HasAnySelected(): boolean { return this.hasAnyRecords && this.dataChange.value.some(g => g.Selected == true); }
+    get HasAnySelected(): boolean { return this.hasAnyRecords && this.dataHasSelection.value; }
 
     constructor(private store: Store) {
         this.initialize();
@@ -47,7 +48,7 @@ export class NavigationBuilderDb {
 
                     const data = this.buildFileTree(navigationRoot, 0);
                     this.dataChange.next(data);
-
+                    this.dataHasSelection.next(false);
                 }
             })
         ).subscribe();
@@ -103,6 +104,7 @@ export class NavigationBuilderDb {
     removeSelected() {
         const data = this.removeSelectedNavs(this.data);
         this.dataChange.next(data);
+        this.dataHasSelection.next(false);
     }
 
     removeSelectedNavs(nodes: NavigationItemNode[]) {
@@ -118,6 +120,10 @@ export class NavigationBuilderDb {
 
     dataChanged() {
         this.dataChange.next(this.data);
+    }
+
+    toggleAsHasSelected(hasSelected: boolean) {
+        this.dataHasSelection.next(hasSelected);
     }
 
     

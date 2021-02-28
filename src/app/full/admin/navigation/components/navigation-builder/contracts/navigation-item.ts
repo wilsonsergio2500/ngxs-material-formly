@@ -11,18 +11,3 @@ export class NavigationItemNode {
     Selected?: boolean;
 }
 
-//export class NavigationItemDb {
-
-//    children?: NavigationItemNode[];
-//    Label: string;
-//    Url?: string;
-//    IsLabelOnly?: boolean;
-
-//}
-
-
-export interface INavigationItemNodeElement {
-    label: string;
-    path: string;
-    children: INavigationItemNodeElement[];
-}

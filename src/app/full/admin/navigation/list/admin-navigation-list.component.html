@@ -29,7 +29,6 @@
 
             </div>
 
-
           </mat-expansion-panel>
         </mat-accordion>
       </div>
@@ -42,7 +41,6 @@
       <div fxLayout="row" fxLayoutAlign="end center" class="action-section">
         <div class="action-button-container" *ngIf="hasAnyRecords()">
 
-          <!--<button mat-raised-button color="primary" type="button" (click)="onSaveNavigations()">Save</button>-->
           <loading-button [IsBusy]="btnLoading" type="button" mat-raised-button (click)="onSaveNavigations()">
             <loading-button-ready>
               Save
@@ -54,7 +52,7 @@
 
 
         </div>
-        <div class="action-button-container" *ngIf="hasAnySelected()">
+        <div class="action-button-container" *ngIf="hasAnySelected()" >
           <button mat-raised-button color="warn" (click)="onRemoveSelectedNodes()" type="button">Remove Selected Nodes</button>
         </div>
       </div>

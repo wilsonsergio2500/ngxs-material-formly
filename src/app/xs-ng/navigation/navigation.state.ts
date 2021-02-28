@@ -2,7 +2,7 @@ import { Store, State, Selector, StateContext, Action } from '@ngxs/store';
 import { INavigationStateModel } from './navigation.model';
 import { NavigationLoadItemsAction, NavigationSetLoadingAsDoneAction, NavigationSetAsLoadingAction, NavigationCreateAction } from './navigation.actions';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { tap, timeout, mergeMap } from 'rxjs/operators';
+import { tap, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { FirebasePaginationInMemoryStateModel } from '../../firebase/types/firebase-pagination-inmemory';
 import { INavigationFirebaseModel } from '../../schemas/navigations/navigation.model';
