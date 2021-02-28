@@ -56,7 +56,7 @@ export class AuthState implements NgxsOnInit {
            ])
               
            this.snackBarStatus.OpenComplete('Authenticated');
-        }).catch(error => {
+       }).catch(error => {
             ctx.dispatch(new LoginFail())
         });
     }
