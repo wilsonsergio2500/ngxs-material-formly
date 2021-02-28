@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NavigationItemNode, NavigationItemDb } from './contracts/navigation-item';
+import { NavigationItemNode } from './contracts/navigation-item';
 import { BehaviorSubject, Subscription, Observable } from 'rxjs'
 import { Store, Select } from '@ngxs/store';
 import { NavigationState } from '../../../../../xs-ng/navigation/navigation.state';
@@ -28,6 +28,7 @@ export class NavigationBuilderDb {
     @Select(NavigationState.getNavigationItem) navigations$: Observable<INavigationFirebaseModel[]>
     get data(): NavigationItemNode[] { return this.dataChange.value; }
     get hasAnyRecords(): boolean { return this.dataChange.value.length > 0; }
+    get HasAnySelected(): boolean { return this.hasAnyRecords && this.dataChange.value.some(g => g.Selected == true); }
 
     constructor(private store: Store) {
         this.initialize();
@@ -43,8 +44,6 @@ export class NavigationBuilderDb {
 
                     const rec = navItems[0];
                     const { navigationRoot } = rec;
-
-                    console.log(navItems)
 
                     const data = this.buildFileTree(navigationRoot, 0);
                     this.dataChange.next(data);

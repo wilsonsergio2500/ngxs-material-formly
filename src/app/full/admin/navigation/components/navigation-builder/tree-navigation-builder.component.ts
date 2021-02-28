@@ -35,13 +35,13 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
     /** The selection for checklist */
     checklistSelection = new SelectionModel<NavigationItemFlatNode>(true /* multiple */);
 
-    constructor(private _database: NavigationBuilderDb, private zone: NgZone) {
+    constructor(private navigationDb: NavigationBuilderDb, private zone: NgZone) {
 
         this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
         this.treeControl = new FlatTreeControl<NavigationItemFlatNode>(this.getLevel, this.isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-        _database.dataChange.pipe(
+        navigationDb.dataChange.pipe(
             tap(data => this.dataSource.data = data),
         ).subscribe();
         
@@ -62,7 +62,6 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
      * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
      */
     transformer = (node: NavigationItemNode, level: number) => {
-        //console.log(node);
         const existingNode = this.nestedNodeMap.get(node);
         const flatNode = existingNode && existingNode.Label === node.Label
             ? existingNode
@@ -110,7 +109,7 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
             this.checklistSelection.isSelected(child)
         );
         this.checkAllParentsSelection(node);
-        this._database.dataChanged();
+        this.navigationDb.dataChanged();
     }
 
     onSelectNode(node: NavigationItemFlatNode) {
@@ -119,18 +118,18 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
         const navItem = this.flatNodeMap.get(node);
         navItem.Selected = (selected) ? false : true;
 
-        this._database.dataChanged();
+        this.navigationDb.dataChanged();
 
     }
 
     /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
     todoLeafItemSelectionToggle(node: NavigationItemFlatNode): void {
-        const selected = this.checklistSelection.isSelected(node);
-        const navItem = this.flatNodeMap.get(node);
+        //const selected = this.checklistSelection.isSelected(node);
+        //const navItem = this.flatNodeMap.get(node);
 
         this.checklistSelection.toggle(node);
         this.checkAllParentsSelection(node);
-        this._database.dataChanged();
+        this.navigationDb.dataChanged();
     }
 
     /* Checks all the parents when a leaf node is selected/unselected */
@@ -144,7 +143,6 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
 
     /** Check root node checked state and change it accordingly */
     checkRootNodeSelection(node: NavigationItemFlatNode): void {
-        //console.log('here');
         const nodeSelected = this.checklistSelection.isSelected(node);
         const descendants = this.treeControl.getDescendants(node);
         const descAllSelected = descendants.every(child =>
@@ -152,11 +150,9 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
         );
         if (nodeSelected && !descAllSelected) {
             const navItem = this.flatNodeMap.get(node);
-            console.log(navItem);
             this.checklistSelection.deselect(node);
         } else if (!nodeSelected && descAllSelected) {
             const navItem = this.flatNodeMap.get(node);
-            console.log(navItem);
             this.checklistSelection.select(node);
         }
     }
@@ -183,16 +179,14 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
 
     /** Select the category so we can insert the new item. */
     addNewItem(node: NavigationItemFlatNode) {
-        console.log('node',node);
         const parentNavItemNode = this.flatNodeMap.get(node);
         let parent = null;
         if (!parentNavItemNode.children) {
             parentNavItemNode.children = [];
             parent = this.getParentNode(node);
-            console.log('parent',parent);
         }
         const newItem: NavigationItemNode = { Label: '', Level : parentNavItemNode.Level+1, children: [] };
-        this._database.insertItem(parentNavItemNode!, newItem);
+        this.navigationDb.insertItem(parentNavItemNode!, newItem);
         setTimeout(() => this.refreshToggle(node, parent));
     }
 
@@ -215,7 +209,7 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
         nestedNode.Url = Url;
         nestedNode.IsLabelOnly = IsLabelOnly;
 
-        this._database.dataChanged();
+        this.navigationDb.dataChanged();
 
     }
 
@@ -224,7 +218,7 @@ import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
         const parent = this.getParentNode(node);
         const parentNavItem = this.flatNodeMap.get(parent);
         parentNavItem.children = [...parentNavItem.children.filter(g => g.Label != '')]
-        this._database.dataChanged();
+        this.navigationDb.dataChanged();
       
     }
 

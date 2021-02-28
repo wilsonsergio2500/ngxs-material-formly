@@ -15,7 +15,7 @@ export class SearchGridModalComponent implements OnInit, OnDestroy {
     dataSource = new MatTableDataSource();
     subscriptions: Subscription[] = null;
     columns: any[];
-    @ViewChild(MatPaginator, { static: false })
+    @ViewChild(MatPaginator, { static: true })
     paginator: MatPaginator;
     initialFilter: string;
     @ViewChild('searchinput', { static: false })
@@ -35,6 +35,7 @@ export class SearchGridModalComponent implements OnInit, OnDestroy {
         const onrecord$ = this.input.recordsFunc().pipe(tap(x => {
             this.dataSource.data = x;
             this.dataSource.paginator = this.paginator;
+            console.log(this.paginator);
         }));
 
         const onInitialValue$ = this.input.InitializedViewValue().pipe(
@@ -55,7 +56,6 @@ export class SearchGridModalComponent implements OnInit, OnDestroy {
         ];
 
     }
-    
 
     ngOnDestroy() {
         if (this.subscriptions) {

@@ -1,10 +1,7 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
-import { IPageFirebaseModel } from '../../../../schemas/pages/page.model';
 import { Observable, Subscription } from 'rxjs';
-import { NgTypeFormGroup } from '../../../../modules/form-type-builder/form-type-builder.model';
 import { Store, Select } from '@ngxs/store';
 import { FormTypeBuilder } from '../../../../modules/form-type-builder/form-type-builder.service';
-import { PageState } from '../../../../xs-ng/pages/pages.state';
 import { NavigationBuilderDb } from '../components/navigation-builder/tree-navigation-builder.provider';
 import { IPageNavigation } from '../components/page-entry/navigation-page-entry.contract';
 import { ConfirmationDialogService } from '../../../../components/ui-elements/confirmation-dialog/confirmation-dialog.service';
@@ -24,11 +21,11 @@ export class AdminNavigationListComponent implements OnInit, OnDestroy {
 
     @Select(NavigationState.IsLoading) woring$: Observable<boolean>;
     forceExpand = false;
+    btnLoading = false;
     private subscriptions: Subscription[] = [];
 
     constructor(
         private store: Store,
-        private formTypeBuilder: FormTypeBuilder,
         private navigationDb: NavigationBuilderDb,
         private confirmationDialog: ConfirmationDialogService
     ) {
@@ -77,9 +74,14 @@ export class AdminNavigationListComponent implements OnInit, OnDestroy {
 
     onSaveNavigations() {
 
+        this.btnLoading = true;
         const navigations = this.navigationDb.data;
         const model = this.normalizeNavigation(navigations);
         this.store.dispatch(new NavigationCreateAction({ navigationRoot: model }));
+
+        setTimeout(() => {
+            this.btnLoading = false;
+        }, 1000);
 
     }
 
@@ -108,7 +110,9 @@ export class AdminNavigationListComponent implements OnInit, OnDestroy {
     hasAnyRecords() {
         return this.navigationDb.hasAnyRecords;
     }
-
+    hasAnySelected() {
+        return this.navigationDb.HasAnySelected;
+    }
 
   
   } 
