@@ -99,6 +99,8 @@
     <Content Include="src\app\full\public\page\page.component.scss" />
     <Content Include="src\app\full\public\public.component.html" />
     <Content Include="src\app\full\public\public.component.scss" />
+    <Content Include="src\app\full\register\register.component.html" />
+    <Content Include="src\app\full\register\register.component.scss" />
     <Content Include="src\app\modules\form-type-builder\components\mat-form-error-accesor\mat-form-error-accesor.component.html" />
     <Content Include="src\app\modules\form-type-builder\components\mat-form-error\mat-form-error.component.html" />
     <Content Include="src\app\modules\formly-fields-extended\forms\formly-form-flex-json\formly-form-flex-json.component.css" />
@@ -183,6 +185,7 @@
     <Folder Include="src\app\full\admin\posts\edit\" />
     <Folder Include="src\app\full\admin\xs-ng\" />
     <Folder Include="src\app\full\public\not-found\" />
+    <Folder Include="src\app\full\register\" />
     <Folder Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\" />
     <Folder Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\contracts\" />
     <Folder Include="src\app\modules\image-resizer-io\" />
@@ -342,6 +345,8 @@
     <TypeScriptCompile Include="src\app\full\admin\posts\list\admin-post-list.resolver.ts" />
     <TypeScriptCompile Include="src\app\full\public\not-found\not-found.component.ts" />
     <TypeScriptCompile Include="src\app\full\public\page\page.resolver.ts" />
+    <TypeScriptCompile Include="src\app\full\register\register.component.ts" />
+    <TypeScriptCompile Include="src\app\full\register\register.contract.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\contracts\image-rio-uploader-options.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\image-rio-uploader.component.ts" />
     <TypeScriptCompile Include="src\app\modules\formly-fields-extended\types\image-resize-io-upload\image-rio-uploader.module.ts" />

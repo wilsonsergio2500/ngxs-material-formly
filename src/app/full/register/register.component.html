@@ -1,0 +1,63 @@
+
+<div class="register-frame">
+
+  <mat-card fxLayout="column">
+
+    <div class="logo-font logo-header color-primary">
+      Fire8
+    </div>
+    <div >
+      <span class="subheading">Register to Fire8 CMS</span>
+    </div>
+
+    <div>
+
+      <form [formGroup]="form" fxFlex fxLayout="row wrap">
+
+        <mat-form-field fxFlex="100">
+          <input matInput type="text" placeholder="Username" formControlName="Username" autocomplete="off">
+          <mat-error formControlItem="Username"></mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="100" fxFlex.gt-sm="50">
+          <input matInput type="Password" placeholder="Password" formControlName="Password">
+          <mat-error formControlItem="Password"></mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="100" fxFlex.gt-sm="50">
+          <input matInput type="Password" placeholder="Confirm Password" formControlName="ConfirmPassword">
+          <mat-error formControlItem="ConfirmPassword"></mat-error>
+        </mat-form-field>
+
+        <div class="action-section" fxLayout="column" fxFlex="100">
+
+          <div class="flex-center">
+            <a mat-button color="primary" routerLink="/login">Login</a>
+          </div>
+
+          <div fxFlex dir="rtl">
+            <loading-button [IsBusy]="btnLoading" type="submit" mat-raised-button>
+              <loading-button-ready>
+                Register
+              </loading-button-ready>
+              <loading-button-busy>
+                Creating...
+              </loading-button-busy>
+            </loading-button>
+
+          </div>
+
+
+
+        </div>
+
+
+      </form>
+
+    </div>
+
+   
+
+  </mat-card>
+
+</div>
