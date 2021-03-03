@@ -12,7 +12,7 @@
 
     <div>
 
-      <form [formGroup]="form" fxFlex fxLayout="row wrap">
+      <form [formGroup]="form" fxFlex fxLayout="row wrap" (ngSubmit)="Submit()">
 
         <mat-form-field fxFlex="100">
           <input matInput type="text" placeholder="Username" formControlName="Username" autocomplete="off">
@@ -36,7 +36,7 @@
           </div>
 
           <div fxFlex dir="rtl">
-            <loading-button [IsBusy]="btnLoading" type="submit" mat-raised-button>
+            <loading-button [IsBusy]="btnLoading" type="submit" mat-raised-button [disabled]="form.invalid">
               <loading-button-ready>
                 Register
               </loading-button-ready>

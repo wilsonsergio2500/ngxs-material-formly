@@ -1,4 +1,4 @@
-import { IAuthenticateUser, User } from './auth.model';
+import { IAuthenticateUser, User, IRegistrationUser } from './auth.model';
 
 
 export class LoadSession {
@@ -21,6 +21,11 @@ export class LogoutSuccess {
 export class LoginWithEmailAndPassword {
     static type = '[Auth] LoginWithEmailAndPassword'
     constructor(public request: IAuthenticateUser) { }
+}
+
+export class CreateUserwithEmailAndPassword {
+    static type = '[Auth] CreateUserWithEmailAndPassword';
+    constructor(public request: IRegistrationUser) { }
 }
 
 export class LoginRedirectOnAuthenticated {

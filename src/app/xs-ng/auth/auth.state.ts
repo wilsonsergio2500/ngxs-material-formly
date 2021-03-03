@@ -1,7 +1,7 @@
 import { State, Selector, NgxsOnInit, StateContext, Action } from "@ngxs/store";
 import { IAuthStateModel, User } from './auth.model';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout, LoginRedirectOnAuthenticated } from './auth.actions';
+import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout, LoginRedirectOnAuthenticated, CreateUserwithEmailAndPassword } from './auth.actions';
 import { take, tap } from 'rxjs/operators';
 import { Navigate } from '@ngxs/router-plugin';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
@@ -59,6 +59,17 @@ export class AuthState implements NgxsOnInit {
        }).catch(error => {
             ctx.dispatch(new LoginFail())
         });
+    }
+
+    @Action(CreateUserwithEmailAndPassword)
+    onCreateUserWithEmailAndPassword(ctx: StateContext<IAuthStateModel>, action: CreateUserwithEmailAndPassword) {
+        const { email, password } = action.request;
+        return this.fireAuth.auth.createUserWithEmailAndPassword(email, password).then((credentials) => {
+
+            console.log(credentials);
+        }).catch(error => {
+
+        })
     }
 
     @Action(LoginRedirectOnAuthenticated)

@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
 
 
-        this.LoginForm.setContractErrors<ILoginCredentials>({
+        this.LoginForm.setContractErrors({
             Username: {
                 required: 'Username is required'
             },
