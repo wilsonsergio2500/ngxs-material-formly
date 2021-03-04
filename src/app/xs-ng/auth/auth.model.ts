@@ -4,6 +4,7 @@ export type User = UserInfo;
 
 export interface IAuthStateModel {
     user: Partial<User>;
+    errorMessage: string;
 }
 
 export interface IAuthenticateUser {

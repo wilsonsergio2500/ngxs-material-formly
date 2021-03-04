@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgTypeFormGroup, NgTypeFormControl } from '../../modules/form-type-builder/form-type-builder.model';
 import { IRegistrationForm } from './register.contract';
 import { FormTypeBuilder } from '../../modules/form-type-builder/form-type-builder.service';
-import { Store } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
 import { Validators } from '@angular/forms';
+import { CreateUserwithEmailAndPassword } from '../../xs-ng/auth/auth.actions';
+import { AuthState } from '../../xs-ng/auth/auth.state';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'register',
@@ -13,6 +16,9 @@ import { Validators } from '@angular/forms';
   export class RegisterComponent implements OnInit {
 
     form: NgTypeFormGroup<IRegistrationForm>;
+    @Select(AuthState.getErrorMessage) error$: Observable<string>;
+    btnLoading = false;
+
     constructor(
         private formTypeBuilder: FormTypeBuilder,
         private store: Store
@@ -53,6 +59,8 @@ import { Validators } from '@angular/forms';
 
     Submit() {
 
+        const { Username : email, Password : password } = this.form.value;
+        this.store.dispatch(new CreateUserwithEmailAndPassword({ email, password }));
 
     }
   

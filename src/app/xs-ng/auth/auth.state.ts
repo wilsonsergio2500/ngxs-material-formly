@@ -1,7 +1,7 @@
 import { State, Selector, NgxsOnInit, StateContext, Action } from "@ngxs/store";
 import { IAuthStateModel, User } from './auth.model';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout, LoginRedirectOnAuthenticated, CreateUserwithEmailAndPassword } from './auth.actions';
+import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout, LoginRedirectOnAuthenticated, CreateUserwithEmailAndPassword, RegistrationError, CleanErrorMessage, RegistrationSuccess } from './auth.actions';
 import { take, tap } from 'rxjs/operators';
 import { Navigate } from '@ngxs/router-plugin';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
@@ -10,7 +10,8 @@ import { SnackbarStatusService } from '../../components/ui-elements/snackbar-sta
 @State<IAuthStateModel>({
     name: 'auth',
     defaults: <IAuthStateModel>{
-        user: null
+        user: null,
+        errorMessage: null
     }
 })
 export class AuthState implements NgxsOnInit {
@@ -32,6 +33,12 @@ export class AuthState implements NgxsOnInit {
     static getUser(state: IAuthStateModel) {
         return state.user;
     }
+
+    @Selector()
+    static getErrorMessage(state: IAuthStateModel) {
+        return state.errorMessage;
+    }    
+
 
     @Action(LoadSession)
     onLoadSession(ctx: StateContext<IAuthStateModel>) {
@@ -67,8 +74,15 @@ export class AuthState implements NgxsOnInit {
         return this.fireAuth.auth.createUserWithEmailAndPassword(email, password).then((credentials) => {
 
             console.log(credentials);
+
+            ctx.dispatch(new RegistrationSuccess());
+
         }).catch(error => {
 
+            const errorMessage = (error.message) ? error.message : 'The User could not be registered at this momemnt';
+            ctx.dispatch(new RegistrationError(errorMessage));
+
+            //console.log(error);
         })
     }
 
@@ -98,5 +112,20 @@ export class AuthState implements NgxsOnInit {
         });
         ctx.dispatch(new Navigate([this.loginPage]))
     }
-    
+
+    @Action(RegistrationError)
+    onRegistrationError(ctx: StateContext<IAuthStateModel>, action: RegistrationError) {
+        const { message : errorMessage } = action;
+        ctx.patchState({ errorMessage });
+    }
+
+    @Action(RegistrationSuccess)
+    OnRegistrationSuccess(ctx: StateContext<IAuthStateModel>) {
+        ctx.dispatch(new CleanErrorMessage());
+    }
+
+    @Action(CleanErrorMessage)
+    onCleanErrorMessage(ctx: StateContext<IAuthStateModel>) {
+        ctx.patchState({ errorMessage: null})
+    }
 }
