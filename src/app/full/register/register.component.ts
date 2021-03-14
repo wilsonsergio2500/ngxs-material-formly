@@ -1,27 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgTypeFormGroup, NgTypeFormControl } from '../../modules/form-type-builder/form-type-builder.model';
 import { IRegistrationForm } from './register.contract';
 import { FormTypeBuilder } from '../../modules/form-type-builder/form-type-builder.service';
-import { Store, Select } from '@ngxs/store';
+import { Store, Select, Actions, ofActionSuccessful } from '@ngxs/store';
 import { Validators } from '@angular/forms';
-import { CreateUserwithEmailAndPassword } from '../../xs-ng/auth/auth.actions';
+import { CreateUserwithEmailAndPassword, RegistrationError } from '../../xs-ng/auth/auth.actions';
 import { AuthState } from '../../xs-ng/auth/auth.state';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { tap, delay } from 'rxjs/operators';
 
 @Component({
     selector: 'register',
     templateUrl: 'register.component.html',
     styleUrls: [`register.component.scss`]
   })
-  export class RegisterComponent implements OnInit {
+  export class RegisterComponent implements OnInit, OnDestroy {
 
     form: NgTypeFormGroup<IRegistrationForm>;
     @Select(AuthState.getErrorMessage) error$: Observable<string>;
     btnLoading = false;
+    private subscriptions: Subscription[];
 
     constructor(
         private formTypeBuilder: FormTypeBuilder,
-        private store: Store
+        private store: Store,
+        private actions: Actions
     ) {
     }
 
@@ -54,6 +57,21 @@ import { Observable } from 'rxjs';
             }
         });
 
+        const onPasswordChange$ = this.form.controls.Password.valueChanges.pipe(
+            delay(1),
+            tap(_ => {
+                this.form.controls.ConfirmPassword.updateValueAndValidity();
+            })
+        ).subscribe();
+
+
+        const onRegsitrationError$ = this.actions.pipe(ofActionSuccessful(RegistrationError)).pipe(
+            tap(() => {
+                this.form.reset();
+            })
+        ).subscribe();
+        
+        this.subscriptions = [onPasswordChange$, onRegsitrationError$];
 
     }
 
@@ -62,6 +80,12 @@ import { Observable } from 'rxjs';
         const { Username : email, Password : password } = this.form.value;
         this.store.dispatch(new CreateUserwithEmailAndPassword({ email, password }));
 
+    }
+
+    ngOnDestroy() {
+        if (this.subscriptions) {
+            this.subscriptions.forEach(g => g.unsubscribe());
+        }
     }
   
   } 
