@@ -208,6 +208,7 @@
     <Folder Include="src\app\modules\ng-dompurify\utils\" />
     <Folder Include="src\app\schemas\images\" />
     <Folder Include="src\app\schemas\navigations\" />
+    <Folder Include="src\app\schemas\users\" />
     <Folder Include="src\app\xs-ng\media\" />
     <Folder Include="src\app\xs-ng\media\images-on-resizer\" />
     <Folder Include="src\app\xs-ng\navigation\" />
@@ -261,6 +262,8 @@
     <Folder Include="src\app\xs-ng\auth\" />
     <Folder Include="src\app\xs-ng\base\" />
     <Folder Include="src\app\xs-ng\base\loading-state-actions\" />
+    <Folder Include="src\app\xs-ng\users-security\" />
+    <Folder Include="src\app\xs-ng\users\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\assets\fonts\" />
     <Folder Include="src\environments\" />
@@ -389,6 +392,9 @@
     <TypeScriptCompile Include="src\app\schemas\images\image-resizer.model.ts" />
     <TypeScriptCompile Include="src\app\schemas\navigations\navigation.firebase.ts" />
     <TypeScriptCompile Include="src\app\schemas\navigations\navigation.model.ts" />
+    <TypeScriptCompile Include="src\app\schemas\users\user.firebase.ts" />
+    <TypeScriptCompile Include="src\app\schemas\users\user.model.ts" />
+    <TypeScriptCompile Include="src\app\schemas\users\user.security.firebase.ts" />
     <TypeScriptCompile Include="src\app\utils\string-helpers.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\media\images-on-resizer\images-on-resizer.actions.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\media\images-on-resizer\images-on-resizer.model.ts" />
@@ -489,6 +495,12 @@
     <TypeScriptCompile Include="src\app\xs-ng\auth\auth.state.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\base\loading-state-actions\loading-state-actions.ts" />
     <TypeScriptCompile Include="src\app\xs-ng\states.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\users-security\users-security.actions.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\users-security\users-security.model.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\users-security\users-security.state.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\users\users.actions.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\users\users.model.ts" />
+    <TypeScriptCompile Include="src\app\xs-ng\users\users.state.ts" />
     <TypeScriptCompile Include="src\environments\environment.prod.ts" />
     <TypeScriptCompile Include="src\environments\environment.ts" />
     <TypeScriptCompile Include="src\main.ts" />
