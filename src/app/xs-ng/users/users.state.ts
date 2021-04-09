@@ -9,6 +9,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 import { UserSetAsDoneAction, UserSetAsLoadingAction, UserCreateAction, UserLoadItemsAction, UserSetElementsAction, UserGetPageAction, UserGetNextPageAction, UserGetPreviousPageAction } from './users.actions';
 import { Logger } from '../../utils/logger';
+import { Injectable } from '@angular/core';
 
 @State<IUsersStateModel>({
     name: 'users',
@@ -19,6 +20,7 @@ import { Logger } from '../../utils/logger';
         paginationState: new FirebasePaginationStateModel<IUserFirebaseModel>()
     }
 })
+@Injectable()
 export class UsersState {
 
     private users: UserFireStore;
@@ -163,7 +165,6 @@ export class UsersState {
                     return of("INCORRECT_SEQUENCE_ERROR");
                 })
             );
-
 
     }
 

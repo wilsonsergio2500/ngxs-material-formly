@@ -1,5 +1,12 @@
 import { IAuthenticateUser, User, IRegistrationUser } from './auth.model';
 
+export class AuthSetAsLoading {
+    static type = '[Auth] Set As Loading';
+}
+
+export class AuthSetAsDone {
+    static type = '[Auth] Set As Done';
+}
 
 export class LoadSession {
     static type = '[Auth] LoadSession';

@@ -6,7 +6,7 @@ import { Store, Select, Actions, ofActionSuccessful } from '@ngxs/store';
 import { Validators } from '@angular/forms';
 import { CreateUserwithEmailAndPassword, RegistrationError } from '../../xs-ng/auth/auth.actions';
 import { AuthState } from '../../xs-ng/auth/auth.state';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, merge } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 
 @Component({
@@ -18,8 +18,9 @@ import { tap, delay } from 'rxjs/operators';
 
     form: NgTypeFormGroup<IRegistrationForm>;
     @Select(AuthState.getErrorMessage) error$: Observable<string>;
-    btnLoading = false;
     private subscriptions: Subscription[];
+
+    @Select(AuthState.IsLoading) working$: Observable<boolean>;
 
     constructor(
         private formTypeBuilder: FormTypeBuilder,
@@ -64,14 +65,11 @@ import { tap, delay } from 'rxjs/operators';
             })
         ).subscribe();
 
-
-        const onRegsitrationError$ = this.actions.pipe(ofActionSuccessful(RegistrationError)).pipe(
-            tap(() => {
-                this.form.reset();
-            })
+        const finalized$ = merge(this.actions.pipe(ofActionSuccessful(RegistrationError)), this.actions.pipe(ofActionSuccessful(CreateUserwithEmailAndPassword))).pipe(
+            tap(() => this.form.reset())
         ).subscribe();
         
-        this.subscriptions = [onPasswordChange$, onRegsitrationError$];
+        this.subscriptions = [onPasswordChange$, finalized$];
 
     }
 

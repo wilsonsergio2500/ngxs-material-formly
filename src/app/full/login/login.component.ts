@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { FormTypeBuilder } from '../../modules/form-type-builder/form-type-builder.service';
 import { NgTypeFormGroup } from '../../modules/form-type-builder/form-type-builder.model';
 import { ILoginCredentials } from './login.contract';
-import { Store, Actions, ofActionSuccessful } from '@ngxs/store';
+import { Store, Actions, ofActionSuccessful, Select } from '@ngxs/store';
 import { LoginWithEmailAndPassword, LoginFail } from '../../xs-ng/auth/auth.actions';
 import { tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { AuthState } from '../../xs-ng/auth/auth.state';
 
 @Component({
     selector: 'login',
@@ -16,9 +17,10 @@ import { Subscription } from 'rxjs';
 export class LoginComponent implements OnInit, OnDestroy {
 
     LoginForm: NgTypeFormGroup<ILoginCredentials>;
-    btnLoading: boolean = false;
     hasError: boolean = false;
     private subscription: Subscription;
+
+    @Select(AuthState.IsLoading) working$: Observable<boolean>;
 
     constructor(
         private formTypeBuilder: FormTypeBuilder,
@@ -54,7 +56,6 @@ export class LoginComponent implements OnInit, OnDestroy {
             ofActionSuccessful(LoginFail),
             tap(() => {
                 this.hasError = true;
-                this.btnLoading = false;
                 this.LoginForm.reset();
             })
         ).subscribe();
@@ -69,16 +70,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     Submit() {
-        if (this.LoginForm.valid) {
-            this.btnLoading = true;
 
+        if (this.LoginForm.valid) {
 
             this.store.dispatch(new LoginWithEmailAndPassword({
                 email: this.LoginForm.value.Username,
                 password: this.LoginForm.value.Password
-            }))
-
-
+            }));
 
         }
     }

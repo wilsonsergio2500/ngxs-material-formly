@@ -1,13 +1,15 @@
 import { Store, State, Selector, StateContext, Action } from '@ngxs/store';
 import { IUsersSecurityStateModel } from './users-security.model';
-import { UsersSecurityDoneAction, UsersSecurityLoadingAction, UsersSecurityGetElements, UsersSecuritySetAsLoadingAction, UsersSecuritySetAsDoneAction, UsersSecurityCreateAction } from './users-security.actions';
+import {  UsersSecuritySetAsLoadingAction, UsersSecuritySetAsDoneAction, UsersSecurityCreateAction, UserSecurityLoadItemsAction, UserSecuritySetItemsAction, UserSecurityGetPageAction, UserSecurityGetNextPageAction, UserSecurityGetPreviousPageAction } from './users-security.actions';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { tap, timeout, mergeMap } from 'rxjs/operators';
+import { tap, mergeMap, delay, catchError } from 'rxjs/operators';
 import { FirebasePaginationStateModel } from '../../firebase/types/firabes-pagination';
 import { IUserSecurityFirebaseModel, ISecurityTypeInUserSecurityFirebaseModel } from '../../schemas/users/user.model';
 import { UserSecurityFireStore } from '../../schemas/users/user.security.firebase';
-import { Subscription, from } from 'rxjs';
+import { Subscription, from, of } from 'rxjs';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
+import { Logger } from '../../utils/logger';
+import { Injectable } from '@angular/core';
 
 
 @State<IUsersSecurityStateModel>({
@@ -19,12 +21,13 @@ import { SnackbarStatusService } from '../../components/ui-elements/snackbar-sta
         paginationState: new FirebasePaginationStateModel<IUserSecurityFirebaseModel>()
     }
 })
+@Injectable()
 export class UsersSecurityState {
 
     private userSecurity: UserSecurityFireStore;
     private GetUserSecuritySubscription: Subscription;
     constructor(
-        private angularFireStore: AngularFirestore,
+        angularFireStore: AngularFirestore,
         private snackBarStatus: SnackbarStatusService
     ) {
         this.userSecurity = new UserSecurityFireStore(angularFireStore);
@@ -85,5 +88,124 @@ export class UsersSecurityState {
         );
 
     }
-    
+
+    @Action(UserSecurityLoadItemsAction)
+    onGetUserSecurity(ctx: StateContext<IUsersSecurityStateModel>) {
+        if (this.GetUserSecuritySubscription) {
+            ctx.dispatch(new UsersSecuritySetAsLoadingAction());
+
+            this.GetUserSecuritySubscription = this.userSecurity.collection$(ref => ref.orderBy('createDate', 'desc')).pipe(
+                tap(items => {
+                    ctx.dispatch(new UserSecuritySetItemsAction(items))
+                }),
+                delay(250),
+                mergeMap(() => ctx.dispatch(new UsersSecuritySetAsDoneAction()))
+            ).subscribe();
+
+        }
+    }
+
+    @Action(UserSecuritySetItemsAction)
+    onSetUserSecurityItems(ctx: StateContext<IUsersSecurityStateModel>, action: UserSecuritySetItemsAction) {
+        const { request: userSecurities } = action;
+        ctx.patchState({ userSecurities, size: userSecurities.length });
+    }
+
+    @Action(UserSecurityGetPageAction)
+    onGetUserSecurityPage(ctx: StateContext<IUsersSecurityStateModel>) {
+
+        const { paginationState } = ctx.getState();
+        const { pageSize, orderByField } = paginationState;
+        if (!this.GetUserSecuritySubscription) {
+            ctx.dispatch(new UsersSecuritySetAsLoadingAction());
+            this.GetUserSecuritySubscription = this.userSecurity.collection$(ref => ref.limit(pageSize).orderBy(orderByField, 'desc')).pipe(
+                tap(model => {
+                    if (!model.length) {
+                        return false;
+                    }
+                    const first = model[0][orderByField];
+                    const last = model[model.length - 1][orderByField];
+                    const pagination_count = 0;
+                    const next = model.length === pageSize;
+                    const prev = false;
+                    const prevStartAt = [first];
+                    const newPaginationState = { ...paginationState, first, last, pagination_count, next, prev, prev_start_at: prevStartAt, items: model };
+                    ctx.patchState({ paginationState: newPaginationState })
+                }),
+                mergeMap(() => ctx.dispatch(new UsersSecuritySetAsDoneAction()))
+            ).subscribe();
+        }
+
+    }
+
+    @Action(UserSecurityGetNextPageAction)
+    onGetUserSecurityNextPage(ctx: StateContext<IUsersSecurityStateModel>) {
+
+        const { paginationState } = ctx.getState();
+        let { pageSize, last, pagination_count, prev_start_at, first, orderByField } = paginationState;
+        return this.userSecurity.queryCollection(ref => ref.limit(pageSize).orderBy(orderByField, 'desc').startAfter(last))
+            .get().pipe(
+                tap(models => {
+                    const currentSize = models.docs.length;
+                    let next = currentSize === pageSize;
+                    const prev = true;
+                    if (!currentSize) {
+                        next = false;
+                        return;
+                    }
+                    const first = models.docs[0].data()[orderByField];
+                    const last = models.docs[currentSize - 1].data()[orderByField];
+                    let items = [];
+                    for (let it of models.docs) {
+                        items.push(it.data());
+                    }
+                    pagination_count++;
+                    const prevStartAt = [...prev_start_at, first];
+                    const newPaginationState = { ...paginationState, next, first, last, items, pagination_count, prev_start_at: prevStartAt, prev };
+                    ctx.patchState({ paginationState: newPaginationState });
+                    Logger.LogTable(`Firebase Paginate Post[Page:${pagination_count + 1}]`, items);
+
+                })
+                , catchError(error => {
+                    const newPaginationState = { ...paginationState, next: false };
+                    ctx.patchState({ paginationState: newPaginationState })
+                    return of("INCORRECT_SEQUENCE_ERROR");
+                })
+            );
+
+    }
+
+    @Action(UserSecurityGetPreviousPageAction)
+    onGetUserSecurityPreviousPage(ctx: StateContext<IUsersSecurityStateModel>) {
+
+        const { paginationState } = ctx.getState();
+        let { pageSize, orderByField, first, pagination_count, prev_start_at } = paginationState;
+        return this.userSecurity.queryCollection(ref => ref.orderBy(orderByField, 'desc').endBefore(first).limit(pageSize))
+            .get().pipe(
+                tap(models => {
+                    const next = true;
+                    const currentSize = models.docs.length;
+                    const first = models.docs[0].data()[orderByField];
+                    const last = models.docs[currentSize - 1].data()[orderByField];
+                    let items = [];
+                    for (let it of models.docs) {
+                        items.push(it.data());
+                    }
+                    pagination_count--;
+                    const prev = pagination_count != 0;
+                    prev_start_at = prev_start_at.slice(0, prev_start_at.length - 1);
+                    const newPaginationState = { ...paginationState, prev, first, last, items, pagination_count, prev_start_at, next };
+                    ctx.patchState({ paginationState: newPaginationState });
+                    Logger.LogTable(`Firebase Paginate Post[Page:${pagination_count + 1}]`, items);
+                }),
+                catchError(error => {
+                    const newPaginationState = { ...paginationState, prev: false };
+                    ctx.patchState({ paginationState: newPaginationState })
+                    return of("INCORRECT_SEQUENCE_ERROR")
+                })
+            )
+    }
+
+
+
 }

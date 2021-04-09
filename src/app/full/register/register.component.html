@@ -47,7 +47,7 @@
           </div>
 
           <div fxFlex dir="rtl">
-            <loading-button [IsBusy]="btnLoading" type="submit" mat-raised-button [disabled]="form.invalid">
+            <loading-button [IsBusy]="working$ | async" type="submit" mat-raised-button [disabled]="form.invalid">
               <loading-button-ready>
                 Register
               </loading-button-ready>
