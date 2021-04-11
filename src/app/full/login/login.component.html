@@ -28,7 +28,7 @@
           </mat-card>
         </div>
 
-        <loading-button [IsBusy]="btnLoading" type="submit" mat-raised-button class="flex-center">
+        <loading-button [IsBusy]="working$ | async" type="submit" mat-raised-button class="flex-center">
           <loading-button-ready>
             Login
           </loading-button-ready>
@@ -37,8 +37,6 @@
           </loading-button-busy>
         </loading-button>
 
-
-
       </form>
 
     </div>
@@ -46,7 +44,5 @@
     <div class="flex-center">
       <button mat-button color="accent" type="button" >Forgot Password</button>
     </div>
-    <!--Here will be my login view..-->
   </mat-card>
-  <!--Here will be my login view..-->
 </div>
