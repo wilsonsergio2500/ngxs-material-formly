@@ -1,0 +1,4 @@
+
+<input matInput [placeholder]="placeholder" (blur)="blur()" (focus)="focus($event)" [readonly]="disabled" autocomplete="off"  #input  />
+<mat-icon matSuffix class="search-icon" (click)="onSeach()" [attr.disabled]="disabled ? 'true' : null">search</mat-icon>
+<mat-icon matSuffix color="accent" class="search-icon" (click)="onClear()" [attr.disabled]="!!!input.value || disabled  ? 'true': null">undo</mat-icon>

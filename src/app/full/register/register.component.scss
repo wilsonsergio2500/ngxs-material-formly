@@ -1,0 +1,49 @@
+@import "../../../styles-variables";
+:host {
+  .register-frame {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    margin-top: -10vh;
+  }
+
+  .logo-font {
+    font-family: spartan
+  }
+
+  .logo-header {
+    font-size: 30px;
+    padding: 20px;
+  }
+
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .block {
+    display: block;
+  }
+
+  .mat-form-field {
+    padding: 5px;
+  }
+
+  .mat-card {
+    margin: 10px;
+  }
+
+  .error-container {
+    margin: 5px;
+
+    .msg {
+      position: absolute;
+      top: 10px;
+      padding: 10px;
+      color: $mat-color-warn;
+    }
+  }
+}

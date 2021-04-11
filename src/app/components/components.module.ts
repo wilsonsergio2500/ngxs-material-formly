@@ -5,7 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialComponentsModule } from '../materialcomponents.module';
 
 import { getCustomUiElements, getCustomUiElementsEntryComponents, getCustomUiElementsProviders } from './ui-elements/elements';
-import { getCustomFormElements } from './form-elements/elements';
+import { getCustomFormElements, getCustomFormEntryComponents } from './form-elements/elements';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import { getCustomFormElements } from './form-elements/elements';
     ...getCustomUiElementsProviders()
   ],
   entryComponents: [
-    ...getCustomUiElementsEntryComponents(),
+      ...getCustomUiElementsEntryComponents(),
+      ...getCustomFormEntryComponents()
   ]
 })
 export class CustomComponentsModule {

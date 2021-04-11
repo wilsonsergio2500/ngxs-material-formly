@@ -1,0 +1,45 @@
+
+  <div fxFlex="100" fxLayout="column">
+    <div class="flex-center">
+      <mat-form-field fxFlex.gt-xs="60">
+        <input matInput [placeholder]="input.placeholder" (keyup)="filter($event.target.value)" autocomplete="off" #searchinput  />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="flex-center">
+
+      <button mat-button color="primary">
+        Search
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-button color="accent" (click)="clearFilter(searchinput)" [disabled]="!!!searchinput.value">
+        Clear
+        <mat-icon>undo</mat-icon>
+      </button>
+      <button mat-button color="warn" (click)="onClose()">
+        Close
+        <mat-icon>clear</mat-icon>
+      </button>
+
+    </div>
+
+    <div>
+      <mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="{{col}}" *ngFor="let col of columns">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{dic[col]}} </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="mobile-label"> {{dic[col]}}</span>
+            <span class="mobile-value">{{element[col]}}</span>
+            <button mat-button color="primary" *ngIf="col == 'Action'" class="action-btn" (click)="onSelect(element)">Select</button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[3, 5, 10]" #paginator [attr.Hidden]="paginator.pageSize >= paginator.length ? 'true' : null"></mat-paginator>
+    </div>
+
+  </div>

@@ -1,20 +1,66 @@
-<div fxLayout="column" fxFlex="100">
+<div fxLayout="column" fxFlex>
 
-    <!--<div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
-      <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
-      <span [ngStyle]="{'padding.px': 10}">Loading Items...</span>
-    </div>-->
-  
-   
-  
-    <!--<ng-template #done>
-  
-        <h3>{Name_titlelized} Title</h3>
-  
-    </ng-template>-->
-  
-  Form Naviation Page
-  <page-finder></page-finder>
-  <tree-navigation-builder>Loading</tree-navigation-builder>
-  
+  <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+    <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+    <span [ngStyle]="{'padding.px': 10}">Loading Navigation...</span>
   </div>
+
+  <ng-template #done>
+
+    <h3>Navigation</h3>
+
+    <div fxLayout="column" fxFlex>
+
+      <div fxFlex class="panel-add-root">
+        <mat-accordion fxFlex>
+          <mat-expansion-panel [expanded]="forceExpand" (opened)="OnOpenPanel()">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>add</mat-icon>
+                <span class="panel-heading">Add</span>
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div fxLayout="row" fxFlex>
+
+              <navigation-page-entry (onAdd)="addTop($event)" (onCancel)="cancelTop()"></navigation-page-entry>
+
+            </div>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+      
+
+      <div fxFlex>
+        <tree-navigation-builder>Loading</tree-navigation-builder>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end center" class="action-section">
+        <div class="action-button-container" *ngIf="hasAnyRecords()">
+
+          <loading-button [IsBusy]="btnLoading" type="button" mat-raised-button (click)="onSaveNavigations()">
+            <loading-button-ready>
+              Save
+            </loading-button-ready>
+            <loading-button-busy>
+              Saving...
+            </loading-button-busy>
+          </loading-button>
+
+
+        </div>
+        <div class="action-button-container" *ngIf="hasAnySelected()" >
+          <button mat-raised-button color="warn" (click)="onRemoveSelectedNodes()" type="button">Remove Selected Nodes</button>
+        </div>
+      </div>
+
+    </div>
+
+    
+  </ng-template>
+
+
+</div>

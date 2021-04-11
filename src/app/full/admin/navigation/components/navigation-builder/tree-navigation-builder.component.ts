@@ -6,6 +6,7 @@ import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NavigationBuilderDb } from './tree-navigation-builder.provider';
 import { tap } from 'rxjs/operators';
+import { IPageNavigation } from '../page-entry/navigation-page-entry.contract';
 
 @Component({
     selector: 'tree-navigation-builder',
@@ -34,13 +35,13 @@ import { tap } from 'rxjs/operators';
     /** The selection for checklist */
     checklistSelection = new SelectionModel<NavigationItemFlatNode>(true /* multiple */);
 
-    constructor(private _database: NavigationBuilderDb, private zone: NgZone) {
-        //this.setTreeFlattener();
+    constructor(private navigationDb: NavigationBuilderDb, private zone: NgZone) {
+
         this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
         this.treeControl = new FlatTreeControl<NavigationItemFlatNode>(this.getLevel, this.isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-        _database.dataChange.pipe(
+        navigationDb.dataChange.pipe(
             tap(data => this.dataSource.data = data),
         ).subscribe();
         
@@ -54,7 +55,7 @@ import { tap } from 'rxjs/operators';
 
     hasChild = (_: number, _nodeData: NavigationItemFlatNode) =>  _nodeData.expandable;
 
-    hasNoContent = (_: number, _nodeData: NavigationItemFlatNode) => _nodeData.item === '';
+    hasNoContent = (_: number, _nodeData: NavigationItemFlatNode) => _nodeData.Label === '';
 
 
     /**
@@ -62,12 +63,12 @@ import { tap } from 'rxjs/operators';
      */
     transformer = (node: NavigationItemNode, level: number) => {
         const existingNode = this.nestedNodeMap.get(node);
-        const flatNode = existingNode && existingNode.item === node.item
+        const flatNode = existingNode && existingNode.Label === node.Label
             ? existingNode
             : new NavigationItemFlatNode();
-        flatNode.item = node.item;
+        flatNode.Label = node.Label;
         flatNode.level = level;
-        flatNode.expandable = !!node.children;
+        flatNode.expandable = !!node.children && !!node.children.length;
         this.flatNodeMap.set(flatNode, node);
         this.nestedNodeMap.set(node, flatNode);
         return flatNode;
@@ -89,8 +90,26 @@ import { tap } from 'rxjs/operators';
         return result && !this.descendantsAllSelected(node);
     }
 
+    getHasSelection(): boolean {
+
+        for (let map of this.flatNodeMap) {
+            const nodeItem = map[1];
+            if (nodeItem.Selected) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /** Toggle the to-do item selection. Select/deselect all the descendants node */
     todoItemSelectionToggle(node: NavigationItemFlatNode): void {
+
+        const selected = this.checklistSelection.isSelected(node);
+        const navItem = this.flatNodeMap.get(node);
+        navItem.Selected = (selected) ? false : true;
+
+
         this.checklistSelection.toggle(node);
         const descendants = this.treeControl.getDescendants(node);
         this.checklistSelection.isSelected(node)
@@ -102,12 +121,17 @@ import { tap } from 'rxjs/operators';
             this.checklistSelection.isSelected(child)
         );
         this.checkAllParentsSelection(node);
+        this.navigationDb.dataChanged();
+        this.navigationDb.toggleAsHasSelected(this.getHasSelection());
     }
+
 
     /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
     todoLeafItemSelectionToggle(node: NavigationItemFlatNode): void {
+
         this.checklistSelection.toggle(node);
         this.checkAllParentsSelection(node);
+        this.navigationDb.dataChanged();
     }
 
     /* Checks all the parents when a leaf node is selected/unselected */
@@ -155,13 +179,14 @@ import { tap } from 'rxjs/operators';
 
     /** Select the category so we can insert the new item. */
     addNewItem(node: NavigationItemFlatNode) {
-        const navItemNode = this.flatNodeMap.get(node);
+        const parentNavItemNode = this.flatNodeMap.get(node);
         let parent = null;
-        if (!navItemNode.children) {
-            navItemNode.children = [];
+        if (!parentNavItemNode.children) {
+            parentNavItemNode.children = [];
             parent = this.getParentNode(node);
         }
-        this._database.insertItem(navItemNode!, '');
+        const newItem: NavigationItemNode = { Label: '', Level : parentNavItemNode.Level+1, children: [] };
+        this.navigationDb.insertItem(parentNavItemNode!, newItem);
         setTimeout(() => this.refreshToggle(node, parent));
     }
 
@@ -173,10 +198,30 @@ import { tap } from 'rxjs/operators';
         }
     }
 
-    /** Save the node to database */
-    saveNode(node: NavigationItemFlatNode, itemValue: string) {
+
+    onSaveNode($event: IPageNavigation, node: NavigationItemFlatNode) {
+
         const nestedNode = this.flatNodeMap.get(node);
-        this._database.updateItem(nestedNode!, itemValue);
+
+        const { label : Label, pageFinder: Url, isLabelOnly : IsLabelOnly } = $event;
+
+        nestedNode.Label = Label;
+        nestedNode.Url = Url;
+        nestedNode.IsLabelOnly = IsLabelOnly;
+
+        this.navigationDb.dataChanged();
+
     }
+
+    onCancelAdd(node: NavigationItemFlatNode) {
+
+        const parent = this.getParentNode(node);
+        const parentNavItem = this.flatNodeMap.get(parent);
+        parentNavItem.children = [...parentNavItem.children.filter(g => g.Label != '')]
+        this.navigationDb.dataChanged();
+      
+    }
+
+    
   
   } 

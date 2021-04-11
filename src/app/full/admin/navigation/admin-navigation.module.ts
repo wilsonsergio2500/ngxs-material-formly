@@ -12,16 +12,20 @@ import { AdminNavigationComponent } from './admin-navigation.component';
 import { NavigationBuilderDb } from './components/navigation-builder/tree-navigation-builder.provider';
 import { TreeNavigationBuilderComponent } from './components/navigation-builder/tree-navigation-builder.component';
 import { PageFinderComponent } from './components/page-finder/page-finder.component';
+import { NavigationPageEntryComponent } from './components/page-entry/navigation-page-entry.component';
+import { AdminNavigationListResolver } from './list/admin-navigation-list.resolver';
 
 @NgModule({
     providers: [
-        NavigationBuilderDb
+        NavigationBuilderDb,
+        AdminNavigationListResolver
     ],
     declarations: [
         AdminNavigationComponent,
         AdminNavigationListComponent,
         TreeNavigationBuilderComponent,
-        PageFinderComponent
+        PageFinderComponent,
+        NavigationPageEntryComponent
     ],
     imports: [
         CommonModule,

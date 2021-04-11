@@ -1,18 +1,27 @@
 import { State, Selector, NgxsOnInit, StateContext, Action } from "@ngxs/store";
 import { IAuthStateModel, User } from './auth.model';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout, LoginRedirectOnAuthenticated } from './auth.actions';
-import { take, tap } from 'rxjs/operators';
+import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout, LoginRedirectOnAuthenticated, CreateUserwithEmailAndPassword, RegistrationError, CleanErrorMessage, RegistrationSuccess, AuthSetAsLoading, AuthSetAsDone } from './auth.actions';
+import { take, tap, mergeMap, catchError, delay } from 'rxjs/operators';
 import { Navigate } from '@ngxs/router-plugin';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
+import { from } from 'rxjs';
+import { UserCreateAction } from '../users/users.actions';
+import { IUserFirebaseModel } from '../../schemas/users/user.model';
+import { UsersSecurityCreateAction } from '../users-security/users-security.actions';
+import { Injectable } from '@angular/core';
 
+const REGISTRATION_ERROR_GENERIC = 'The User could not be registered at this momemnt';
 
 @State<IAuthStateModel>({
     name: 'auth',
     defaults: <IAuthStateModel>{
-        user: null
+        user: null,
+        errorMessage: null,
+        working: false
     }
 })
+@Injectable()
 export class AuthState implements NgxsOnInit {
 
     private mainPage = '/main';
@@ -33,6 +42,28 @@ export class AuthState implements NgxsOnInit {
         return state.user;
     }
 
+
+    @Selector()
+    static getErrorMessage(state: IAuthStateModel) {
+        return state.errorMessage;
+    }
+
+    @Selector()
+    static IsLoading(state: IAuthStateModel) {
+        return state.working;
+    }
+
+    @Action(AuthSetAsLoading)
+    onLoading(ctx: StateContext<IAuthStateModel>) {
+        ctx.patchState({ working: true });
+    }
+
+    @Action(AuthSetAsDone)
+    onDone(ctx: StateContext<IAuthStateModel>) {
+        ctx.patchState({ working: false });
+    }
+
+
     @Action(LoadSession)
     onLoadSession(ctx: StateContext<IAuthStateModel>) {
         return this.fireAuth.authState.pipe(
@@ -48,17 +79,55 @@ export class AuthState implements NgxsOnInit {
 
     @Action(LoginWithEmailAndPassword)
     onAuthenticatUser(ctx: StateContext<IAuthStateModel>, action: LoginWithEmailAndPassword) {
-       return this.fireAuth.auth.signInWithEmailAndPassword(action.request.email, action.request.password).then((userCredentials: firebase.auth.UserCredential) => {
-           const { uid, phoneNumber, photoURL, email, displayName } = userCredentials.user;
-           ctx.dispatch([
-               new LoginSuccess({ uid, phoneNumber, photoURL, email, displayName }),
-               new LoginRedirectOnAuthenticated()
-           ])
-              
-           this.snackBarStatus.OpenComplete('Authenticated');
-        }).catch(error => {
-            ctx.dispatch(new LoginFail())
-        });
+
+        ctx.dispatch(new AuthSetAsLoading());
+        return from(this.fireAuth.auth.signInWithEmailAndPassword(action.request.email, action.request.password)).pipe(
+            mergeMap(userCredentials => {
+                const { uid, phoneNumber, photoURL, email, displayName } = userCredentials.user;
+                return ctx.dispatch([
+                    new LoginSuccess({ uid, phoneNumber, photoURL, email, displayName }),
+                    new LoginRedirectOnAuthenticated()
+                ]);
+            }),
+            delay(1000),
+            tap(() => {
+                this.snackBarStatus.OpenComplete('Authenticated');
+                ctx.dispatch(new AuthSetAsDone());
+            }),
+            catchError(() => {
+                ctx.dispatch(new AuthSetAsDone());
+                return ctx.dispatch(new LoginFail())
+            })
+        );
+
+    }
+
+    @Action(CreateUserwithEmailAndPassword)
+    onCreateUserWithEmailAndPassword(ctx: StateContext<IAuthStateModel>, action: CreateUserwithEmailAndPassword) {
+
+        const { email, password } = action.request;
+        ctx.dispatch(new AuthSetAsLoading());
+        return from(this.fireAuth.auth.createUserWithEmailAndPassword(email, password)).pipe(
+            mergeMap(credentials => {
+
+                const { user: firebaseUser } = credentials;
+                const { uid: Id, phoneNumber, photoURL, email, displayName } = firebaseUser;
+                const user = <IUserFirebaseModel>{ Id, phoneNumber, photoURL, email, displayName, createdBy: Id };
+
+                ctx.dispatch(new UsersSecurityCreateAction({ Id, email }));
+                return ctx.dispatch(new UserCreateAction(user));
+            }),
+            delay(1000),
+            tap(() => {
+                ctx.dispatch(new AuthSetAsDone());
+            }),
+            catchError(error => {
+                const errorMessage = (error.message) ? error.message : REGISTRATION_ERROR_GENERIC;
+                ctx.dispatch(new AuthSetAsDone());
+                return ctx.dispatch(new RegistrationError(errorMessage));
+            })
+        );
+        
     }
 
     @Action(LoginRedirectOnAuthenticated)
@@ -87,5 +156,20 @@ export class AuthState implements NgxsOnInit {
         });
         ctx.dispatch(new Navigate([this.loginPage]))
     }
-    
+
+    @Action(RegistrationError)
+    onRegistrationError(ctx: StateContext<IAuthStateModel>, action: RegistrationError) {
+        const { message : errorMessage } = action;
+        ctx.patchState({ errorMessage });
+    }
+
+    @Action(RegistrationSuccess)
+    OnRegistrationSuccess(ctx: StateContext<IAuthStateModel>) {
+        ctx.dispatch(new CleanErrorMessage());
+    }
+
+    @Action(CleanErrorMessage)
+    onCleanErrorMessage(ctx: StateContext<IAuthStateModel>) {
+        ctx.patchState({ errorMessage: null})
+    }
 }

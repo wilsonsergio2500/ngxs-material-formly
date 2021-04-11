@@ -1,0 +1,74 @@
+
+<div class="register-frame">
+
+  <mat-card fxLayout="column">
+
+    <div class="logo-font logo-header color-primary">
+      Fire8
+    </div>
+    <div >
+      <span class="subheading">Register to Fire8 CMS</span>
+    </div>
+
+    <div>
+
+      <form [formGroup]="form" fxFlex fxLayout="row wrap" (ngSubmit)="Submit()">
+
+        <mat-form-field fxFlex="100">
+          <input matInput type="text" placeholder="Username" formControlName="Username" autocomplete="off">
+          <mat-error formControlItem="Username"></mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="100" fxFlex.gt-sm="50">
+          <input matInput type="Password" placeholder="Password" formControlName="Password">
+          <mat-error formControlItem="Password"></mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="100" fxFlex.gt-sm="50">
+          <input matInput type="Password" placeholder="Confirm Password" formControlName="ConfirmPassword">
+          <mat-error formControlItem="ConfirmPassword"></mat-error>
+        </mat-form-field>
+
+        <div class="action-section" fxLayout="column" fxFlex="100">
+
+          <ng-container *ngIf="(error$ | async) as error">
+
+            <div class="error-container" *ngIf="error">
+              <mat-card>
+                <mat-icon color="warn">error</mat-icon>
+                <span class="msg">{{error}}</span>
+              </mat-card>
+            </div>
+
+          </ng-container>
+
+          <div class="flex-center">
+            Already have an Account?<a mat-button color="primary" routerLink="/login">Login</a>
+          </div>
+
+          <div fxFlex dir="rtl">
+            <loading-button [IsBusy]="working$ | async" type="submit" mat-raised-button [disabled]="form.invalid">
+              <loading-button-ready>
+                Register
+              </loading-button-ready>
+              <loading-button-busy>
+                Creating...
+              </loading-button-busy>
+            </loading-button>
+
+          </div>
+
+
+
+        </div>
+
+
+      </form>
+
+    </div>
+
+   
+
+  </mat-card>
+
+</div>

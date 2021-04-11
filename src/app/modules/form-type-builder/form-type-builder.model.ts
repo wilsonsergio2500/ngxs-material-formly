@@ -39,8 +39,7 @@ interface FormGroup<T = any> extends NgFormGroup {
     getRawValue(): T;
     setFormErrors(config: any);
     setFormControlErrors(string: keyof T, config: { [key: string]: any });
-    setContractErrors<L>(config: { [p in keyof L]: any });
-    setContractErrors(config: { [key: string]: any });
+    setContractErrors(config: { [p in keyof T]: any });
     markAsSubmitted(): void;
     IsSubmited(): boolean;
 }
