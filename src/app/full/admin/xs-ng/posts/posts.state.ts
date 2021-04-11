@@ -56,6 +56,10 @@ export class PostState {
     static getPreviousEnabled(state: IPostStateModel) {
         return state.paginationState.prev;
     }
+    @Selector()
+    static IsPaginatorEnabled(state: IPostStateModel): boolean {
+        return state.paginationState.prev || state.paginationState.next;
+    }
 
     @Action(SetPostAsLoadingAction)
     onPostAsworking(ctx: StateContext<IPostStateModel>) {

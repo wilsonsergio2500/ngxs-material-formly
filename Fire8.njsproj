@@ -83,6 +83,8 @@
     <Content Include="src\app\full\admin\posts\create\admin-post-create.component.scss" />
     <Content Include="src\app\full\admin\posts\list\admin-post-list.component.html" />
     <Content Include="src\app\full\admin\posts\list\admin-post-list.component.scss" />
+    <Content Include="src\app\full\admin\roles\admin-role.component.html" />
+    <Content Include="src\app\full\admin\roles\admin-role.component.scss" />
     <Content Include="src\app\full\full.component.html" />
     <Content Include="src\app\full\full.component.scss" />
     <Content Include="src\app\full\login\login.component.html" />
@@ -183,6 +185,8 @@
     <Folder Include="src\app\full\admin\posts\create\" />
     <Folder Include="src\app\full\admin\posts\list\" />
     <Folder Include="src\app\full\admin\posts\edit\" />
+    <Folder Include="src\app\full\admin\roles\" />
+    <Folder Include="src\app\full\admin\roles\NewFolder1\" />
     <Folder Include="src\app\full\admin\xs-ng\" />
     <Folder Include="src\app\full\public\not-found\" />
     <Folder Include="src\app\full\register\" />
@@ -346,6 +350,7 @@
     <TypeScriptCompile Include="src\app\full\admin\posts\elements.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\list\admin-post-list.component.ts" />
     <TypeScriptCompile Include="src\app\full\admin\posts\list\admin-post-list.resolver.ts" />
+    <TypeScriptCompile Include="src\app\full\admin\roles\admin-role.component.ts" />
     <TypeScriptCompile Include="src\app\full\public\not-found\not-found.component.ts" />
     <TypeScriptCompile Include="src\app\full\public\page\page.resolver.ts" />
     <TypeScriptCompile Include="src\app\full\register\register.component.ts" />

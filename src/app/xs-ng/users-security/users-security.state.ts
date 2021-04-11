@@ -55,6 +55,10 @@ export class UsersSecurityState {
     static getPreviousEnabled(state: IUsersSecurityStateModel) {
         return state.paginationState.prev;
     }
+    @Selector()
+    static IsPaginatorEnabled(state: IUsersSecurityStateModel): boolean {
+        return state.paginationState.prev || state.paginationState.next;
+    }
 
     @Action(UsersSecuritySetAsDoneAction)
     onDone(ctx: StateContext<IUsersSecurityStateModel>) {

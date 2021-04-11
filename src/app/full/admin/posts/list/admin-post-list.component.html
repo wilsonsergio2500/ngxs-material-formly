@@ -1,5 +1,5 @@
 
-  <div fxLayout="column" fxFlex="100">
+  <div fxLayout="column" fxFlex>
 
     <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
       <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
@@ -51,13 +51,11 @@
 
           </mat-table>
 
-          <ng-container *ngIf="true">
-
+          <ng-container *ngIf="paginationEnabled$ | async">
             <firebase-pagination (onNextPage)="onNextPage()"
                                  (onPreviousPage)="onPrevPage()"
                                  [enabled-next]="next$ | async"
                                  [enabled-previous]="prev$ | async"></firebase-pagination>
-
           </ng-container>
 
         </ng-container>
