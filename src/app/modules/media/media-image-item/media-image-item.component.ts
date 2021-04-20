@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { IImagesOnResizerRemoveRequest } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.model';
+import { IImagesOnResizerRemoveRequest } from '../../../states/media/images-on-resizer/images-on-resizer.model';
 
 @Component({
     selector: 'media-image-item',

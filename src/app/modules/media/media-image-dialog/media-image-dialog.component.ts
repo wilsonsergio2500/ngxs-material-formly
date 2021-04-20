@@ -4,7 +4,7 @@ import { FieldTypes } from '../../formly-fields-extended/base/fields-types-schem
 import { MatDialogRef } from '@angular/material';
 import { Store, Actions, ofActionSuccessful } from '@ngxs/store';
 import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
-import { ImagesOnResizerCreateAction } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.actions';
+import { ImagesOnResizerCreateAction } from '../../../states/media/images-on-resizer/images-on-resizer.actions';
 import { Subscription } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 

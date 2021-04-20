@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NavigationItemNode } from './contracts/navigation-item';
 import { BehaviorSubject, Subscription, Observable } from 'rxjs'
 import { Store, Select } from '@ngxs/store';
-import { NavigationState } from '../../../../../xs-ng/navigation/navigation.state';
+import { NavigationState } from '../../../../../states/navigation/navigation.state';
 import { tap } from 'rxjs/operators';
 import { INavigationFirebaseModel, INavigationModel } from '../../../../../schemas/navigations/navigation.model';
 

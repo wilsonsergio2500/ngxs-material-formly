@@ -8,7 +8,7 @@ import { FirebaseModule } from '../../firebase/firebase.module';
 import { MaterialComponentsModule } from '../../materialcomponents.module';
 import { AdminRoutingModule } from './admin.routing.module';
 import { NgxsModule } from '@ngxs/store';
-import { getAdminStates } from './xs-ng/states'
+import { getAdminStates } from './states/states'
 
 @NgModule({
     declarations: [

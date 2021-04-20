@@ -4,14 +4,14 @@ import { IPostStateModel } from './posts.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PostFireStore } from '../../../../schemas/posts/post.firebase';
 import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction, PostNextPage, PostPrevPage } from './posts.actions';
-import { SnackbarStatusService } from '../../../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 import { from, Subscription, of } from 'rxjs';
 import { tap, mergeMap, delay, catchError } from 'rxjs/operators';
-import { AuthState } from '../../../../xs-ng/auth/auth.state';
 import { Navigate } from '@ngxs/router-plugin';
-import { FirebasePaginationStateModel } from '../../../../firebase/types/firabes-pagination';
-import { IPostFirebaseModel } from '../../../../schemas/posts/post.model';
-import { Logger } from '../../../../utils/logger';
+import { AuthState } from '../auth/auth.state';
+import { IPostFirebaseModel } from '../../schemas/posts/post.model';
+import { FirebasePaginationStateModel } from '../../firebase/types/firabes-pagination';
+import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
+import { Logger } from '../../utils/logger';
 
 @State({
     name: 'postState',

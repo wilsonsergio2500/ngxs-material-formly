@@ -1,5 +1,5 @@
-import { IPostFirebaseModel } from '../../../../schemas/posts/post.model';
-import { IFirebasePaginationState } from '../../../../firebase/types/firabes-pagination';
+import { IFirebasePaginationState } from '../../firebase/types/firabes-pagination';
+import { IPostFirebaseModel } from '../../schemas/posts/post.model';
 
 export interface IPostStateModel {
     working: boolean;

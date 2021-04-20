@@ -4,10 +4,10 @@ import { FormTypeBuilder } from '../../modules/form-type-builder/form-type-build
 import { NgTypeFormGroup } from '../../modules/form-type-builder/form-type-builder.model';
 import { ILoginCredentials } from './login.contract';
 import { Store, Actions, ofActionSuccessful, Select } from '@ngxs/store';
-import { LoginWithEmailAndPassword, LoginFail } from '../../xs-ng/auth/auth.actions';
+import { LoginWithEmailAndPassword, LoginFail } from '../../states/auth/auth.actions';
 import { tap } from 'rxjs/operators';
 import { Subscription, Observable } from 'rxjs';
-import { AuthState } from '../../xs-ng/auth/auth.state';
+import { AuthState } from '../../states/auth/auth.state';
 
 @Component({
     selector: 'login',
