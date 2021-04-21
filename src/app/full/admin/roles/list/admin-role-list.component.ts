@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { UsersSecurityState } from '../../../../xs-ng/users-security/users-security.state';
+import { UsersSecurityState } from '../../../../states/users-security/users-security.state';
 import { Observable } from 'rxjs';
 import { IUserSecurityFirebaseModel } from '../../../../schemas/users/user.model';
 
