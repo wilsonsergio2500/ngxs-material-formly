@@ -1,0 +1,49 @@
+.cdk-column-Action {
+  max-width: 80px;
+}
+
+.mobile-label {
+  display: none;
+}
+
+@media(max-width: 959px) {
+
+  .mat-header-row {
+    display: none;
+  }
+
+  .mat-row {
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 24px;
+  }
+
+  mat-cell {
+    min-width: 100%;
+  }
+
+  mat-cell:last-of-type {
+    min-width: 100%;
+    justify-content: flex-end;
+  }
+
+  mat-cell:first-of-type {
+    padding-left: 0px;
+  }
+
+  mat-cell span.value {
+    display: flex;
+    justify-items: flex-start;
+    flex: 100%;
+  }
+
+  .mobile-label {
+    display: flex;
+    flex: 100%;
+    font-weight: bold;
+  }
+
+  mat-row::after {
+    display: none;
+  }
+}

@@ -10,9 +10,50 @@
     <ng-template #done>
 
       <h3>Roles</h3>
-  
-        <h3>{Name_titlelized} Title</h3>
-  
+
+      <ng-container *ngIf="records$ | async as records">
+
+        <ng-container *ngIf="!records.length">
+          <mat-card>
+            No Records
+          </mat-card>
+        </ng-container>
+
+        <ng-container *ngIf="records.length">
+
+          <mat-table [dataSource]="records">
+
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+              <mat-cell *matCellDef="let row" data-label="email">
+                <span class="mobile-label"> Title </span>
+                <span class="value">{{row['email']}}</span>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Action">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let row" data-label="Action">
+                <!--<a mat-button color="primary" routerLink="../detail/{{row['Id']}}">View</a>-->
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="['email', 'Action']"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: ['email', 'Action']"></mat-row>
+
+          </mat-table>
+
+          <ng-container *ngIf="paginationEnabled$ | async">
+            <firebase-pagination (onNextPage)="onNextPage()"
+                                 (onPreviousPage)="onPrevPage()"
+                                 [enabled-next]="next$ | async"
+                                 [enabled-previous]="prev$ | async"></firebase-pagination>
+          </ng-container>
+
+        </ng-container>
+
+      </ng-container>
+
     </ng-template>
   
   
