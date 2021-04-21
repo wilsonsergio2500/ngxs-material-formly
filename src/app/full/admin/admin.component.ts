@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Store } from '@ngxs/store';
-import { Logout } from '../../xs-ng/auth/auth.actions';
+import { Logout } from '../../states/auth/auth.actions';
 
 @Component({
     selector: 'admin-view-component',

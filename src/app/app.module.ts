@@ -10,7 +10,7 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { FirebaseModule } from './firebase/firebase.module';
 import { getFullPageViewComponents } from './full/elements';
-import { getRootStates } from './xs-ng/states';
+import { getRootStates } from './states/states';
 import { getRootGuards } from './guards/guards';
 import { environment } from '../environments/environment';
 import { getGlobalResolvers } from './resolvers/resolvers';

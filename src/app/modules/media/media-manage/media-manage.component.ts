@@ -1,5 +1,5 @@
 import { Component, AfterContentInit, OnInit } from '@angular/core';
-import { ImagesOnResizerState } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.state'
+import { ImagesOnResizerState } from '../../../states/media/images-on-resizer/images-on-resizer.state'
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { FormTypeBuilder } from '../../form-type-builder/form-type-builder.service';
@@ -7,11 +7,11 @@ import { NgTypeFormGroup, NgTypeFormControl } from '../../form-type-builder/form
 import { IImageLookUp } from '../contracts/image-lookup';
 import { Validators } from '@angular/forms';
 import { MatChipInputEvent, MatDialog } from '@angular/material';
-import { ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSearchAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction, ImagesOnResizerRemoveImageAction } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.actions';
+import { ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSearchAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction, ImagesOnResizerRemoveImageAction } from '../../../states/media/images-on-resizer/images-on-resizer.actions';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MediaImageDialogComponent } from '../media-image-dialog/media-image-dialog.component';
 import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
-import { IImagesOnResizerRemoveRequest } from '../../../xs-ng/media/images-on-resizer/images-on-resizer.model';
+import { IImagesOnResizerRemoveRequest } from '../../../states/media/images-on-resizer/images-on-resizer.model';
 
 @Component({
     selector: 'media-manage',

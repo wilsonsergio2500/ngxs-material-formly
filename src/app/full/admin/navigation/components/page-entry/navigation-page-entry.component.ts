@@ -7,7 +7,7 @@ import { Validators, ValidatorFn, FormGroupDirective } from '@angular/forms';
 import { tap, delay } from 'rxjs/operators';
 import { Store, Select } from '@ngxs/store';
 import { Subscription, Observable } from 'rxjs';
-import { PageState } from '../../../../../xs-ng/pages/pages.state';
+import { PageState } from '../../../../../states/pages/pages.state';
 import { IPageFirebaseModel } from '../../../../../schemas/pages/page.model';
 
 @Component({
