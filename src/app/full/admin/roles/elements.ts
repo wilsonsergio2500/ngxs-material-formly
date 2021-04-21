@@ -14,5 +14,5 @@ export function getAdminComponents() {
 export function getProviders() {
     return [
         AdminRoleListResolver
-    ]
+    ];
 }

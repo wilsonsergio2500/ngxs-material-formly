@@ -22,7 +22,7 @@ import { MaterialComponentsModule } from '../../../materialcomponents.module';
         AdminRoleRoutingModule
     ],
     providers: [
-        getProviders()
+        ...getProviders()
     ]
 })
 export class AdminRoleModule {}

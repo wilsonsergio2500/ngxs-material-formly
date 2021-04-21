@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Store } from '@ngxs/store';
+import { UserSecurityGetPageAction } from '../../../../states/users-security/users-security.actions';
 
 @Injectable()
 export class AdminRoleListResolver implements Resolve<void>{
 
-    //constructor()
+    constructor(private store: Store) { }
 
-    resolve(route: import("@angular/router").ActivatedRouteSnapshot, state: import("@angular/router").RouterStateSnapshot): void | import("rxjs").Observable<void> | Promise<void> {
-        throw new Error("Method not implemented.");
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        this.store.dispatch(new UserSecurityGetPageAction())
+        return;
     }
 
 }
