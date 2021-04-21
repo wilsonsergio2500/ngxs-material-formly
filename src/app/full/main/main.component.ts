@@ -1,11 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Store, Select } from '@ngxs/store';
-//import { Logout } from '../../xs-ng/auth/auth.actions';
-//import { MenuState } from '../../xs-ng/menu/menu.state';
+//import { Logout } from '../../states/auth/auth.actions';
+//import { MenuState } from '../../states/menu/menu.state';
 import { Observable, interval } from 'rxjs';
-import { Logout } from '../../xs-ng/auth/auth.actions';
-//import { MenuGetItems } from '../../xs-ng/menu/menu.action';
+import { Logout } from '../../states/auth/auth.actions';
+//import { MenuGetItems } from '../../states/menu/menu.action';
 
 @Component({
   selector: 'main-view-component',

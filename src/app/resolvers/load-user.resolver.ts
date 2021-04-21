@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { AuthState } from '../xs-ng/auth/auth.state';
+import { AuthState } from '../states/auth/auth.state';
 import { tap, take, mergeMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 

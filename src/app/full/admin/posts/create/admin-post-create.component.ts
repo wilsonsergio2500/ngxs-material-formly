@@ -3,8 +3,8 @@ import { IAdminPostCreate } from './admin-post-crete.contract';
 import { FieldTypes } from '../../../../modules/formly-fields-extended/base/fields-types-schemas';
 import { FormlyTypeGroup } from '../../../../modules/formly-fields-extended/base/FormlyTypeGroup';
 import { Store } from '@ngxs/store';
-import { CreatePostAction } from '../../xs-ng/posts/posts.actions';
 import { ActivatedRoute } from '@angular/router';
+import { CreatePostAction } from '../../../../states/posts/posts.actions';
 
 @Component({
     selector: 'admin-post-create',

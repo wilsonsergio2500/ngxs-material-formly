@@ -4,8 +4,8 @@ import { IRegistrationForm } from './register.contract';
 import { FormTypeBuilder } from '../../modules/form-type-builder/form-type-builder.service';
 import { Store, Select, Actions, ofActionSuccessful } from '@ngxs/store';
 import { Validators } from '@angular/forms';
-import { CreateUserwithEmailAndPassword, RegistrationError } from '../../xs-ng/auth/auth.actions';
-import { AuthState } from '../../xs-ng/auth/auth.state';
+import { CreateUserwithEmailAndPassword, RegistrationError } from '../../states/auth/auth.actions';
+import { AuthState } from '../../states/auth/auth.state';
 import { Observable, Subscription, merge } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 

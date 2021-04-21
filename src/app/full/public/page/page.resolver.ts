@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { PageGetCurrentPageAction } from '../../../xs-ng/pages/pages.actions';
+import { PageGetCurrentPageAction } from '../../../states/pages/pages.actions';
 
 @Injectable()
 export class PageResolver implements Resolve<any> {

@@ -5,10 +5,10 @@ import { NavigationBuilderDb } from '../components/navigation-builder/tree-navig
 import { IPageNavigation } from '../components/page-entry/navigation-page-entry.contract';
 import { ConfirmationDialogService } from '../../../../components/ui-elements/confirmation-dialog/confirmation-dialog.service';
 import { tap } from 'rxjs/operators';
-import { NavigationState } from '../../../../xs-ng/navigation/navigation.state';
+import { NavigationState } from '../../../../states/navigation/navigation.state';
 import { INavigationModel } from '../../../../schemas/navigations/navigation.model';
 import { NavigationItemNode } from '../components/navigation-builder/contracts/navigation-item';
-import { NavigationCreateAction } from '../../../../xs-ng/navigation/navigation.actions';
+import { NavigationCreateAction } from '../../../../states/navigation/navigation.actions';
 
 @Component({
     selector: 'admin-navigation-list',

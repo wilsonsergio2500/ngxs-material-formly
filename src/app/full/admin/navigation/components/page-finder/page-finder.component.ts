@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { PageSearchItemsByTitleAction } from '../../../../../xs-ng/pages/pages.actions';
+import { PageSearchItemsByTitleAction } from '../../../../../states/pages/pages.actions';
 
 @Component({
     selector: 'page-finder',
