@@ -2,7 +2,6 @@
 import { State, Action, StateContext, Store, Selector } from '@ngxs/store'
 import { IPostStateModel } from './posts.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { PostFireStore } from '../../../../schemas/posts/post.firebase';
 import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction, PostNextPage, PostPrevPage } from './posts.actions';
 import { from, Subscription, of } from 'rxjs';
 import { tap, mergeMap, delay, catchError } from 'rxjs/operators';
@@ -12,6 +11,7 @@ import { IPostFirebaseModel } from '../../schemas/posts/post.model';
 import { FirebasePaginationStateModel } from '../../firebase/types/firabes-pagination';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 import { Logger } from '../../utils/logger';
+import { PostFireStore } from '../../schemas/posts/post.firebase';
 
 @State({
     name: 'postState',

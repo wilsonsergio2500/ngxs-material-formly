@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { PostState } from '../../states/posts/posts.state';
-import { PostNextPage, PostPrevPage } from '../../states/posts/posts.actions';
+import { PostState } from '../../../../states/posts/posts.state';
+import { PostNextPage, PostPrevPage } from '../../../../states/posts/posts.actions';
 
 @Component({
     selector: 'admin-post-list',
