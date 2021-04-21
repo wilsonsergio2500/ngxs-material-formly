@@ -1,11 +1,11 @@
-import { AuthState } from '../xs-ng/auth/auth.state';
+import { AuthState } from '../states/auth/auth.state';
 import { RouterStateSnapshot, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-import { User } from '../xs-ng/auth/auth.model'
+import { User } from '../states/auth/auth.model'
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { LoginFail } from '../xs-ng/auth/auth.actions';
+import { LoginFail } from '../states/auth/auth.actions';
 
 @Injectable()
 export class AuthenticatedGuard implements CanActivate {

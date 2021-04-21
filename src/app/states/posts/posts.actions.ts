@@ -1,5 +1,4 @@
-import { IPostFirebaseModel } from '../../../../schemas/posts/post.model';
-
+import { IPostFirebaseModel } from '../../schemas/posts/post.model';
 
 export class SetPostAsLoadingAction {
     static type = '[Post] Set As Loading'
