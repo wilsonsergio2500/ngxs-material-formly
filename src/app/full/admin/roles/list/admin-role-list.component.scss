@@ -53,3 +53,12 @@
   overflow: hidden;
   display: flex;
 }
+
+.detail-row {
+  height: 0;
+  /*min-height:0;*/
+}
+
+.element-row{
+  border-bottom-width: 0;
+}

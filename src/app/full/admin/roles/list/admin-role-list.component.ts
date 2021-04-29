@@ -24,6 +24,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     @Select(UsersSecurityState.getNextEnabled) next$: Observable<boolean>;
     @Select(UsersSecurityState.getPreviousEnabled) prev$: Observable<boolean>;
     @Select(UsersSecurityState.IsPaginatorEnabled) paginationEnabled$: Observable<boolean>;
+
+    columnsToDisplay = ['email', 'action'];
     expandedElement: any;
 
     constructor() {

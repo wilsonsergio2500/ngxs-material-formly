@@ -21,7 +21,7 @@
 
         <ng-container *ngIf="records.length">
 
-          <mat-table [dataSource]="records">
+          <mat-table [dataSource]="records" multiTemplateDataRows>
 
             <ng-container matColumnDef="email">
               <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
@@ -31,27 +31,29 @@
               </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="Action">
+            <ng-container matColumnDef="action">
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
               <mat-cell *matCellDef="let row" data-label="Action">
-                <!--<a mat-button color="primary" routerLink="../detail/{{row['Id']}}">View</a>-->
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="detail">
-              <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let row" data-label="detail">
-                <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">Will be expanded</div>
               </mat-cell>
             </ng-container>
 
 
-            <mat-header-row *matHeaderRowDef="['email', 'Action', 'detail']"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: ['email', 'Action', 'detail']"
+            <ng-container matColumnDef="expandedDetail">
+              <mat-cell *matCellDef="let row" data-label="Action" [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="element-detail" >
+                  This is expanded
+
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnsToDisplay;"
                      class="element-row"
-                    [class.element-expanded-row]="expandedElement === row"
-                    (click)="expandedElement = expandedElement === row ? null : element"></mat-row>
-
+                     [class.element-expanded-row]="expandedElement === row"
+                     (click)="expandedElement && expandedElement.Id === row.Id ? expandedElement = null : expandedElement = row">
+            </mat-row>
+            <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row" [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'"></mat-row>
           </mat-table>
 
           <ng-container *ngIf="paginationEnabled$ | async">
