@@ -1,0 +1,74 @@
+<div fxLayout="column" fxFlex>
+
+    <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+      <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+      <span [ngStyle]="{'padding.px': 10}">Loading Items...</span>
+    </div>
+  
+   
+  
+    <ng-template #done>
+
+      <h3>Roles</h3>
+
+      <ng-container *ngIf="records$ | async as records">
+
+        <ng-container *ngIf="!records.length">
+          <mat-card>
+            No Records
+          </mat-card>
+        </ng-container>
+
+        <ng-container *ngIf="records.length">
+
+          <mat-table [dataSource]="records" multiTemplateDataRows>
+
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+              <mat-cell *matCellDef="let row" data-label="email">
+                <span class="mobile-label"> Title </span>
+                <span class="value">{{row['email']}}</span>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let row" data-label="Action">
+              </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="expandedDetail">
+              <mat-cell *matCellDef="let row" data-label="Action" [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="element-detail" >
+                  This is expanded
+
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnsToDisplay;"
+                     class="element-row"
+                     [class.element-expanded-row]="expandedElement === row"
+                     (click)="expandedElement && expandedElement.Id === row.Id ? expandedElement = null : expandedElement = row">
+            </mat-row>
+            <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row" [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'"></mat-row>
+          </mat-table>
+
+          <ng-container *ngIf="paginationEnabled$ | async">
+            <firebase-pagination (onNextPage)="onNextPage()"
+                                 (onPreviousPage)="onPrevPage()"
+                                 [enabled-next]="next$ | async"
+                                 [enabled-previous]="prev$ | async"></firebase-pagination>
+          </ng-container>
+
+        </ng-container>
+
+      </ng-container>
+
+    </ng-template>
+  
+  
+  
+  </div>

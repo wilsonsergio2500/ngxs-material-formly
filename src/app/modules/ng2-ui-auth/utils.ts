@@ -50,7 +50,7 @@ export function buildQueryString(obj: object) {
         .join('&');
 }
 
-export function getWindowOrigin(w = window) {
+export function getWindowOrigin(w : Window = window) {
     try {
         if (!w || !w.location) {
             return null;

@@ -12,6 +12,7 @@ import { FirebasePaginationStateModel } from '../../firebase/types/firabes-pagin
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 import { Logger } from '../../utils/logger';
 import { PostFireStore } from '../../schemas/posts/post.firebase';
+import { Injectable } from '@angular/core';
 
 @State({
     name: 'postState',
@@ -22,6 +23,7 @@ import { PostFireStore } from '../../schemas/posts/post.firebase';
         paginationState: new FirebasePaginationStateModel<IPostFirebaseModel>()
     }
 })
+@Injectable()
 export class PostState {
 
     private posts: PostFireStore;
@@ -55,6 +57,10 @@ export class PostState {
     @Selector()
     static getPreviousEnabled(state: IPostStateModel) {
         return state.paginationState.prev;
+    }
+    @Selector()
+    static IsPaginatorEnabled(state: IPostStateModel): boolean {
+        return state.paginationState.prev || state.paginationState.next;
     }
 
     @Action(SetPostAsLoadingAction)

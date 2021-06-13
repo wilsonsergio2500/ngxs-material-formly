@@ -55,6 +55,10 @@ export class UsersSecurityState {
     static getPreviousEnabled(state: IUsersSecurityStateModel) {
         return state.paginationState.prev;
     }
+    @Selector()
+    static IsPaginatorEnabled(state: IUsersSecurityStateModel): boolean {
+        return state.paginationState.prev || state.paginationState.next;
+    }
 
     @Action(UsersSecuritySetAsDoneAction)
     onDone(ctx: StateContext<IUsersSecurityStateModel>) {
@@ -91,11 +95,14 @@ export class UsersSecurityState {
 
     @Action(UserSecurityLoadItemsAction)
     onGetUserSecurity(ctx: StateContext<IUsersSecurityStateModel>) {
-        if (this.GetUserSecuritySubscription) {
+        console.log('entered');
+        if (!this.GetUserSecuritySubscription) {
             ctx.dispatch(new UsersSecuritySetAsLoadingAction());
+            console.log('entry');
 
             this.GetUserSecuritySubscription = this.userSecurity.collection$(ref => ref.orderBy('createDate', 'desc')).pipe(
                 tap(items => {
+                    console.log(items);
                     ctx.dispatch(new UserSecuritySetItemsAction(items))
                 }),
                 delay(250),

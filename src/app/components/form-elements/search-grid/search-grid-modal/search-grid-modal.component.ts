@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatInput } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { ISearchGridInput } from './search-grid.input';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';

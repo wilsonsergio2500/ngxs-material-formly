@@ -1,9 +1,8 @@
 
-import { Injectable, OnDestroy } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from './modal/confirmation-modal.component';
-import { Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 @Injectable()
 export class ConfirmationDialogService{

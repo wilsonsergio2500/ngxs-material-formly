@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { IPostFirebaseModel } from '../../../../schemas/posts/post.model';
 import { PostState } from '../../../../states/posts/posts.state';
 import { PostNextPage, PostPrevPage } from '../../../../states/posts/posts.actions';
 
@@ -10,12 +12,11 @@ import { PostNextPage, PostPrevPage } from '../../../../states/posts/posts.actio
 })
 export class AdminPostListComponent {
 
-    @Select(PostState.IsLoading) working$;
-    @Select(PostState.getPage) records$;
-
-    @Select(PostState.getNextEnabled) next$;
-    @Select(PostState.getPreviousEnabled) prev$;
-
+    @Select(PostState.IsLoading) working$: Observable<boolean>;
+    @Select(PostState.getPage) records$ : Observable<IPostFirebaseModel[]>;
+    @Select(PostState.getNextEnabled) next$ : Observable<boolean>;
+    @Select(PostState.getPreviousEnabled) prev$: Observable<boolean>;
+    @Select(PostState.IsPaginatorEnabled) paginationEnabled$: Observable<boolean>;
 
     constructor(
         private store: Store

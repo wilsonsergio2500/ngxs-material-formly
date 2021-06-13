@@ -1,7 +1,9 @@
 import { Component, OnInit, HostBinding, Input, ViewChild, ElementRef, ContentChildren, QueryList, Optional, Injector, DoCheck, OnDestroy, AfterViewInit, forwardRef } from '@angular/core';
 import { Observable, Subject, Subscription, fromEvent, of } from 'rxjs';
 import { ControlValueAccessor, NgControl, FormGroupDirective, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatFormFieldControl, ErrorStateMatcher, MatDialog } from '@angular/material';
+import { MatFormFieldControl } from '@angular/material/form-field'
+import { ErrorStateMatcher } from '@angular/material/core';
+import {  MatDialog } from '@angular/material/dialog';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ISearchGridValue } from './search-grid.contract';
 import { filter, map, tap } from 'rxjs/operators';

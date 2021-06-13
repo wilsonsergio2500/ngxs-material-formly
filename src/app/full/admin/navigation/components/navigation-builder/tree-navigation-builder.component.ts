@@ -2,7 +2,7 @@ import { Component, NgZone} from '@angular/core';
 import { NavigationItemNode } from './contracts/navigation-item';
 import { NavigationItemFlatNode } from './contracts/navigation-tem-flatnode';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
+import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NavigationBuilderDb } from './tree-navigation-builder.provider';
 import { tap } from 'rxjs/operators';

@@ -7,7 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyMatFormFieldModule } from '@ngx-formly/material/form-field';
 import { FormlyModule } from '@ngx-formly/core';
 import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule, MatAutocompleteModule } from '@angular/material';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 
 @NgModule({
   declarations: [FormlyChipTypeComponent],

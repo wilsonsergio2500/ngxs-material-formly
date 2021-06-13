@@ -1,12 +1,11 @@
-import { Component, AfterContentInit, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ImagesOnResizerState } from '../../../states/media/images-on-resizer/images-on-resizer.state'
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { FormTypeBuilder } from '../../form-type-builder/form-type-builder.service';
 import { NgTypeFormGroup, NgTypeFormControl } from '../../form-type-builder/form-type-builder.model';
 import { IImageLookUp } from '../contracts/image-lookup';
-import { Validators } from '@angular/forms';
-import { MatChipInputEvent, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSearchAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction, ImagesOnResizerRemoveImageAction } from '../../../states/media/images-on-resizer/images-on-resizer.actions';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MediaImageDialogComponent } from '../media-image-dialog/media-image-dialog.component';

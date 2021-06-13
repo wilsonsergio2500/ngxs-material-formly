@@ -1,6 +1,5 @@
 import {  Injectable, NgZone  } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
-
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { CompletedSnackbarComponent } from '../types/completed/snackbar-completed.component';
 import { ProgressSnackbarComponent } from '../types/progress/snackbar-progress.component';
 import { ErrorSnackbarComponent } from '../types/error/snackbar-error.component';

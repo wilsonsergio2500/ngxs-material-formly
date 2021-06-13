@@ -6,7 +6,6 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material
 import { Observable, of, Subscription } from 'rxjs';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { AutoUnsubscribe } from '../../../decorators/autounsuscribe.decorator';
-import { MatFormFieldControl } from '@angular/material';
 
 @Component({
   selector: 'ngx-chips',

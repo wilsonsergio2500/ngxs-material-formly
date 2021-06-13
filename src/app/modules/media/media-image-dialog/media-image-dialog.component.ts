@@ -1,7 +1,7 @@
 import { Component,  OnInit, OnDestroy } from '@angular/core';
 import { FormlyTypeGroup } from '../../formly-fields-extended/base/FormlyTypeGroup';
 import { FieldTypes } from '../../formly-fields-extended/base/fields-types-schemas';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Store, Actions, ofActionSuccessful } from '@ngxs/store';
 import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
 import { ImagesOnResizerCreateAction } from '../../../states/media/images-on-resizer/images-on-resizer.actions';
