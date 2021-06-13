@@ -32,8 +32,8 @@ interface FormGroup<T = any> extends NgFormGroup {
     get<K extends keyof T>(path: K): AbstractControl<T[K]>;
     get<S>(path: (string | number)[]): AbstractControl<S>;
     get(path: (string | number)[]): AbstractControl<any>;
-    registerControl<K extends keyof T>(name: K, control: AbstractControl<T[K]>): AbstractControl<T[K]>;
-    addControl<K extends keyof T>(name: K, control: AbstractControl<T[K]>): void;
+    registerControl<K extends keyof T>(name: keyof K, control: AbstractControl<T[K]>): AbstractControl<T[K]>;
+    addControl<K extends keyof T>(name: keyof K, control: AbstractControl<T[K]>): void;
     setValue(value: T, options?: Object): void;
     patchValue(value: T, options?: Object): void;
     getRawValue(): T;

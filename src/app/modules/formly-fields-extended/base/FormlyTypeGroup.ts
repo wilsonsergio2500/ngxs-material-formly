@@ -82,7 +82,7 @@ export class FormlyTypeGroup<T = any> implements IFormlyTypeGroup<T> {
   }
 
     get(key: keyof T) {
-        return this.form.get(key);
+        return this.form.get(key as string);
     }
 
     patchValue(model: Partial<T>) {

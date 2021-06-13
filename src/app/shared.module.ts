@@ -25,7 +25,6 @@ import { FirebaseModule } from './firebase/firebase.module';
     NgxsModule,
     NgxsRouterPluginModule,
     FirebaseModule,
-    //Ng2UiAuthModule.forRoot(<IPartialConfigOptions>{ loginUrl: `${environment.api.target}userlogin/login` }),
     CustomComponentsModule,
     ReactiveFormsModule,
     FormsModule,
@@ -55,7 +54,7 @@ import { FirebaseModule } from './firebase/firebase.module';
   ]
 })
 export class SharedModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
       //providers: [...getSharedResolvers()]

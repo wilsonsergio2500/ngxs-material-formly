@@ -80,8 +80,8 @@ export class AuthState implements NgxsOnInit {
     @Action(LoginWithEmailAndPassword)
     onAuthenticatUser(ctx: StateContext<IAuthStateModel>, action: LoginWithEmailAndPassword) {
 
-        ctx.dispatch(new AuthSetAsLoading());
-        return from(this.fireAuth.auth.signInWithEmailAndPassword(action.request.email, action.request.password)).pipe(
+      ctx.dispatch(new AuthSetAsLoading());
+        return from(this.fireAuth.signInWithEmailAndPassword(action.request.email, action.request.password)).pipe(
             mergeMap(userCredentials => {
                 const { uid, phoneNumber, photoURL, email, displayName } = userCredentials.user;
                 return ctx.dispatch([
@@ -107,7 +107,7 @@ export class AuthState implements NgxsOnInit {
 
         const { email, password } = action.request;
         ctx.dispatch(new AuthSetAsLoading());
-        return from(this.fireAuth.auth.createUserWithEmailAndPassword(email, password)).pipe(
+        return from(this.fireAuth.createUserWithEmailAndPassword(email, password)).pipe(
             mergeMap(credentials => {
 
                 const { user: firebaseUser } = credentials;
@@ -137,7 +137,7 @@ export class AuthState implements NgxsOnInit {
 
     @Action(Logout)
     onLogOut(ctx: StateContext<IAuthStateModel>) {
-        this.fireAuth.auth.signOut().then(_ => {
+        this.fireAuth.signOut().then(_ => {
             ctx.dispatch(new LogoutSuccess())
         })
     }

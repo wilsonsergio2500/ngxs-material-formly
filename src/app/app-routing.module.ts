@@ -7,7 +7,7 @@ import { redirectUnauthorizedTo, canActivate } from '@angular/fire/auth-guard';
 import { LoadUserResolver } from './resolvers/load-user.resolver';
 import { RegisterComponent } from './full/register/register.component';
 
-const redirectUnauthorizedToLanding = redirectUnauthorizedTo(['login']);
+const redirectUnauthorizedToLanding = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
   <Route>{

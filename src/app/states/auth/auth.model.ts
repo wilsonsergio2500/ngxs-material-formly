@@ -1,6 +1,6 @@
-import { UserInfo } from 'firebase'
+import firebase from 'firebase'
 
-export type User = UserInfo;
+export type User = firebase.UserInfo; 
 
 export interface IAuthStateModel {
     user: Partial<User>;

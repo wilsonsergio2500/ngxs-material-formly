@@ -13,6 +13,7 @@ import { Logger } from '../../../utils/logger';
 import { ConfirmationDialogService } from '../../../components/ui-elements/confirmation-dialog/confirmation-dialog.service';
 import { StringHelpers } from '../../../utils/string-helpers';
 import { FILE_BASE_PATH, ImageResizeIoAPI } from '../../../modules/image-resizer-io/lib-api/image-resizer-io-api';
+import { Injectable } from '@angular/core';
 
 
 @State<IImagesOnResizerStateModel>({
@@ -24,6 +25,7 @@ import { FILE_BASE_PATH, ImageResizeIoAPI } from '../../../modules/image-resizer
         searching: false
       }
 })
+@Injectable()
 export class ImagesOnResizerState {
 
     private schema: ImageResizeFireStore;

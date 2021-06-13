@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material';
+import { Inject } from '@angular/core';
+import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 
 export interface ISnackBarStatus{
   message: string;
