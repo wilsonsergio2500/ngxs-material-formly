@@ -1,7 +1,7 @@
-<span *ngIf="parentContext.IsWorking">
+<span class="busy-container" *ngIf="parentContext.IsWorking">
 
   <ng-content></ng-content>
-  <span style="float:right; padding-top:7px; padding-left: 7px">
+  <span class="busy-container-loading" >
     <mat-progress-spinner mode="indeterminate" [diameter]="20" [strokeWidth]="2"></mat-progress-spinner>
   </span>
 </span>

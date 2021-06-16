@@ -4,7 +4,7 @@ import { LoadingButton } from '../loading-button.component';
 @Component({
     selector: 'loading-button-busy',
     templateUrl: 'busy.component.html',
-    
+  styleUrls: ['busy.component.scss']
     
 })
 export class LoadingButtonBusyComponent implements OnInit {

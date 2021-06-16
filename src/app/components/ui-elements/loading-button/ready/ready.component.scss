@@ -1,0 +1,10 @@
+:host {
+  .ready-container{
+      display:flex;
+      flex-direction:row;
+
+      ::ng-deep mat-icon{
+          margin:3px;
+      }
+  }
+}

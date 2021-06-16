@@ -50,7 +50,10 @@
   mat-row::after {
     display: none;
   }
-  
+
+  .detail-row{
+      min-height:80px;
+  }
 }
 
 
@@ -60,10 +63,9 @@
 }
 
 .detail-row {
-  height: 0;
+  height:10px;
   flex-direction:column;
   align-items: flex-start;
-  /*min-height:0;*/
 }
 
 .element-row{
