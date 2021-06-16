@@ -1,6 +1,9 @@
 .cdk-column-action {
   max-width: 80px;
 }
+.cdk-column-expandedDetail {
+    min-width:80%;
+}
 
 .mobile-label {
   display: none;
@@ -52,7 +55,11 @@
   }
 
   .detail-row{
-      min-height:80px;
+      min-height:100px;
+  }
+  .action-submit-container{
+      margin-top:20px;
+      margin-bottom:20px;
   }
 }
 
@@ -60,6 +67,7 @@
 .element-detail {
   overflow: hidden;
   display: flex;
+  width:100%;
 }
 
 .detail-row {
@@ -70,4 +78,14 @@
 
 .element-row{
   border-bottom-width: 0;
+}
+
+.action-toggles-container {
+  max-width: 500px;
+}
+.action-submit-container{
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    align-items:flex-end;
 }

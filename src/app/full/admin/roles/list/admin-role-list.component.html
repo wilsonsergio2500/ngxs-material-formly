@@ -41,7 +41,7 @@
             <ng-container matColumnDef="expandedDetail">
               <mat-cell *matCellDef="let row" data-label="Action" [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'">
                 <div class="element-detail" fxLayout="column" fxLayout.gt-sm="row">
-                  <div fxFlex>
+                  <div fxFlex class="action-toggles-container">
                     <div fxFlex>
                       <mat-slide-toggle>Admin</mat-slide-toggle>
                     </div>
@@ -52,15 +52,13 @@
                       <mat-slide-toggle>Blogger</mat-slide-toggle>
                     </div>
                   </div>
-                  <div>
-
+                  <div class="action-submit-container">
                     <loading-button [IsBusy]="saving" (onSubmit)="onSave(row)" mat-raised-button type="button">
                       <loading-button-ready>
                         <mat-icon>save</mat-icon>
                       </loading-button-ready>
                       <loading-button-busy></loading-button-busy>
                     </loading-button>
-
                   </div>
 
                 </div>
