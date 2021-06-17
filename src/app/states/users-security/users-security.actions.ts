@@ -1,4 +1,5 @@
 import { IUserSecurityFirebaseModel } from '../../schemas/users/user.model';
+import { IUsersSecurityTogglesOnly } from './users-security.model';
 
 export class UsersSecuritySetAsLoadingAction {
   static type = '[Users Security] Set As Working';
@@ -32,4 +33,9 @@ export class UserSecurityGetNextPageAction {
 
 export class UserSecurityGetPreviousPageAction {
     static type = '[Users Security] Get Previous Page';
+}
+
+export class UserSecurityUpdateSecurity {
+  static type = '[Users Security] Update Security';
+  constructor(public request: IUsersSecurityTogglesOnly) { }
 }
