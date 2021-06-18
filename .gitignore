@@ -53,3 +53,7 @@ Fire8.njsproj.user
 /.vs/ngxs-material-formly/v16
 /.vs/ProjectSettings.json
 /.vs/*
+/functions/package-lock.json
+/functions/node_modules
+/functions/lib
+/functions/ui-debug.log
