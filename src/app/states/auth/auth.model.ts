@@ -1,16 +1,19 @@
 import firebase from 'firebase'
+import { ISecurityTypeInUserSecurityFirebaseModel } from '../../schemas/users/user.model';
 
-export type User = firebase.UserInfo; 
+export type User = firebase.User;
+export type FirebaseTokenResult = firebase.auth.IdTokenResult;
 
 export interface IAuthStateModel {
-    user: Partial<User>;
-    errorMessage: string;
-    working: boolean;
+  user: Partial<User>;
+  errorMessage: string;
+  working: boolean;
+  customClaims: ISecurityTypeInUserSecurityFirebaseModel
 }
 
 export interface IAuthenticateUser {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface IRegistrationUser extends IAuthenticateUser { }

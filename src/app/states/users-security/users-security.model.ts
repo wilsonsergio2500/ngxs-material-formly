@@ -2,8 +2,17 @@ import { IFirebasePaginationState } from '../../firebase/types/firabes-paginatio
 import { IUserSecurityFirebaseModel } from '../../schemas/users/user.model';
 
 export interface IUsersSecurityStateModel {
-    working: boolean;
-    userSecurities: IUserSecurityFirebaseModel[];
-    size: number;
-    paginationState: IFirebasePaginationState<IUserSecurityFirebaseModel>
-  }
+  working: boolean;
+  updating: boolean;
+  userSecurities: IUserSecurityFirebaseModel[];
+  size: number;
+  paginationState: IFirebasePaginationState<IUserSecurityFirebaseModel>;
+
+}
+
+export interface IUsersSecurityTogglesOnly {
+  admin?: boolean;
+  editor?: boolean;
+  blogger?: boolean;
+  Id?: string;
+}

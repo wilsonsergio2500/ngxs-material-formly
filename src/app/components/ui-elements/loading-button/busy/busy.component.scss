@@ -1,0 +1,10 @@
+:host {
+  .busy-container {
+    display: flex;
+    flex-direction: row;
+    .busy-container-loading{
+        height:20px;
+        padding:7px;
+    }
+  }
+}

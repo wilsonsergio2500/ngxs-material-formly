@@ -5,8 +5,6 @@
       <span [ngStyle]="{'padding.px': 10}">Loading Items...</span>
     </div>
   
-   
-  
     <ng-template #done>
 
       <h3>Roles</h3>
@@ -25,7 +23,7 @@
 
             <ng-container matColumnDef="email">
               <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-              <mat-cell *matCellDef="let row" data-label="email">
+              <mat-cell *matCellDef="let row; let i = index" data-label="email">
                 <span class="mobile-label"> Title </span>
                 <span class="value">{{row['email']}}</span>
               </mat-cell>
@@ -40,8 +38,26 @@
 
             <ng-container matColumnDef="expandedDetail">
               <mat-cell *matCellDef="let row" data-label="Action" [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'">
-                <div class="element-detail" >
-                  This is expanded
+                <div class="element-detail" fxLayout="column" fxLayout.gt-sm="row">
+                  <div fxFlex class="action-toggles-container">
+                    <div fxFlex>
+                      <mat-slide-toggle name="admin" [ngModel]="row.admin" (change)="toggleChange($event, row)">Admin</mat-slide-toggle>
+                    </div>
+                    <div fxFlex>
+                      <mat-slide-toggle name="editor" [ngModel]="row.editor" (change)="toggleChange($event, row)">Editor</mat-slide-toggle>
+                    </div>
+                    <div fxFlex>
+                      <mat-slide-toggle name="blogger" [ngModel]="row.blogger" (change)="toggleChange($event, row)">Blogger</mat-slide-toggle>
+                    </div>
+                  </div>
+                  <div class="action-submit-container">
+                    <loading-button [IsBusy]="updating$ | async" [disabled]="hasSame(row)" (onSubmit)="onSave(row)" mat-raised-button type="button">
+                      <loading-button-ready>
+                        <mat-icon>save</mat-icon>
+                      </loading-button-ready>
+                      <loading-button-busy></loading-button-busy>
+                    </loading-button>
+                  </div>
 
                 </div>
               </mat-cell>
@@ -53,7 +69,7 @@
                      [class.element-expanded-row]="expandedElement === row"
                      (click)="expandedElement && expandedElement.Id === row.Id ? expandedElement = null : expandedElement = row">
             </mat-row>
-            <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row" [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'"></mat-row>
+            <mat-row *matRowDef="let row; let i = index; columns: ['expandedDetail']" class="detail-row" [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'"></mat-row>
           </mat-table>
 
           <ng-container *ngIf="paginationEnabled$ | async">
