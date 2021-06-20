@@ -51,7 +51,7 @@
                     </div>
                   </div>
                   <div class="action-submit-container">
-                    <loading-button [IsBusy]="updating$ | async" (onSubmit)="onSave(row)" mat-raised-button type="button">
+                    <loading-button [IsBusy]="updating$ | async" [disabled]="hasSame(row)" (onSubmit)="onSave(row)" mat-raised-button type="button">
                       <loading-button-ready>
                         <mat-icon>save</mat-icon>
                       </loading-button-ready>

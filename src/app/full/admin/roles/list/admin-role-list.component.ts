@@ -67,4 +67,10 @@ export class AdminRoleListComponent {
 
   }
 
+  hasSame(row: IUserSecurityFirebaseModel) {
+    const { editor, blogger, admin, Id } = row;
+    const mem = this.map.get(row.Id);
+    return !!mem ? (mem.editor == editor && mem.blogger == blogger && mem.admin == admin) : true;
+  }
+
 } 
