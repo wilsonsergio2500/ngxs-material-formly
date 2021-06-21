@@ -14,6 +14,8 @@ import { NgxFormlyFieldExtendedModule } from './modules/formly-fields-extended/n
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { WebWorkerModule } from './modules/web-worker/web-worker.module';
 import { FirebaseModule } from './firebase/firebase.module';
+import { QuillModule } from 'ngx-quill';
+import { MatQuillModule } from './modules/mat-quill/mat-quill.module';
 
 @NgModule({
   imports: [
@@ -32,7 +34,25 @@ import { FirebaseModule } from './firebase/firebase.module';
     //VirtualScrollerModule,
     //TextMaskModule,
     ScrollingModule,
-    WebWorkerModule
+    WebWorkerModule,
+    QuillModule.forRoot({
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, false] }],
+          ['bold', 'italic', 'underline'],
+          ['image', 'code-block']
+        ]
+      },
+      //customModules: [{
+      //  implementation: Counter,
+      //  path: 'modules/counter'
+      //}],
+      customOptions: [{
+        import: 'formats/font',
+        whitelist: ['mirza', 'roboto', 'aref', 'serif', 'sansserif', 'monospace']
+      }]
+    }),
+    MatQuillModule,
   ],
   //providers: [
   //],
@@ -49,7 +69,9 @@ import { FirebaseModule } from './firebase/firebase.module';
     //VirtualScrollerModule,
     //TextMaskModule,
     ScrollingModule,
-    WebWorkerModule
+    WebWorkerModule,
+    QuillModule,
+    MatQuillModule
 
   ]
 })
