@@ -57,3 +57,4 @@ Fire8.njsproj.user
 /functions/node_modules
 /functions/lib
 /functions/ui-debug.log
+/package-lock.json
