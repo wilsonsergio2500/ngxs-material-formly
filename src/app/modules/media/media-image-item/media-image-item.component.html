@@ -20,9 +20,11 @@
         <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #imgMenu="matMenu" xPosition="before" yPosition="above" class="meta-action-menu">
-        <button mat-menu-item>Item 1</button>
-        <button mat-menu-item (click)="onRemove()" type="button">Remove
-            <mat-icon color="warn">delete</mat-icon>
+        <button mat-menu-item (click)="onSelect()" type="button" *ngIf="displaySelection">
+          <mat-icon color="primary">done</mat-icon>Select
+        </button>
+        <button mat-menu-item (click)="onRemove()" type="button">
+          <mat-icon color="warn">delete</mat-icon>Remove
         </button>
       </mat-menu>
 

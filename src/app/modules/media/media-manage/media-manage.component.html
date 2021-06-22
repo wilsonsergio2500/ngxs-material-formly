@@ -47,6 +47,8 @@
           <ng-container *ngFor="let item of pageItems">
             <media-image-item fxFlex="50" fxFlex.gt-lg="10" fxFlex.gt-md="20" fxFlex.gt-sm="25"
                               (remove)="onRemove($event)"
+                              (select)="onSelect($event)"
+                              [modeType]="modeType"
                               [image]="item.imageUrl"
                               [tags]="item.tags"
                               [key]="item.Id" ></media-image-item>
