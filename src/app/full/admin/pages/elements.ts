@@ -6,6 +6,7 @@ import { AdminPageCreateComponent } from './create/admin-page-create.component';
 
 //resolvers
 import { AdminPageListResolver } from './list/admin-page-list.resolver'
+import { AdminPageCreateResolver } from './create/admin-page-create.resolver';
 
 export function getAdminPagesComponents() {
     return [
@@ -17,6 +18,7 @@ export function getAdminPagesComponents() {
 
 export function getAdminPagesProviders() {
     return [
-        AdminPageListResolver
+      AdminPageListResolver,
+      AdminPageCreateResolver
     ]
 }
