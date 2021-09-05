@@ -1,0 +1,16 @@
+<div class="nav-item">
+
+  <ng-container *ngIf="navItem.IsLabelOnly">
+    <a mat-button *ngIf="navItem.children.length; else childs" [matMenuTriggerFor]="panel.menu" #trigger="matMenuTrigger" (mouseenter)="onMouseEnter(trigger)" style="z-index:1050">{{navItem.Label}}</a>
+    <a mat-button *ngIf="!navItem.children?.length">{{navItem.Label}}</a>
+    <toolbar-navigation-menu #panel [navigations]="navItem.children"></toolbar-navigation-menu>
+  </ng-container>
+
+
+  <ng-container *ngIf="!navItem.IsLabelOnly">
+    <a mat-button *ngIf="navItem.children.length; else childs" [routerLink]="navItem.Url" [matMenuTriggerFor]="panel.menu" #trigger="matMenuTrigger" (mouseenter)="onMouseEnter(trigger)" style="z-index:1050">{{navItem.Label}}</a>
+    <a mat-button [routerLink]="navItem.Url" *ngIf="!navItem.children?.length" style="z-index:1050" (mouseenter)="onMouseEnterOnLink()">{{navItem.Label}}</a>
+    <toolbar-navigation-menu #panel [navigations]="navItem.children"></toolbar-navigation-menu>
+  </ng-container>
+
+</div>

@@ -1,6 +1,9 @@
 import { Component, AfterContentInit, OnInit, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Select, Selector, Store } from '@ngxs/store';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { NavigationState } from '@states/navigation/navigation.state';
+import { Observable } from 'rxjs';
+import { INavigationModel } from '../../schemas/navigations/navigation.model';
 
 @Component({
     selector: 'public',
@@ -9,7 +12,8 @@ import { MediaMatcher } from '@angular/cdk/layout';
   })
 export class PublicComponent implements OnInit, AfterViewInit, OnDestroy  {
    
-    mobileQuery: MediaQueryList;
+  mobileQuery: MediaQueryList;
+  @Select(NavigationState.getNavigationRoot) navigations$: Observable<INavigationModel[]>;
 
     constructor(
         private media: MediaMatcher,

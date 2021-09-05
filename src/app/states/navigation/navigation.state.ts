@@ -60,7 +60,12 @@ export class NavigationState {
     @Selector()
     static getNavigationItem(state: INavigationStateModel) {
         return state.paginationState.items;
-    }
+  }
+
+  @Selector()
+  static getNavigationRoot(state: INavigationStateModel) {
+    return state.paginationState.items[0]?.navigationRoot;
+  }
 
     @Selector()
     static getCurrentPage(state: INavigationStateModel) {

@@ -6,6 +6,7 @@ import { MaterialComponentsModule } from '../materialcomponents.module';
 
 import { getCustomUiElements, getCustomUiElementsEntryComponents, getCustomUiElementsProviders } from './ui-elements/elements';
 import { getCustomFormElements, getCustomFormEntryComponents } from './form-elements/elements';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { getCustomFormElements, getCustomFormEntryComponents } from './form-elem
     CommonModule,
     FlexLayoutModule,
     MaterialComponentsModule,
+    RouterModule
     
   ],
   exports: [
