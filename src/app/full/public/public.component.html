@@ -11,23 +11,7 @@
 
     <ng-container *ngIf="navigations$ | async as navigations">
       <ng-container *ngIf="navigations.length">
-
-        <!--<ul class="nav-item">
-          <li *ngFor="let nav of navigations">
-            <ng-container *ngIf="nav.IsLabelOnly">
-
-            </ng-container>
-            <ng-container *ngIf="!nav.IsLabelOnly">
-              <a mat-button routerLink="{{nav.Url}}">{{nav.Label}}</a>
-
-            </ng-container>
-          </li>
-
-        </ul>-->
-
-          <!--<nav-menu-item *ngFor="let nav of navigations" [navItem]="nav"></nav-menu-item>-->
         <toolbar-navigation [navigations]="navigations"></toolbar-navigation>
-
       </ng-container>
     </ng-container>
 
@@ -48,43 +32,14 @@
 
 </mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav #mobilenav  [mode]="mobileQuery.matches ? 'over' : 'side'">
+  <mat-sidenav #mobilenav [mode]="mobileQuery.matches ? 'over' : 'side'">
 
-    Hello..
-    <!--<mat-list class="nav">
-      <ng-container *ngFor="let item of nav | async">
-        <ng-container *ngIf="item.label && item.label !== '' && item.url && item.url !== ''">
-          <mat-list-item>
-            <a matLine routerLink="{{item.url}}">
-              <span> {{item.label}}</span>
-            </a>
-          </mat-list-item>
-        </ng-container>
+
+    <ng-container *ngIf="navigations$ | async as navigations">
+      <ng-container *ngIf="navigations.length">
+        <side-navigation [navigations]="navigations"></side-navigation>
       </ng-container>
-
-      <mat-divider></mat-divider>
-
-      <mat-list-item>
-        <a matLine routerLink="/search">
-          <span>Search</span>
-        </a>
-        <mat-icon mat-list-icon>search</mat-icon>
-      </mat-list-item>
-
-      <ng-container *ngIf="cartTotal$ | async as cartTotal">
-        <ng-container *ngIf="cartTotal">
-          <mat-list-item>
-            <a matLine routerLink="store/cart">
-              <span>Cart</span>
-            </a>
-            <span class="cart-counter">{{cartTotal}}</span>
-            <mat-icon mat-list-icon>shopping_cart</mat-icon>
-          </mat-list-item>
-        </ng-container>
-
-      </ng-container>
-
-    </mat-list>-->
+    </ng-container>
 
   </mat-sidenav>
   <router-outlet></router-outlet>

@@ -5,6 +5,7 @@ import { getLoadingButtonComponents } from './loading-button/elements';
 import { getSnackBarStatusComponents, getSnackBarStatusProviders } from './snackbar-status/elements';
 import { getConfirmationDialogEntryComponents, getConfirmationDialogProviders } from './confirmation-dialog/elements';
 import { getToolbarNavigationComponents } from './toolbar-navigation/elements';
+import { getSideNavigationComponents } from './side-navigation/elements';
 
 export function getCustomUiElements() {
   return [
@@ -14,7 +15,8 @@ export function getCustomUiElements() {
     ...getToolbarNavigationComponents(),
     ...getLoadingButtonComponents(),
     ...getSnackBarStatusComponents(),
-    ...getConfirmationDialogEntryComponents()
+    ...getConfirmationDialogEntryComponents(),
+    ...getSideNavigationComponents()
   ];
 }
 
