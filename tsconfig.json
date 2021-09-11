@@ -18,7 +18,8 @@
     ],
     "paths": {
       "@states/*": [ "src/app/states/*" ],
-      "@firebase-schemas/*": [ "src/app/schemas/*" ]
+      "@firebase-schemas/*": [ "src/app/schemas/*" ],
+      "@firebase-image/*": [ "src/app/modules/firebase-image/*" ]
     }
   },
   "angularCompilerOptions": {
