@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  ::ng-deep {
+    .content {
+      justify-content: center
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+
+    .firebase-image-uploader {
+      .mat-form-field-label, mat-label {
+        display: none;
+      }
+      img{
+          max-height:115px;
+      }
+    }
+  }
+}

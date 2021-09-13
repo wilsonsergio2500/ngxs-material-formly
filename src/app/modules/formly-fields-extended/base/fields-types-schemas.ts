@@ -5,6 +5,7 @@ import { IFileUploaderOptions } from '../types/file-uploader/contracts/file-uplo
 import { Observable } from 'rxjs';
 import { getCountryStates } from '../../../utils/country-states';
 import { IImageResizeIoUploaderOptions } from '../types/image-resize-io-upload/contracts/image-rio-uploader-options';
+import { IFirebaseImageFormlyTemplateOptions } from '../types/firebase-image-formly/firebase-image-formly.module';
 
 
 export namespace FieldTypes {
@@ -48,7 +49,8 @@ export namespace FieldTypes {
         autogrow: boolean;
         fxHideXs: boolean;
         fileUploder: IFileUploaderOptions;
-        fileResizeIoUploader: IImageResizeIoUploaderOptions
+      fileResizeIoUploader: IImageResizeIoUploaderOptions,
+      firebaseImageFormlyconfig: IFirebaseImageFormlyTemplateOptions,
         height: number;
         suffixIcon: string;
         prefixIcon: string;
@@ -463,88 +465,15 @@ export namespace FieldTypes {
             this.templateOptions.placeholder = label;
         }
     
+  }
+
+  export class FirebaseImageUploader extends InputBase {
+    constructor(label: string, required: boolean, fxFlex = 100, firebaseImageFormlyconfig: Partial<IFirebaseImageFormlyTemplateOptions>, config?: Partial<InputBase>) {
+      super(label, required, fxFlex, config);
+      this.type = 'firebase-image-uploader';
+      this.templateOptions.firebaseImageFormlyconfig = { ...this.templateOptions.firebaseImageFormlyconfig, ...firebaseImageFormlyconfig };
+      this.templateOptions.placeholder = label;
     }
-
-  //export class LimitSelection extends InputBase {
-  //  constructor(list$: Observable<any[][]>, controlConfig: Partial<ILimitSelectionFormly> = {}) {
-  //    super('', true, 100);
-  //    this.type = 'formly-limit-client-selection';
-
-  //    const defaults = <ILimitSelectionFormly>{
-  //      config: [
-  //        <ILimitControlConfigItem>{ title: 'Client', expanded: true },
-  //        <ILimitControlConfigItem>{ title: 'Entity', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Location', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Department', expanded: false },
-  //      ],
-  //      maxLevel: PAYLOAD_TYPES.DEPARTMENT,
-  //      list$,
-  //      label: 'Selection'
-  //    }
-      
-  //    this.templateOptions.limitSelectionControl = { ...defaults, ...controlConfig };
-  //    this.templateOptions.label = this.templateOptions.limitSelectionControl.label;
-  //  }
-  //}
-
-  //export class LimitSelectionReport extends InputBase {
-  //  constructor(list$: Observable<any[][]>, controlConfig: Partial<ILimitSelectionFormly> = {}) {
-  //    super('', true, 100);
-  //    this.type = 'formly-limit-client-selection-report';
-
-  //    const defaults = <ILimitSelectionFormly>{
-  //      config: [
-  //        <ILimitControlConfigItem>{ title: 'Client', expanded: true },
-  //        <ILimitControlConfigItem>{ title: 'Entity', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Location', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Department', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Cost Center', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Manager', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Position', expanded: false },
-  //      ],
-  //      maxLevel: 5,
-  //      list$,
-  //      label: 'Selection'
-  //    }
-
-  //    this.templateOptions.limitSelectionControl = { ...defaults, ...controlConfig };
-  //    this.templateOptions.label = this.templateOptions.limitSelectionControl.label;
-  //  }
-  //}
-
-  //export class ReportPickerAvailableGroups extends InputBase {
-  //  constructor(label: string, list$: Observable<any[]>, controlConfig: Partial<ILimitSelectionFormly> = {}) {
-  //    super(label, false, 100);
-  //    this.type = 'formly-report-picker-available-group';
-  //    this.templateOptions.reportPickerAvailableGroups = <IReportPickerAvailableGroupConfig>{};
-  //    this.templateOptions.reportPickerAvailableGroups.list$ = list$;
-  //  }
-  //}
-
-  //export class TopReportSelectionCriteria extends InputBase {
-  //  constructor(label: string, list$: Observable<any[][]>, encodedType: string, controlConfig: Partial<ILimitSelectionFormly> = {}) {
-  //    super('', false, 100);
-  //    this.type = 'formly-limit-client-selection-report-top';
-  //    this.templateOptions.topReportSelectionCriteria = <ITopReportSelectionCriteria>{
-  //      label,
-  //      list$,
-  //      EncodedType: encodedType
-  //    };
-  //    const messages = {
-  //      required: (error, field: FormlyFieldConfig) => {
-  //        return `Main Selection is required`;
-  //      }
-  //    }
-  //    this.validation = { messages };
-  //  }
-  //}
-
-  //export class UserContextLimitLocation extends InputBase {
-  //  constructor(formlyConfig: IUserContextLimitLocationFormly, required: boolean = true, controlConfig: Partial<ILimitSelectionFormly> = {}) {
-  //    super('', required, 100);
-  //    this.type = 'formly-user-context-limit-location';
-  //    this.templateOptions.userContextLocationLimit = { ...formlyConfig };
-
-  //  }
-  //}
+  }
+ 
 }

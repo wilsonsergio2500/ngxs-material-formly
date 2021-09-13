@@ -9,6 +9,7 @@ import { FirebaseModule } from '../../../firebase/firebase.module';
 import { MaterialComponentsModule } from '../../../materialcomponents.module';
 import { getImageModuleComponents } from './elements';
 import { FirebaseImageModule } from '@firebase-image/firebase-image.module';
+import { FirebaseImageManagerModule } from '../../../modules/firebase-image-manager/firebase-image-manager.module';
 
 @NgModule({
   declarations:[
@@ -22,7 +23,8 @@ import { FirebaseImageModule } from '@firebase-image/firebase-image.module';
     SharedModule,
     FirebaseModule,
     MaterialComponentsModule,
-    FirebaseImageModule
+    FirebaseImageModule,
+    FirebaseImageManagerModule.forRoot()
   ]
 })
 export class ImagesModule { }
