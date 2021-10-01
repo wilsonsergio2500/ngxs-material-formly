@@ -33,6 +33,17 @@
 
     </ng-container>
 
+    <div>
+
+      <ng-container *ngIf="paginationEnabled$ | async">
+        <firebase-pagination (onNextPage)="onNextPage()"
+                             (onPreviousPage)="onPrevPage()"
+                             [enabled-next]="next$ | async"
+                             [enabled-previous]="prev$ | async"></firebase-pagination>
+      </ng-container>
+
+      </div>
+
 
   </ng-template>
 
