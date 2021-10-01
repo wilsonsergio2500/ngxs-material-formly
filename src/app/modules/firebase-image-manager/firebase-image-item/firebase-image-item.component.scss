@@ -13,6 +13,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      height:200px;
 
       img {
         width: 100%;
@@ -24,6 +25,7 @@
 
     .meta-description {
       padding: 20px;
+      display:flex;
 
       .tag-container {
         .tag-item {

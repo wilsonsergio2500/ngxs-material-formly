@@ -1,18 +1,33 @@
 :host {
+
+   .action-item-container{
+        display:flex;
+        flex-direction:column;
+        align-items:end;
+        button {
+            width:90px;
+        }
+  }
+
   .galery-container {
     display: flex;
     flex-direction: column;
+    padding: 10px;
 
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 350px));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       grid-gap: 1rem;
     }
 
     @media(max-width: 960px) {
       .grid-container {
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       }
+    }
+
+    .no-image-message {
+      margin: 10px;
     }
   }
 }

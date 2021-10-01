@@ -19,7 +19,7 @@ import { mergeMap, tap } from 'rxjs/operators';
 })
 export class FirebaseImageUploaderComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
-  @Input() bucket: string;
+  @Input() bucket: string = 'images';
   bucketRef: AngularFireStorageReference;
   loading = false;
   disable = false;

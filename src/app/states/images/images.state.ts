@@ -12,6 +12,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthState } from '../auth/auth.state';
 import { Logger } from '../../utils/logger';
 import { Injectable } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 
 @State<IImagesStateModel>({
@@ -30,6 +31,7 @@ export class ImagesState {
     private store: Store,
     private snackBarStatus: SnackbarStatusService,
     private confirmationDialog: ConfirmationDialogService,
+    private storage: AngularFireStorage,
     angularFireStore: AngularFirestore
   ) {
     this.schema = new ImagesFireStore(angularFireStore);
@@ -207,8 +209,16 @@ export class ImagesState {
   @Action(ImagesRemoveAction)
   onRemoveImage(ctx: StateContext<IImagesStateModel>, action: ImagesRemoveAction) {
     const { id, path } = action.request;
+    
     return this.confirmationDialog.OnConfirm('Are you sure you would like to delete this image?').pipe(
-
+      mergeMap(() => {
+        console.log(path);
+        const fileRef = this.storage.refFromURL(path);
+        return fileRef.delete();
+      }),
+      mergeMap(() => from(this.schema.delete(id))),
+      tap(() => this.snackBarStatus.OpenComplete('Image has been Removed')),
+      mergeMap(() => ctx.dispatch(new ImagesLoadFirstPageAction()))
     )
   }
 

@@ -1,7 +1,7 @@
-<h3>Images</h3>
+<h3>Image Gallery</h3>
 
-<div>
-<button mat-button color="primary" (click)="onAdd()">
+<div class="action-item-container">
+<button mat-raised-button color="primary" (click)="onAdd()">
   Add
   <mat-icon>add</mat-icon>
 </button>
@@ -23,6 +23,12 @@
         <div class="grid-container">
           <firebase-image-item *ngFor="let item of items" [item]="item" (onRemove)="removeImage($event)" (onSelect)="imageSelected($event)"></firebase-image-item>
         </div>
+      </ng-container>
+
+      <ng-container *ngIf="!items.length">
+        <mat-card class="no-image-message">
+          No images in this gallery
+        </mat-card>
       </ng-container>
 
     </ng-container>
