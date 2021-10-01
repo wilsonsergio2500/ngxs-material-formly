@@ -3,6 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormlyTypeGroup } from '@formly-fields-extended/base/FormlyTypeGroup';
 import { FieldTypes } from '@formly-fields-extended/base/fields-types-schemas';
 import { IImageFirebaseModel } from '@firebase-schemas/images/image.model';
+import { Store } from '@ngxs/store';
+import { ImagesCreateRecordAction } from '../../../states/images/images.actions';
 
 @Component({
     selector: 'firebase-image-uploader-dialog',
@@ -16,6 +18,7 @@ import { IImageFirebaseModel } from '@firebase-schemas/images/image.model';
   formlyGroup: FormlyTypeGroup<IImageFirebaseModel>;
 
   constructor(
+    private store: Store,
     private matDialogRef: MatDialogRef<FirebaseImageUploaderDialogComponent>
     ) {
     }
@@ -52,7 +55,7 @@ import { IImageFirebaseModel } from '@firebase-schemas/images/image.model';
 
   formSubmit($event) {
     this.formlyGroup.markAsBusy();
-    /*this.store.dispatch(new ImagesOnResizerCreateAction(this.formlyGroup.model))*/
+    this.store.dispatch(new ImagesCreateRecordAction(this.formlyGroup.model));
   }
    
   

@@ -1,91 +1,77 @@
 import { Store, State, Selector, StateContext, Action } from '@ngxs/store';
-import { IImagesOnResizerStateModel } from './images-on-resizer.model';
-import { ImagesOnResizerDoneAction, ImagesOnResizerLoadingAction, ImagesOnResizerCreateAction, ImagesOnResizerLoadAction, ImagesOnResizerNextPageAction, ImagesOnResizerPreviousPageAction, ImagesOnResizerLookupTagChangeAction, ImagesOnResizerSetAsSearchingAction, ImagesOnResizerSetSearchingAsDoneAction, ImagesOnResizerSearchAction, ImagesOnResizerRemoveImageAction, ImagesOnResizerFirstPageAction } from './images-on-resizer.actions';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { IImagesStateModel } from './images.model';
+import { ImagesDone, ImagesLoading, ImagesCreateRecordAction, ImagesLoadAction, ImagesLoadFirstPageAction, ImagesLoadNextPageAction, ImagesLoadPreviousPageAction, ImagesRemoveAction } from './images.actions';
 import { tap, mergeMap, catchError } from 'rxjs/operators';
-import { ImageResizeFireStore } from '../../../schemas/images/image-resizer.firebase';
-import { Subscription, from, of } from 'rxjs';
-import { SnackbarStatusService } from '../../../components/ui-elements/snackbar-status/service/snackbar-status.service';
-import { AuthState } from '../../auth/auth.state';
-import { FirebasePaginationStateModel } from '../../../firebase/types/firabes-pagination';
-import { IImageResizerFirebaseModel } from '../../../schemas/images/image-resizer.model';
-import { Logger } from '../../../utils/logger';
-import { ConfirmationDialogService } from '../../../components/ui-elements/confirmation-dialog/confirmation-dialog.service';
-import { StringHelpers } from '../../../utils/string-helpers';
-import { FILE_BASE_PATH, ImageResizeIoAPI } from '../../../modules/image-resizer-io/lib-api/image-resizer-io-api';
+import { FirebasePaginationStateModel } from '../../firebase/types/firabes-pagination';
+import { IImageFirebaseModel } from '@firebase-schemas/images/image.model';
+import { ImagesFireStore } from '@firebase-schemas/images/image.firebase';
+import { from, of, Subscription } from 'rxjs';
+import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
+import { ConfirmationDialogService } from '../../components/ui-elements/confirmation-dialog/confirmation-dialog.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthState } from '../auth/auth.state';
+import { Logger } from '../../utils/logger';
 import { Injectable } from '@angular/core';
 
 
-@State<IImagesOnResizerStateModel>({
-  name: 'imagesOnResizer',
-  defaults: <IImagesOnResizerStateModel>{
-    loading: false,
-    paginationState: new FirebasePaginationStateModel<IImageResizerFirebaseModel>(20),
-    lookUpTags: [],
-    searching: false
+@State<IImagesStateModel>({
+  name: 'imagesState',
+  defaults: <IImagesStateModel>{
+    loading: true,
+    paginationState: new FirebasePaginationStateModel<IImageFirebaseModel>(20)
   }
 })
 @Injectable()
-export class ImagesOnResizerState {
+export class ImagesState {
 
-  private schema: ImageResizeFireStore;
+  private schema: ImagesFireStore;
   private subscription: Subscription;
   constructor(
     private store: Store,
     private snackBarStatus: SnackbarStatusService,
     private confirmationDialog: ConfirmationDialogService,
-    private angularFireStore: AngularFirestore
-
+    angularFireStore: AngularFirestore
   ) {
-    this.schema = new ImageResizeFireStore(angularFireStore);
+    this.schema = new ImagesFireStore(angularFireStore);
   }
 
   @Selector()
-  static IsLoading(state: IImagesOnResizerStateModel): boolean {
+  static IsLoading(state: IImagesStateModel): boolean {
     return state.loading;
   }
 
   @Selector()
-  static getPage(state: IImagesOnResizerStateModel) {
+  static getPage(state: IImagesStateModel) {
     return state.paginationState.items;
   }
   @Selector()
-  static getNextEnabled(state: IImagesOnResizerStateModel): boolean {
+  static getNextEnabled(state: IImagesStateModel): boolean {
     return state.paginationState.next;
   }
   @Selector()
-  static getPreviousEnabled(state: IImagesOnResizerStateModel): boolean {
+  static getPreviousEnabled(state: IImagesStateModel): boolean {
     return state.paginationState.prev;
   }
   @Selector()
-  static IsPaginatorEnabled(state: IImagesOnResizerStateModel): boolean {
+  static IsPaginatorEnabled(state: IImagesStateModel): boolean {
     return state.paginationState.prev || state.paginationState.next;
   }
 
-  @Selector()
-  static getImageLookUpTags(state: IImagesOnResizerStateModel) {
-    return state.lookUpTags;
-  }
-  @Selector()
-  static IsSearching(state: IImagesOnResizerStateModel) {
-    return state.searching;
-  }
-
-  @Action(ImagesOnResizerDoneAction)
-  onDone(ctx: StateContext<IImagesOnResizerStateModel>) {
+  @Action(ImagesDone)
+  onDone(ctx: StateContext<IImagesStateModel>) {
     ctx.patchState({
       loading: false
     });
   }
-  @Action(ImagesOnResizerLoadingAction)
-  onLoading(ctx: StateContext<IImagesOnResizerStateModel>) {
+  @Action(ImagesLoading)
+  onLoading(ctx: StateContext<IImagesStateModel>) {
     ctx.patchState({
       loading: true
     });
   }
 
-  @Action(ImagesOnResizerCreateAction)
-  onCreate(ctx: StateContext<IImagesOnResizerStateModel>, action: ImagesOnResizerCreateAction) {
+  @Action(ImagesCreateRecordAction)
+  onCreateRecordAction(ctx: StateContext<IImagesStateModel>, action: ImagesCreateRecordAction) {
     return this.store.selectOnce(AuthState.getUser).pipe(
       mergeMap((user) => {
         const form = { ...action.request };
@@ -95,18 +81,17 @@ export class ImagesOnResizerState {
       }),
       tap(() => {
         this.snackBarStatus.OpenComplete('Image succesfully added');
-        //naviage to view
       })
     )
   }
 
-  @Action(ImagesOnResizerLoadAction)
-  onLoad(ctx: StateContext<IImagesOnResizerStateModel>) {
+  @Action(ImagesLoadAction)
+  onLoad(ctx: StateContext<IImagesStateModel>) {
 
     const { paginationState } = ctx.getState();
     const { pageSize, orderByField } = paginationState;
     if (!this.subscription) {
-      ctx.dispatch(new ImagesOnResizerLoadingAction());
+      ctx.dispatch(new ImagesLoading());
       this.subscription = this.schema.collection$(ref => ref.limit(pageSize).orderBy(orderByField, 'desc')).pipe(
         tap(model => {
           if (!model.length) {
@@ -122,14 +107,14 @@ export class ImagesOnResizerState {
           const newPaginationState = { ...paginationState, begining, first, last, pagination_count, next, prev, prev_start_at: prevStartAt, items: model };
           ctx.patchState({ paginationState: newPaginationState })
         }),
-        mergeMap(() => ctx.dispatch(new ImagesOnResizerDoneAction()))
+        mergeMap(() => ctx.dispatch(new ImagesDone()))
       ).subscribe();
     }
 
   }
 
-  @Action(ImagesOnResizerFirstPageAction)
-  onGoToFirstPage(ctx: StateContext<IImagesOnResizerStateModel>) {
+  @Action(ImagesLoadFirstPageAction)
+  onGoToFirstPage(ctx: StateContext<IImagesStateModel>) {
     const { paginationState } = ctx.getState();
     const { pageSize, orderByField, begining } = paginationState;
     return this.schema.queryCollection(ref => ref.limit(pageSize).orderBy(orderByField, 'desc').startAt(begining))
@@ -148,13 +133,14 @@ export class ImagesOnResizerState {
           const prev_start_at = [first];
           const newPaginationState = { ...paginationState, prev, first, last, items, pagination_count, prev_start_at, next };
           ctx.patchState({ paginationState: newPaginationState });
-          Logger.LogTable(`Firebase Paginate Post[Page:${pagination_count + 1}]`, items);
+          Logger.LogTable(`Firebase Paginate Images[Page:${pagination_count + 1}]`, items);
         })
       )
+
   }
 
-  @Action(ImagesOnResizerNextPageAction)
-  onNextPage(ctx: StateContext<IImagesOnResizerStateModel>) {
+  @Action(ImagesLoadNextPageAction)
+  onNextPage(ctx: StateContext<IImagesStateModel>) {
     const { paginationState } = ctx.getState();
     let { pageSize, last, pagination_count, prev_start_at, first, orderByField } = paginationState;
     return this.schema.queryCollection(ref => ref.limit(pageSize).orderBy(orderByField, 'desc').startAfter(last))
@@ -177,7 +163,7 @@ export class ImagesOnResizerState {
           const prevStartAt = [...prev_start_at, first];
           const newPaginationState = { ...paginationState, next, first, last, items, pagination_count, prev_start_at: prevStartAt, prev };
           ctx.patchState({ paginationState: newPaginationState });
-          Logger.LogTable(`Firebase Paginate Post[Page:${pagination_count + 1}]`, items);
+          Logger.LogTable(`Firebase Paginate Images[Page:${pagination_count + 1}]`, items);
 
         })
         , catchError(error => {
@@ -188,8 +174,8 @@ export class ImagesOnResizerState {
       );
   }
 
-  @Action(ImagesOnResizerPreviousPageAction)
-  onPreviousPage(ctx: StateContext<IImagesOnResizerStateModel>) {
+  @Action(ImagesLoadPreviousPageAction)
+  onPreviousPage(ctx: StateContext<IImagesStateModel>) {
     const { paginationState } = ctx.getState();
     let { pageSize, orderByField, first, pagination_count, prev_start_at } = paginationState;
     return this.schema.queryCollection(ref => ref.orderBy(orderByField, 'desc').endBefore(first).limit(pageSize))
@@ -208,7 +194,7 @@ export class ImagesOnResizerState {
           prev_start_at = prev_start_at.slice(0, prev_start_at.length - 1);
           const newPaginationState = { ...paginationState, prev, first, last, items, pagination_count, prev_start_at, next };
           ctx.patchState({ paginationState: newPaginationState });
-          Logger.LogTable(`Firebase Paginate Post[Page:${pagination_count + 1}]`, items);
+          Logger.LogTable(`Firebase Paginate Images[Page:${pagination_count + 1}]`, items);
         }),
         catchError(error => {
           const newPaginationState = { ...paginationState, prev: false };
@@ -218,44 +204,13 @@ export class ImagesOnResizerState {
       )
   }
 
-  @Action(ImagesOnResizerLookupTagChangeAction)
-  onTagChanged(ctx: StateContext<IImagesOnResizerStateModel>, action: ImagesOnResizerLookupTagChangeAction) {
-    const { tags: lookUpTags } = action;
-    ctx.patchState({ lookUpTags });
-  }
-
-  @Action(ImagesOnResizerSetAsSearchingAction)
-  onSearching(ctx: StateContext<IImagesOnResizerStateModel>) {
-    ctx.patchState({ searching: true });
-  }
-
-  @Action(ImagesOnResizerSetSearchingAsDoneAction)
-  onSearchingDone(ctx: StateContext<IImagesOnResizerStateModel>) {
-    ctx.patchState({ searching: false })
-  }
-
-  @Action(ImagesOnResizerSearchAction)
-  onSearch(ctx: StateContext<IImagesOnResizerStateModel>) {
-    ctx.dispatch(new ImagesOnResizerSetAsSearchingAction());
-  }
-
-  @Action(ImagesOnResizerRemoveImageAction)
-  onRemoveImage(ctx: StateContext<IImagesOnResizerStateModel>, action: ImagesOnResizerRemoveImageAction) {
-    const { Id, Image } = action.request;
-    return this.confirmationDialog.OnConfirm('Are you sure you would like to delete this image').pipe(
-      mergeMap(() => from(this.schema.delete(Id))),
-      mergeMap(() => {
-        const resizeIoId = StringHelpers.ExtractSubstring(Image, FILE_BASE_PATH);
-        return from(ImageResizeIoAPI.Delete(resizeIoId));
-      }),
-      tap(() => {
-        this.snackBarStatus.OpenComplete('Image has been removed');
-      }),
-      mergeMap(() => {
-        return ctx.dispatch(new ImagesOnResizerFirstPageAction())
-      })
+  @Action(ImagesRemoveAction)
+  onRemoveImage(ctx: StateContext<IImagesStateModel>, action: ImagesRemoveAction) {
+    const { id, path } = action.request;
+    return this.confirmationDialog.OnConfirm('Are you sure you would like to delete this image?').pipe(
 
     )
   }
+
 
 }

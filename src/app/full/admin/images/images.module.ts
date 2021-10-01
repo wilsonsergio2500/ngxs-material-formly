@@ -10,11 +10,15 @@ import { MaterialComponentsModule } from '../../../materialcomponents.module';
 import { getImageModuleComponents } from './elements';
 import { FirebaseImageModule } from '@firebase-image/firebase-image.module';
 import { FirebaseImageManagerModule } from '../../../modules/firebase-image-manager/firebase-image-manager.module';
+import { ImagesMangerResolver } from './images-manager/images-manager.resolver';
 
 @NgModule({
-  declarations:[
-      ...getImageModuleComponents()
-    ],
+  declarations: [
+    ...getImageModuleComponents()
+  ],
+  providers: [
+    ImagesMangerResolver
+  ],
   imports: [
     CommonModule,
     ImagesRoutingModule,

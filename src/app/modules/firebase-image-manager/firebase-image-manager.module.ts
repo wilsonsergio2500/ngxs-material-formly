@@ -10,6 +10,7 @@ import { FirebaseImageModule } from '@firebase-image/firebase-image.module';
 import { FirebaseImageManageComponent } from './firebase-image-manage/firebase-image-manage.component';
 import { FirebaseImageUploaderDialogComponent } from './firebase-image-uploader-dialog/firebase-image-uploader-dialog.component';
 import { FirebaseImageUploaderService } from './firebase-image-uploader-service/firebase-image-uploader.service';
+import { FirebaseImageItemComponent } from './firebase-image-item/firebase-image-item.component';
 
 
 @NgModule({
@@ -24,11 +25,13 @@ import { FirebaseImageUploaderService } from './firebase-image-uploader-service/
   ],
   declarations: [
     FirebaseImageManageComponent,
-    FirebaseImageUploaderDialogComponent
+    FirebaseImageUploaderDialogComponent,
+    FirebaseImageItemComponent
   ],
   exports: [
     FirebaseImageManageComponent,
-    FirebaseImageUploaderDialogComponent
+    FirebaseImageUploaderDialogComponent,
+    FirebaseImageItemComponent
   ],
   entryComponents: [
     FirebaseImageManageComponent,

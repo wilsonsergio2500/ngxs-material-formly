@@ -1,0 +1,47 @@
+:host {
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  background: #fff;
+  height: 100%;
+  position: relative;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    .image-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 100%;
+        object-fit: contain;
+        object-position: center;
+        max-height: 200px;
+      }
+    }
+
+    .meta-description {
+      padding: 20px;
+
+      .tag-container {
+        .tag-item {
+          background-color: #e0e0e0;
+          padding: 7px 10px;
+          align-items: center;
+          border-radius: 16px;
+          font-size: 10px;
+          margin: 1px;
+          line-height: 25px;
+        }
+      }
+    }
+
+    .meta-actions{
+        position:absolute;
+        right:10px;
+        top:10px;
+    }
+  }
+}

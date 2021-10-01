@@ -5,6 +5,7 @@ import { NavigationState } from './navigation/navigation.state';
 import { UsersState } from './users/users.state';
 import { UsersSecurityState } from './users-security/users-security.state';
 import { PostState } from './posts/posts.state';
+import { ImagesState } from './images/images.state';
 
 export function getRootStates() {
   return [
@@ -14,6 +15,7 @@ export function getRootStates() {
     NavigationState,
     UsersState,
     UsersSecurityState,
-    PostState
+    PostState,
+    ImagesState
   ]
 }

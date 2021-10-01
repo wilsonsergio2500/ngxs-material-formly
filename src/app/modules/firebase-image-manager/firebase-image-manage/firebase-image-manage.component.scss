@@ -1,0 +1,18 @@
+:host {
+  .galery-container {
+    display: flex;
+    flex-direction: column;
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 350px));
+      grid-gap: 1rem;
+    }
+
+    @media(max-width: 960px) {
+      .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      }
+    }
+  }
+}

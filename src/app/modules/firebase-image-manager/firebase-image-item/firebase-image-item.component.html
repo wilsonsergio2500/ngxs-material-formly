@@ -1,0 +1,32 @@
+<div class="content">
+
+  <div class="image-container">
+    <img *ngIf="item.imageUrl" src="{{item.imageUrl}}" />
+  </div>
+  <div class="meta-description">
+
+    <ng-container *ngFor="let tag of item.tags">
+      <div class="tag-container">
+        <span class="tag-item">{{tag}}</span>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <div class="meta-actions">
+
+    <button mat-mini-fab color="primary" aria-label="menu" [matMenuTriggerFor]="imgMenu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #imgMenu="matMenu" xPosition="before" yPosition="below" class="meta-action-menu">
+      <button mat-menu-item (click)="select()" type="button" *ngIf="displaySelection">
+        <mat-icon color="primary">done</mat-icon>Select
+      </button>
+      <button mat-menu-item (click)="remove()" type="button">
+        <mat-icon color="warn">delete</mat-icon>Remove
+      </button>
+    </mat-menu>
+
+  </div>
+
+</div>
