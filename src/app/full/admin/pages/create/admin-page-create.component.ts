@@ -26,6 +26,13 @@ export class AdminPageCreateComponent implements OnInit {
   componentTitle = 'Admin Page Create Title';
   listPath = "../list"
 
+  modules = {
+    //'emoji-shortname': true,
+    //'emoji-textarea': true,
+    //'emoji-toolbar': true,
+    'imageResize': {}
+  }
+
   constructor(
     private store: Store,
     private imageDialogService: MediaManageDialogService,
@@ -61,6 +68,13 @@ export class AdminPageCreateComponent implements OnInit {
   onQuillEditorCreated() {
     const toolbar = this.editor.quillEditor.getModule('toolbar');
     toolbar.addHandler('image', this.onImageHandle.bind(this));
+  }
+  onCamera() {
+      //const toolbar = this.editor.quillEditor.getModule('toolbar');
+      //console.log(toolbar);
+      //console.log(this.editor);
+      //console.log(this.editor.quillEditor);
+    this.onImageHandle();
   }
 
   onImageHandle() {

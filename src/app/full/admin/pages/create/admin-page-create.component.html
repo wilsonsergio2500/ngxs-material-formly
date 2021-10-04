@@ -29,7 +29,22 @@
   <div>
 
 
-    <mat-quill theme="bubble" (onEditorCreated)="onQuillEditorCreated()">
+    <mat-quill theme="bubble" [modules]="modules" (onEditorCreated)="onQuillEditorCreated()">
+
+      <mat-icon>add</mat-icon>
+      <div class="controls">
+        <mat-icon (click)="onCamera()">camera_alt</mat-icon>
+      </div>
+      <!--<div id="sidebar-controls">
+        <button id="show-controls"><i class="fa fa-plus"></i></button>
+        <span class="controls">
+          <button id="image-button"><i class="fa fa-camera"></i></button>
+          <button id="video-button"><i class="fa fa-play"></i></button>
+          <button id="tweet-button"><i class="fa fa-twitter"></i></button>
+          <button id="divider-button"><i class="fa fa-minus"></i></button>
+        </span>
+      </div>-->
+
     </mat-quill>
 
 

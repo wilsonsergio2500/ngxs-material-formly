@@ -6,6 +6,10 @@ import {
 import { MatFormFieldControl } from '@angular/material/form-field'
 import { _MatQuillBase } from './mat-quill-base'
 
+import Quill from 'quill'
+import { ImageResize } from './extensions/ImageResize/imageResize'
+Quill.register('modules/imageResize', ImageResize)
+
 let nextUniqueId = 0
 
 const SELECTOR = 'mat-quill'
