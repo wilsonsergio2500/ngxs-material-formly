@@ -38,8 +38,6 @@ export class ImageResize {
     // save the quill reference and options
     this.quill = quill;
 
-    console.log('happen');
-
     // Apply the options to our defaults, and stash them for later
     // defaultsDeep doesn't do arrays as you'd expect, so we'll need to apply the classes array from options separately
     let moduleClasses = false;

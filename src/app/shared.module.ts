@@ -16,6 +16,7 @@ import { WebWorkerModule } from './modules/web-worker/web-worker.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { QuillModule } from 'ngx-quill';
 import { MatQuillModule } from './modules/mat-quill/mat-quill.module';
+import { MatFabSpeedDialModule } from './modules/mat-fab-speed-dial/mat-fab-speed-dial.module';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { MatQuillModule } from './modules/mat-quill/mat-quill.module';
       }]
     }),
     MatQuillModule,
+    MatFabSpeedDialModule
   ],
   //providers: [
   //],
@@ -71,7 +73,8 @@ import { MatQuillModule } from './modules/mat-quill/mat-quill.module';
     ScrollingModule,
     WebWorkerModule,
     QuillModule,
-    MatQuillModule
+    MatQuillModule,
+    MatFabSpeedDialModule
 
   ]
 })

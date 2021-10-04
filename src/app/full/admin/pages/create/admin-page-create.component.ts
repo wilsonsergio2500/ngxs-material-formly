@@ -10,6 +10,8 @@ import { MatQuill } from '../../../../modules/mat-quill/mat-quill';
 import { MediaManageDialogService } from '../../../../modules/media/media-manage-dialog-service/media-manage-dialog.service';
 import { tap } from 'rxjs/operators';
 
+import Quill from 'quill'
+
 @Component({
   selector: 'admin-page-create',
   templateUrl: 'admin-page-create.component.html',
@@ -30,6 +32,11 @@ export class AdminPageCreateComponent implements OnInit {
     //'emoji-shortname': true,
     //'emoji-textarea': true,
     //'emoji-toolbar': true,
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+  /*    ['image', 'code-block']*/
+    ],
     'imageResize': {}
   }
 
@@ -66,15 +73,42 @@ export class AdminPageCreateComponent implements OnInit {
   }
 
   onQuillEditorCreated() {
+    //console.log(this.editor);
+    console.log(this.editor.quillEditor);
     const toolbar = this.editor.quillEditor.getModule('toolbar');
     toolbar.addHandler('image', this.onImageHandle.bind(this));
+    this.addSideBarControlHandler();
   }
+  addSideBarControlHandler() {
+    let Block = Quill.import('blots/block');
+    const editor = this.editor.quillEditor;
+    editor.on(Quill.events.EDITOR_CHANGE, (eventType, range) => {
+      if (eventType !== Quill.events.SELECTION_CHANGE) return;
+      if (range == null) return;
+      if (range.length === 0) {
+        let [block, offset] = editor.scroll.descendant(Block, range.index);
+        if (block != null && block.domNode.firstChild instanceof HTMLBRElement) {
+          let lineBounds = editor.getBounds(range);
+          console.log(lineBounds);
+        }
+
+      }
+
+    })
+  }
+
   onCamera() {
       //const toolbar = this.editor.quillEditor.getModule('toolbar');
       //console.log(toolbar);
       //console.log(this.editor);
       //console.log(this.editor.quillEditor);
     this.onImageHandle();
+  }
+  onVideo() {
+  }
+
+  doAction(event: any) {
+    console.log(event);
   }
 
   onImageHandle() {
