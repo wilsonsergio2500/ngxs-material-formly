@@ -26,9 +26,9 @@
 
   </div>
 
-  <div>
+  <div class="editor-container">
 
-    <mat-fab-speed-dial [direction]="'right'">
+    <!--<mat-fab-speed-dial [direction]="'right'">
       <mat-fab-speed-dial-trigger>
         <button mat-mini-fab (click)="doAction('trigger')"><mat-icon>menu</mat-icon></button>
       </mat-fab-speed-dial-trigger>
@@ -38,25 +38,40 @@
         <button mat-mini-fab (click)="doAction('action2')"><mat-icon>edit</mat-icon></button>
         <button mat-mini-fab (click)="doAction('action3')"><mat-icon>search</mat-icon></button>
       </mat-fab-speed-dial-actions>
-    </mat-fab-speed-dial>
+    </mat-fab-speed-dial>-->
 
 
     <mat-quill theme="bubble" [modules]="modules" (onEditorCreated)="onQuillEditorCreated()">
 
-      <mat-icon>add</mat-icon>
-      <div class="controls">
-        <mat-icon (click)="onCamera()">camera_alt</mat-icon>
-        <mat-icon (click)="onVideo()">play_arrow</mat-icon>
+      <div class="sidebar">
+        <mat-fab-speed-dial [direction]="'right'" *ngIf="displaySideBar">
+          <mat-fab-speed-dial-trigger>
+            <button mat-mini-fab (click)="doAction('trigger')"><mat-icon>menu</mat-icon></button>
+          </mat-fab-speed-dial-trigger>
+
+          <mat-fab-speed-dial-actions>
+            <button mat-mini-fab (click)="doAction('action1')"><mat-icon>add</mat-icon></button>
+            <button mat-mini-fab (click)="doAction('action2')"><mat-icon>edit</mat-icon></button>
+            <button mat-mini-fab (click)="doAction('action3')"><mat-icon>search</mat-icon></button>
+          </mat-fab-speed-dial-actions>
+        </mat-fab-speed-dial>
       </div>
+
+
+      <!--<mat-icon>add</mat-icon>
+  <div class="controls">
+    <mat-icon (click)="onCamera()">camera_alt</mat-icon>
+    <mat-icon (click)="onVideo()">play_arrow</mat-icon>
+  </div>-->
       <!--<div id="sidebar-controls">
-      <button id="show-controls"><i class="fa fa-plus"></i></button>
-      <span class="controls">
-        <button id="image-button"><i class="fa fa-camera"></i></button>
-        <button id="video-button"><i class="fa fa-play"></i></button>
-        <button id="tweet-button"><i class="fa fa-twitter"></i></button>
-        <button id="divider-button"><i class="fa fa-minus"></i></button>
-      </span>
-    </div>-->
+    <button id="show-controls"><i class="fa fa-plus"></i></button>
+    <span class="controls">
+      <button id="image-button"><i class="fa fa-camera"></i></button>
+      <button id="video-button"><i class="fa fa-play"></i></button>
+      <button id="tweet-button"><i class="fa fa-twitter"></i></button>
+      <button id="divider-button"><i class="fa fa-minus"></i></button>
+    </span>
+  </div>-->
 
     </mat-quill>
 

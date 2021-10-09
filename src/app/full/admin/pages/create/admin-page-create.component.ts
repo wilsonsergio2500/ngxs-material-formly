@@ -28,6 +28,8 @@ export class AdminPageCreateComponent implements OnInit {
   componentTitle = 'Admin Page Create Title';
   listPath = "../list"
 
+  displaySideBar: boolean = false;
+
   modules = {
     //'emoji-shortname': true,
     //'emoji-textarea': true,
@@ -74,7 +76,7 @@ export class AdminPageCreateComponent implements OnInit {
 
   onQuillEditorCreated() {
     //console.log(this.editor);
-    console.log(this.editor.quillEditor);
+  /*  console.log(this.editor.quillEditor);*/
     const toolbar = this.editor.quillEditor.getModule('toolbar');
     toolbar.addHandler('image', this.onImageHandle.bind(this));
     this.addSideBarControlHandler();
@@ -88,10 +90,16 @@ export class AdminPageCreateComponent implements OnInit {
       if (range.length === 0) {
         let [block, offset] = editor.scroll.descendant(Block, range.index);
         if (block != null && block.domNode.firstChild instanceof HTMLBRElement) {
-          let lineBounds = editor.getBounds(range);
-          console.log(lineBounds);
+          /* let lineBounds = editor.getBounds(range);*/
+          /* console.log(lineBounds);*/
+          this.displaySideBar = true;
+
+        } else {
+          this.displaySideBar = false;
         }
 
+      } else {
+        this.displaySideBar = false;
       }
 
     })

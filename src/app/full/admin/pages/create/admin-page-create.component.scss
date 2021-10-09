@@ -1,0 +1,33 @@
+:host {
+  .editor-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+
+    ::ng-deep {
+      mat-quill {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+
+        @media(max-width: 960px) {
+          width: 90%
+        }
+
+        .sidebar {
+          position: relative;
+          min-width: 40px;
+          mat-fab-speed-dial{
+              position: absolute;
+              bottom:0;
+          }
+        }
+
+        .ql-container {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

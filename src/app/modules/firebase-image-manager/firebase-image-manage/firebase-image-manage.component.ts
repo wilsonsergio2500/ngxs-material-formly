@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -23,6 +23,8 @@ export type GALLERY_DISPLAY_TYPE = "PRESENTER" | "SELECTION";
   @Select(ImagesState.getNextEnabled) next$: Observable<boolean>;
   @Select(ImagesState.getPreviousEnabled) prev$: Observable<boolean>;
   @Select(ImagesState.IsPaginatorEnabled) paginationEnabled$: Observable<boolean>;
+
+  @Input() displayType: GALLERY_DISPLAY_TYPE = "PRESENTER"
   @Output() onSelectImage = new EventEmitter<string>(null);
   private subscriptions: Subscription[] = [];
 

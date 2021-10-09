@@ -11,12 +11,12 @@ import { GALLERY_DISPLAY_TYPE } from '../firebase-image-manage/firebase-image-ma
 export class FirebaseImageItemComponent {
 
   @Input() item: IImageFirebaseModel;
-  @Input() DisplayType: GALLERY_DISPLAY_TYPE = "PRESENTER"
+  @Input() displayType: GALLERY_DISPLAY_TYPE = "PRESENTER"
   @Output() onSelect = new EventEmitter<string>(null)
   @Output() onRemove = new EventEmitter<IImagesRemoveRequest>(null);
 
   get displaySelection() {
-    return this.DisplayType == "SELECTION";
+    return this.displayType == "SELECTION";
   }
 
   remove() {
