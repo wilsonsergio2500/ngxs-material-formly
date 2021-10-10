@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnDestroy, Output} from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -9,6 +9,11 @@ import { IImagesRemoveRequest } from '@states/images/images.model';
 import { ImagesLoadNextPageAction, ImagesLoadPreviousPageAction, ImagesRemoveAction } from '@states/images/images.actions';
 
 export type GALLERY_DISPLAY_TYPE = "PRESENTER" | "SELECTION";
+
+/**
+ * usage:
+ <firebase-image-manage [displayType]="displayType" (onSelectImage)="onSelectItem($event)"></firebase-image-manage>
+ */
 
 @Component({
     selector: 'firebase-image-manage',
@@ -27,6 +32,11 @@ export type GALLERY_DISPLAY_TYPE = "PRESENTER" | "SELECTION";
   @Input() displayType: GALLERY_DISPLAY_TYPE = "PRESENTER"
   @Output() onSelectImage = new EventEmitter<string>(null);
   private subscriptions: Subscription[] = [];
+
+  @HostBinding('class.gallery-selection-mode')
+  get hasSelectionMode() {
+    return this.displayType == 'SELECTION';
+  }
 
   constructor(
     private store: Store,

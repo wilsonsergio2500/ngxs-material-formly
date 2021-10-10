@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { GALLERY_DISPLAY_TYPE } from '../firebase-image-manage/firebase-image-manage.component';
 

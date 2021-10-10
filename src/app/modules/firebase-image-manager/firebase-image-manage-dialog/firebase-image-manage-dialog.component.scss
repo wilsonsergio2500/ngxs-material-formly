@@ -1,0 +1,10 @@
+:host {
+  .close-action-container {
+    display: flex;
+    justify-content: flex-end;
+
+    mat-icon {
+      cursor: pointer;
+    }
+  }
+}

@@ -3,6 +3,14 @@ import { IImageFirebaseModel } from '@firebase-schemas/images/image.model';
 import { IImagesRemoveRequest } from '@states/images/images.model';
 import { GALLERY_DISPLAY_TYPE } from '../firebase-image-manage/firebase-image-manage.component';
 
+/**
+ * usage:
+ <firebase-image-item *ngFor="let item of items" [item]="item"
+    [displayType]="displayType"
+    (onRemove)="removeImage($event)"
+    (onSelect)="imageSelected($event)"></firebase-image-item>
+ */
+
 @Component({
   selector: 'firebase-image-item',
   templateUrl: 'firebase-image-item.component.html',

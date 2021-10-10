@@ -9,7 +9,7 @@
         }
   }
 
-  .galery-container {
+  .gallery-container {
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -29,5 +29,13 @@
     .no-image-message {
       margin: 10px;
     }
+  }
+}
+:host(.gallery-selection-mode) {
+
+  .gallery-container {
+    max-height: 65vh;
+    overflow: auto;
+    margin-top:10px;
   }
 }

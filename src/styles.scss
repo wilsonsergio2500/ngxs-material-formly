@@ -68,13 +68,20 @@ a {
 
 .dialog-responsive {
   width: 800px;
-/*  height: 500px;*/
+}
+.img-gallery-responsive {
+  width: 1200px;
+
+ &.gallery-container {
+    max-height: 65vh;
+    overflow: auto;
+  }
 }
 
 @media(max-width: 959px) {
-  .dialog-responsive {
+  .dialog-responsive, .img-gallery-responsive {
     max-width: 90vw !important;
-/*    height: 90vh;*/
+    /*    height: 90vh;*/
   }
 }
 

@@ -11,7 +11,7 @@ export class FirebaseImageManageDialogService {
   ) {}
 
   OnOpen() {
-    const dialogRef = this.matDialog.open(FirebaseImageManageDialogComponent, { panelClass: 'dialog-responsive', disableClose: true });
+    const dialogRef = this.matDialog.open(FirebaseImageManageDialogComponent, { panelClass: 'img-gallery-responsive', disableClose: true });
     return dialogRef.afterClosed().pipe(
       filter(_ => !!_),
     )
