@@ -27,8 +27,8 @@ import { ImagesMangerResolver } from './images-manager/images-manager.resolver';
     SharedModule,
     FirebaseModule,
     MaterialComponentsModule,
-    FirebaseImageModule,
-    FirebaseImageManagerModule.forRoot()
+    //FirebaseImageModule,
+    //FirebaseImageManagerModule.forRoot()
   ]
 })
 export class ImagesModule { }

@@ -1,0 +1,16 @@
+<ng-content select="[quill-editor-toolbar]"></ng-content>
+<ng-content></ng-content>
+
+<div class="sidebar">
+  <mat-fab-speed-dial [direction]="'right'" *ngIf="displaySideBar">
+    <mat-fab-speed-dial-trigger>
+      <button mat-mini-fab ><mat-icon>menu</mat-icon></button>
+    </mat-fab-speed-dial-trigger>
+
+    <mat-fab-speed-dial-actions>
+      <button mat-mini-fab (click)="onImage()"><mat-icon>camera_alt</mat-icon></button>
+      <!--<button mat-mini-fab (click)="doAction('action2')"><mat-icon>edit</mat-icon></button>
+      <button mat-mini-fab (click)="doAction('action3')"><mat-icon>search</mat-icon></button>-->
+    </mat-fab-speed-dial-actions>
+  </mat-fab-speed-dial>
+</div>

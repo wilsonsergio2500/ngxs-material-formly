@@ -17,6 +17,9 @@ import { FirebaseModule } from './firebase/firebase.module';
 import { QuillModule } from 'ngx-quill';
 import { MatQuillModule } from './modules/mat-quill/mat-quill.module';
 import { MatFabSpeedDialModule } from './modules/mat-fab-speed-dial/mat-fab-speed-dial.module';
+import { MatEditorModule } from './modules/mat-editor/mat-editor.module';
+import { FirebaseImageModule } from './modules/firebase-image/firebase-image.module';
+import { FirebaseImageManagerModule } from './modules/firebase-image-manager/firebase-image-manager.module';
 
 @NgModule({
   imports: [
@@ -54,7 +57,10 @@ import { MatFabSpeedDialModule } from './modules/mat-fab-speed-dial/mat-fab-spee
       }]
     }),
     MatQuillModule,
-    MatFabSpeedDialModule
+    MatEditorModule,
+    MatFabSpeedDialModule,
+    FirebaseImageModule,
+    FirebaseImageManagerModule.forRoot()
   ],
   //providers: [
   //],
@@ -74,7 +80,10 @@ import { MatFabSpeedDialModule } from './modules/mat-fab-speed-dial/mat-fab-spee
     WebWorkerModule,
     QuillModule,
     MatQuillModule,
-    MatFabSpeedDialModule
+    MatEditorModule,
+    MatFabSpeedDialModule,
+    FirebaseImageModule,
+    FirebaseImageManagerModule
 
   ]
 })
