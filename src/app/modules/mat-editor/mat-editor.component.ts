@@ -25,34 +25,44 @@ export class MatEditorComponent extends _MatQuillBase {
   controlType = SELECTOR;
   @Input() theme = 'bubble';
   @Input() displaySideBar = true;
-  @HostBinding() id = `${SELECTOR}-${nextUniqueId++}`
-  editorCreated$: Subscription;
+  @HostBinding() id = `${SELECTOR}-${nextUniqueId++}`;
+  subscriptions: Subscription[] = [];
 
   static ngAcceptInputType_disabled: boolean | string | null | undefined
   static ngAcceptInputType_required: boolean | string | null | undefined
 
   private firebaseGalleryService: FirebaseImageManageDialogService
+  private editor;
 
   ngOnInit() {
-    this.editorCreated$ = this.onEditorCreated.pipe(tap(q => this.editorCreated(q))).subscribe();
+    const editorCreated$ = this.onEditorCreated.pipe(tap(q => this.editorCreated(q)));
     this.firebaseGalleryService = this.injector.get(FirebaseImageManageDialogService);
+
+    this.subscriptions = [...this.subscriptions, editorCreated$.subscribe()];
 
   }
 
   editorCreated(quill) {
-    console.log(quill);
-  }
-
-  ngOnDestroy() {
-    if (this.editorCreated$) {
-      this.editorCreated$.unsubscribe();
-    }
-    super.ngOnDestroy();
+    //this.editor = quill.editor;
+    //console.log(this.editor);
+    //console.log(quill);
   }
 
   onImage() {
-    console.log(this.quillEditor);
+    const index = this.quillEditor.getSelection()?.index ?? 0;
+    const onImageSelect$ = this.firebaseGalleryService.OnOpen().pipe(
+      tap(_ => {
+        this.quillEditor.insertEmbed(index, 'image', _, 'user');
+      })
+    );
+    this.subscriptions = [...this.subscriptions, onImageSelect$.subscribe()];
   }
 
+  ngOnDestroy() {
+    if (this.subscriptions?.length) {
+      this.subscriptions.forEach(s => s.unsubscribe());
+    }
+    super.ngOnDestroy();
+  }
 
 }

@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Store } from "@ngxs/store";
-import { ImagesOnResizerLoadAction } from "../../../../states/media/images-on-resizer/images-on-resizer.actions";
+import { ImagesLoadAction } from "@states/images/images.actions";
+import { ImagesOnResizerLoadAction } from "@states/media/images-on-resizer/images-on-resizer.actions";
 
 @Injectable()
 export class AdminPageCreateResolver {
@@ -12,6 +13,7 @@ export class AdminPageCreateResolver {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     this.store.dispatch(new ImagesOnResizerLoadAction());
+    this.store.dispatch(new ImagesLoadAction());;
     return;
   }
 }
