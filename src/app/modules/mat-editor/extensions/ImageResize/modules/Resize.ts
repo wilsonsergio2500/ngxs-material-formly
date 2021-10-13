@@ -10,7 +10,6 @@ export class Resize extends BaseModule {
   onCreate = () => {
     // track resize handles
     this.boxes = [];
-    console.log('on created')
 
     // add 4 resize handles
     this.addBox('nwse-resize'); // top left

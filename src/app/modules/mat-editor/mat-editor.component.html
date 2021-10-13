@@ -2,7 +2,7 @@
 <ng-content></ng-content>
 
 <div class="sidebar">
-  <mat-fab-speed-dial [direction]="'right'" *ngIf="displaySideBar">
+  <mat-fab-speed-dial [direction]="'right'" *ngIf="hasSideBar && displaySideBar">
     <mat-fab-speed-dial-trigger>
       <button mat-mini-fab ><mat-icon>menu</mat-icon></button>
     </mat-fab-speed-dial-trigger>

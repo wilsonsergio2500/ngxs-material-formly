@@ -18,7 +18,6 @@ export function MergeObject(...args: any[]) {
 
 
 const knownModules: any = { DisplaySize, Toolbar, Resize };
-/*const knownModules: any = { Resize };*/
 
 /**
  * Custom module for quilljs to allow user to resize <img> elements

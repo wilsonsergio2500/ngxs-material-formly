@@ -28,9 +28,6 @@ export class Toolbar extends BaseModule {
   toolbar: HTMLDivElement;
   alignments: any[];
 
-  //constructor(quill) {
-  //  con
-  //}
 
   onCreate = () => {
     // Setup Toolbar
