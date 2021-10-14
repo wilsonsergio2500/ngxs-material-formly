@@ -4,9 +4,11 @@ import Quill from 'quill'
 import { tap } from 'rxjs/operators'
 import { _MatQuillBase } from './mat-quill-base'
 import { ImageResize } from './extensions/ImageResize/imageResize'
+import { DividerBlot } from './extensions/Divider/divider';
 import { Subscription } from 'rxjs';
 import { FirebaseImageManageDialogService } from '../firebase-image-manager/firebase-image-manage-dialog-service/firebase-image-manage-dialog.service';
 Quill.register('modules/imageResize', ImageResize)
+Quill.register(DividerBlot);
 
 let nextUniqueId = 0
 const SELECTOR = 'mat-editor'
@@ -97,6 +99,19 @@ export class MatEditorComponent extends _MatQuillBase {
       })
     );
     this.subscriptions = [...this.subscriptions, onImageSelect$.subscribe()];
+  }
+
+  onCode() {
+    const index = this.quillEditor.getSelection()?.index ?? 0;
+    const length = this.quillEditor.getLength();
+    this.quillEditor.formatLine(index, length, { 'code-block': true });
+    this.quillEditor.insertEmbed(index + 1, 'break', true, Quill.sources.USER);
+  }
+
+  onDivider() {
+    const index = this.quillEditor.getSelection()?.index ?? 0;
+    this.quillEditor.insertEmbed(index, 'divider', true, Quill.sources.USER);
+    this.quillEditor.setSelection(index + 1, Quill.sources.SILENT);
   }
 
   ngOnDestroy() {
