@@ -23,6 +23,7 @@ import { FomlyPrefixIconWrapperModule } from './wrappers/prefix/prefix-icon.modu
 import { CustomComponentsModule } from '../../components/components.module';
 import { FormlyImageResizeIoModule } from './types/image-resize-io-upload/image-rio-uploader.module';
 import { FirebaseImageFormlyModule } from './types/firebase-image-formly/firebase-image-formly.module';
+import { FormlyMatEditorModule } from './types/mat-editor-formly/mat-editor-formly.module';
 //import { TextMaskModule } from 'angular2-text-mask';
 
 
@@ -45,6 +46,7 @@ import { FirebaseImageFormlyModule } from './types/firebase-image-formly/firebas
     FormlyChipTypeModule,
     FormlyMatNumberInputModule,
     FormlyGroupFlexTypeModule,
+    /*FormlyMatEditorModule,*/
     //FormlyMatInputTypeMaskModule,
 
     FomlySuffixIconWrapperModule,
@@ -63,6 +65,7 @@ import { FirebaseImageFormlyModule } from './types/firebase-image-formly/firebas
     FormlyChipTypeModule,
     FormlyMatNumberInputModule,
     FormlyGroupFlexTypeModule,
+   /* FormlyMatEditorModule,*/
     //FormlyMatInputTypeMaskModule,
 
     FomlySuffixIconWrapperModule,

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormlyModule } from '@ngx-formly/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyMatFormFieldModule } from '@ngx-formly/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CustomComponentsModule } from '../../../../components/components.module';
 import { FirebaseImageFormlyComponent } from './firebase-image-formly.component';
@@ -21,7 +20,6 @@ export interface IFirebaseImageFormlyTemplateOptions {
     CommonModule,
     CustomComponentsModule,
     ReactiveFormsModule,
-    MatInputModule,
     FormlyMatFormFieldModule,
     FileUploadModule,
     FirebaseImageModule,
@@ -29,7 +27,6 @@ export interface IFirebaseImageFormlyTemplateOptions {
       types: [{
         name: 'firebase-image-uploader',
         component: FirebaseImageFormlyComponent,
-        //wrappers: ['form-field'],
         defaultOptions: {
           templateOptions: {
             firebaseImageFormlyconfig: <IFirebaseImageFormlyTemplateOptions>{

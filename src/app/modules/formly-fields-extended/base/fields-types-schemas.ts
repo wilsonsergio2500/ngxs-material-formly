@@ -318,16 +318,6 @@ export namespace FieldTypes {
     }
   }
 
-  //export class SeachGridField extends InputBase {
-  //  constructor(searchGridConfig: ISearchGridSelector, label?: string, fxFlex?: number, required?: boolean)
-  //  constructor(searchGridConfig: ISearchGridSelector, label?: string, fxFlex = 100, required: boolean = true, config?: Partial<InputBase>) {
-  //    super(label, required, fxFlex)
-  //    this.type = 'formly-search-grid';
-  //    this.templateOptions.searchGridSelector = searchGridConfig;
-
-  //  }
-  //}
-
   export class MaskField extends InputBase {
     constructor(label: string, maskConfig: Partial<ITextMask>, required = true, fxFlex = 100) {
       super(label, required, fxFlex)

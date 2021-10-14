@@ -28,6 +28,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatFormFieldModule } from '@angular/material/form-field'
 
 
 const components = [
@@ -57,8 +58,9 @@ const components = [
   MatTableModule,
   MatSortModule,
   MatPaginatorModule,
-    MatExpansionModule,
-  MatTreeModule
+  MatExpansionModule,
+  MatTreeModule,
+  MatFormFieldModule
 ];
 
 @NgModule({

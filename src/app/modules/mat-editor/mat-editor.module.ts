@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatEditorComponent } from './mat-editor.component';
 import { MatFabSpeedDialModule } from '../mat-fab-speed-dial/mat-fab-speed-dial.module';
 import { MaterialComponentsModule } from '../../materialcomponents.module';
@@ -16,7 +15,6 @@ import { FirebaseImageManagerModule } from '../firebase-image-manager/firebase-i
     ReactiveFormsModule,
     MaterialComponentsModule,
     QuillModule,
-    MatFormFieldModule,
     MatFabSpeedDialModule,
     FirebaseImageModule,
     FirebaseImageManagerModule
