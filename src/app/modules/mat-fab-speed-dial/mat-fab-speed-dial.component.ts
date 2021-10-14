@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, AfterContentInit, OnDestroy, HostListener, Input, HostBinding, ViewEncapsulation, Output, EventEmitter, ElementRef, Renderer2, Inject, ContentChild } from '@angular/core';
-import { MatFabSpeedDialActionsComponent } from './mat-fab-speed-dial-actions/mat-fab-speed-dial-actions.component';
-import { AnimationMode, Direction } from './types';
+import { AnimationMode, Direction, MatFabSpeedDialActionsBase } from './types';
 
 @Component({
   selector: 'mat-fab-speed-dial',
@@ -92,7 +91,7 @@ export class MatFabSpeedDialComponent implements OnDestroy, AfterContentInit {
 
   @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @ContentChild(MatFabSpeedDialActionsComponent) _childActions: MatFabSpeedDialActionsComponent;
+  @ContentChild(MatFabSpeedDialActionsBase) _childActions: MatFabSpeedDialActionsBase;
 
   constructor(
     private elementRef: ElementRef,

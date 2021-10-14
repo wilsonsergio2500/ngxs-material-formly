@@ -3,11 +3,12 @@ import { MatButton } from '@angular/material/button';
 import { forkJoin, fromEvent, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { MatFabSpeedDialComponent } from '../mat-fab-speed-dial.component';
-import { Z_INDEX_ITEM } from '../types';
+import { MatFabSpeedDialActionsBase, Z_INDEX_ITEM } from '../types';
 
 @Component({
   selector: 'mat-fab-speed-dial-actions',
   templateUrl: 'mat-fab-speed-dial-actions.component.html',
+  providers: [{ provide: MatFabSpeedDialActionsBase, useExisting: MatFabSpeedDialActionsComponent} ]
 })
 export class MatFabSpeedDialActionsComponent implements AfterContentInit {
 
