@@ -1,16 +1,3 @@
-/*
-:host ::ng-deep loading-button button {
- width: 100%;
-}
-:host ::ng-deep .fomrly-quill-editor * .mat-form-field:not(.mat-focused) .mat-form-field-label {
-  color: white
-}
-:host ::ng-deep .ql-container.ql-snow.ql-disabled {
-  color: rgba(0, 0, 0, 0.38);
-}
-:host ::ng-deep formly-field {
-}*/
-
 :host {
   ::ng-deep {
     .mat-editor-formly-field {

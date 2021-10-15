@@ -1,0 +1,9 @@
+:host {
+  ::ng-deep {
+    .content-container {
+      * img {
+        max-width: 100%;
+      }
+    }
+  }
+}

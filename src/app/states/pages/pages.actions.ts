@@ -40,4 +40,9 @@ export class PageSearchClearItemsAction {
     static type = '[Page] Search Pages Clear';
 }
 
+export class PageRemoveAction {
+  static type = '[Page] Remove Action';
+  constructor(public page: IPageFirebaseModel) { }
+}
+
 

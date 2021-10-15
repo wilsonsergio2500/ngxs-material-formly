@@ -1,9 +1,9 @@
 import { State, StateContext, Action, Store, Selector } from "@ngxs/store";
 import { IPageStateModel } from './pages.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { PageSetAsLoadingAction, PageSetLoadingAsDoneAction, PageLoadItemsAction, PageSetPaginator, PagePaginateItems, PageCreateAction, PageGetCurrentPageAction, PageSearchItemsByTitleAction, PageSearchClearItemsAction } from './pages.actions';
+import { PageSetAsLoadingAction, PageSetLoadingAsDoneAction, PageLoadItemsAction, PageSetPaginator, PagePaginateItems, PageCreateAction, PageGetCurrentPageAction, PageSearchItemsByTitleAction, PageSearchClearItemsAction, PageRemoveAction } from './pages.actions';
 import { tap, mergeMap, catchError } from 'rxjs/operators';
-import { Subscription, from, of, observable, Observable, empty } from 'rxjs';
+import { Subscription, from, of, Observable, empty } from 'rxjs';
 import { Navigate } from '@ngxs/router-plugin';
 import { FirebasePaginationInMemoryStateModel } from '../../firebase/types/firebase-pagination-inmemory';
 import { PageFireStore } from '../../schemas/pages/page.firebase';
@@ -12,6 +12,7 @@ import { IPageFirebaseModel } from '../../schemas/pages/page.model';
 import { AuthState } from '../auth/auth.state';
 import { searchLike } from '../../firebase/utils/search-like';
 import { Injectable } from '@angular/core';
+import { ConfirmationDialogService } from "../../components/ui-elements/confirmation-dialog/confirmation-dialog.service";
 
 @State<IPageStateModel>({
     name: 'pagesState',
@@ -28,9 +29,10 @@ export class PageState {
     private pages: PageFireStore;
     private subscription: Subscription;
     constructor(
-        private angularFireStore: AngularFirestore,
         private store: Store,
-        private snackBarStatus: SnackbarStatusService
+      private snackBarStatus: SnackbarStatusService,
+      private confirmationDialog: ConfirmationDialogService,
+      angularFireStore: AngularFirestore
     ) {
         this.pages = new PageFireStore(angularFireStore);
     }
@@ -171,6 +173,15 @@ export class PageState {
     @Action(PageSearchClearItemsAction)
     onClearSearch(ctx: StateContext<IPageStateModel>) {
         ctx.patchState({ pageFilterByTitle: [] })
-    }
+  }
+
+  @Action(PageRemoveAction)
+  onRemovePage(ctx: StateContext<IPageStateModel>, action: PageRemoveAction) {
+    const { Id } = action.page;
+    return this.confirmationDialog.OnConfirm('Are you sure you would like to delete this Page?').pipe(
+      mergeMap(() => from(this.pages.delete(Id))),
+      tap(() => this.snackBarStatus.OpenComplete('Image has been Removed')),
+    )
+  }
 
 }
