@@ -56,7 +56,6 @@ export class FirebaseImageUploaderComponent implements OnInit, OnDestroy, Contro
   }
 
   ngOnInit() {
-    console.log(this.bucket);
     this.bucketRef = this.storage.ref(this.bucket);
   }
 

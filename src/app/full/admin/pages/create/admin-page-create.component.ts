@@ -57,7 +57,7 @@ export class AdminPageCreateComponent implements OnInit {
     this.formlyGroup = new FormlyTypeGroup<IPageFirebaseModel>({
       url: new FieldTypes.FriendlyUrlField('Url', true, 100),
       title: new FieldTypes.InputField('Title', true, 100),
-      body: new FieldTypes.TextArea('Body', true, 100)
+      body: new FieldTypes.MatEditor('Body', true, 100)
     })
   }
 

@@ -17,9 +17,7 @@ usage:
 @Component({
   selector: 'formly-form-flex-json',
   templateUrl: 'formly-form-flex-json.component.html',
-  styleUrls: [
-    'formly-form-flex-json.component.css'
-  ]
+  styleUrls: ['formly-form-flex-json.component.scss']
 })
 export class FormlyFormFlexJsonComponent<T> implements OnChanges{
 

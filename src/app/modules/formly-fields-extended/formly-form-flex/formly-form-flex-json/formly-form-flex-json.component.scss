@@ -1,4 +1,4 @@
-
+/*
 :host ::ng-deep loading-button button {
  width: 100%;
 }
@@ -9,8 +9,18 @@
   color: rgba(0, 0, 0, 0.38);
 }
 :host ::ng-deep formly-field {
-  /*padding: 3px !important;*/
-}
-/*:host ::ng-deep .chips-formly .mat-form-field-flex + .mat-form-field-underline {
-  display: none;
 }*/
+
+:host {
+  ::ng-deep {
+    .mat-editor-formly-field {
+      * .mat-form-field-label-wrapper {
+        display: none;
+      }
+
+      * .mat-form-field-underline{
+          display: none;
+      }
+    }
+  }
+}

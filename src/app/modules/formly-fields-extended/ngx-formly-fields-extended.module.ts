@@ -6,8 +6,6 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyMatToggleModule } from './types/toggle/toggle.module';
 import { FormlyMatDatepickerModule } from './types/datepicker/datepicker.module';
-import { FormlyFormFlexLayoutComponent } from './forms/formly-form-flex-layout/formly-form-flex-layout.component';
-import { FormlyFormFlexJsonComponent } from './forms/formly-form-flex-json/fomly-form-flex-json.component'
 import { FormlyChipTypeModule } from './types/ngx-chip/chip.module';
 import { FormlyMatNumberInputModule } from './types/number/number.module';
 
@@ -24,14 +22,10 @@ import { CustomComponentsModule } from '../../components/components.module';
 import { FormlyImageResizeIoModule } from './types/image-resize-io-upload/image-rio-uploader.module';
 import { FirebaseImageFormlyModule } from './types/firebase-image-formly/firebase-image-formly.module';
 import { FormlyMatEditorModule } from './types/mat-editor-formly/mat-editor-formly.module';
-//import { TextMaskModule } from 'angular2-text-mask';
+import { FormlyFormsFlexModule } from './formly-form-flex/formly-form-flex.module';
 
 
 @NgModule({
-  declarations: [
-    FormlyFormFlexLayoutComponent,
-    FormlyFormFlexJsonComponent
-  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -40,13 +34,14 @@ import { FormlyMatEditorModule } from './types/mat-editor-formly/mat-editor-form
     CustomComponentsModule,
 
     FormlyModule.forRoot(),
+    FormlyFormsFlexModule,
     FormlyMaterialModule,
     FormlyMatToggleModule,
     FormlyMatDatepickerModule,
     FormlyChipTypeModule,
     FormlyMatNumberInputModule,
     FormlyGroupFlexTypeModule,
-    /*FormlyMatEditorModule,*/
+    FormlyMatEditorModule,
     //FormlyMatInputTypeMaskModule,
 
     FomlySuffixIconWrapperModule,
@@ -57,15 +52,16 @@ import { FormlyMatEditorModule } from './types/mat-editor-formly/mat-editor-form
   ],
   exports: [
     FormlyModule,
+    FormlyFormsFlexModule,
     FormlyMaterialModule,
     FormlyMatToggleModule,
     FormlyMatDatepickerModule,
-    FormlyFormFlexLayoutComponent,
-    FormlyFormFlexJsonComponent,
+    //FormlyFormFlexLayoutComponent,
+    //FormlyFormFlexJsonComponent,
     FormlyChipTypeModule,
     FormlyMatNumberInputModule,
     FormlyGroupFlexTypeModule,
-   /* FormlyMatEditorModule,*/
+    FormlyMatEditorModule,
     //FormlyMatInputTypeMaskModule,
 
     FomlySuffixIconWrapperModule,

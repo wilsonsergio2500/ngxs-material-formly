@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormlyForm } from '@ngx-formly/core';
 
 @Component({
@@ -21,12 +21,6 @@ import { FormlyForm } from '@ngx-formly/core';
     <ng-container #content>
       <ng-content></ng-content>
     </ng-container>
-  `,
-    styles: [
-        `
-    
-    `
-    ]
+  `
 })
-export class FormlyFormFlexLayoutComponent extends FormlyForm {
-}
+export class FormlyFormFlexLayoutComponent extends FormlyForm {}

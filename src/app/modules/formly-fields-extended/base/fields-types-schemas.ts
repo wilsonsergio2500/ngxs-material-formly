@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { getCountryStates } from '../../../utils/country-states';
 import { IImageResizeIoUploaderOptions } from '../types/image-resize-io-upload/contracts/image-rio-uploader-options';
 import { IFirebaseImageFormlyTemplateOptions } from '../types/firebase-image-formly/firebase-image-formly.module';
+import { IMatEditorFormlyTemplateOptions } from '../types/mat-editor-formly/mat-editor-formly.module';
 
 
 export namespace FieldTypes {
@@ -43,19 +44,20 @@ export namespace FieldTypes {
 
 
 
-    export interface IFormlyAppTemplateOptions extends FormlyTemplateOptions {
-        fxFlex: string | number;
-        toolbar: any;
-        autogrow: boolean;
-        fxHideXs: boolean;
-        fileUploder: IFileUploaderOptions;
-      fileResizeIoUploader: IImageResizeIoUploaderOptions,
-      firebaseImageFormlyconfig: IFirebaseImageFormlyTemplateOptions,
-        height: number;
-        suffixIcon: string;
-        prefixIcon: string;
-        textMask: ITextMask
-    }
+  export interface IFormlyAppTemplateOptions extends FormlyTemplateOptions {
+    fxFlex: string | number;
+    toolbar: any;
+    autogrow: boolean;
+    fxHideXs: boolean;
+    fileUploder: IFileUploaderOptions;
+    fileResizeIoUploader: IImageResizeIoUploaderOptions,
+    firebaseImageFormlyconfig: IFirebaseImageFormlyTemplateOptions,
+    matEditorFormlyConfig: IMatEditorFormlyTemplateOptions;
+    height: number;
+    suffixIcon: string;
+    prefixIcon: string;
+    textMask: ITextMask
+  }
 
   class InputBase implements FormlyFieldConfig {
     key: string;
@@ -465,5 +467,14 @@ export namespace FieldTypes {
       this.templateOptions.placeholder = label;
     }
   }
+
+  export class MatEditor extends InputBase {
+    constructor(label: string, required: boolean, fxFlex = 100, matEditorFormlyConfig: Partial<IMatEditorFormlyTemplateOptions> = { placeholder: 'Insert Text here...' }, config: Partial<InputBase> = { className: 'mat-editor-formly-field'}) {
+      super(label, required, fxFlex, config);
+      this.type = 'mat-editor-formly';
+      this.templateOptions.matEditorFormlyConfig = { ...matEditorFormlyConfig } as IMatEditorFormlyTemplateOptions;
+    }
+  }
+  
  
 }

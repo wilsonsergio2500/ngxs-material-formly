@@ -1,31 +1,32 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormlyTypeGroup } from '@formly-fields-extended/base/FormlyTypeGroup';
-import { FieldTypes } from '@formly-fields-extended/base/fields-types-schemas';
+import { FieldTypes } from '../../../base/fields-types-schemas';
+import { FormlyTypeGroup } from '../../../base/FormlyTypeGroup';
 import { IImageFirebaseModel } from '@firebase-schemas/images/image.model';
 import { Actions, ofActionSuccessful, Store } from '@ngxs/store';
-import { ImagesCreateRecordAction } from '../../../states/images/images.actions';
+import { ImagesCreateRecordAction } from '@states/images/images.actions';
 import { Subscription } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 
+
 @Component({
-    selector: 'firebase-image-uploader-dialog',
-    templateUrl: 'firebase-image-uploader-dialog.component.html',
-    styleUrls: [`firebase-image-uploader-dialog.component.scss`]
-  })
-  export class FirebaseImageUploaderDialogComponent implements OnInit, OnDestroy {
+  selector: 'firebase-image-uploader-dialog',
+  templateUrl: 'firebase-image-uploader-dialog.component.html',
+  styleUrls: [`firebase-image-uploader-dialog.component.scss`]
+})
+export class FirebaseImageUploaderDialogComponent implements OnInit, OnDestroy {
 
   btnReadyLabel = 'Save';
   btnLoadingLabel = 'Saving..';
   formlyGroup: FormlyTypeGroup<IImageFirebaseModel>;
-  formSubmited$: Subscription
+    formSubmited$: Subscription
 
   constructor(
     private store: Store,
     private actions: Actions,
     private matDialogRef: MatDialogRef<FirebaseImageUploaderDialogComponent>
-    ) {
-    }
+  ) {
+  }
 
   ngOnInit() {
 
@@ -57,19 +58,18 @@ import { delay, tap } from 'rxjs/operators';
     ).subscribe();
 
   }
-    
+
   onClose() {
     this.matDialogRef.close();
   }
 
   formSubmit($event) {
     this.formlyGroup.markAsBusy();
-    this.store.dispatch(new ImagesCreateRecordAction(this.formlyGroup.model));
+     this.store.dispatch(new ImagesCreateRecordAction(this.formlyGroup.model));
   }
 
   ngOnDestroy() {
     this.formSubmited$.unsubscribe();
   }
-   
-  
-  } 
+
+}

@@ -32,6 +32,7 @@ export class MatEditorComponent extends _MatQuillBase {
     'imageResize': {}
   }
   @Input() hasSideBar = true;
+  @Input() placeholder = 'Insert Text here...';
   @HostBinding() id = `${SELECTOR}-${nextUniqueId++}`;
   displaySideBar = false;
   subscriptions: Subscription[] = [];

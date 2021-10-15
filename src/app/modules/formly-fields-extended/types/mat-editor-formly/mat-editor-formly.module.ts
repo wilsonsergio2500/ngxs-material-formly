@@ -15,6 +15,7 @@ import { MatEditorModule } from '../../../mat-editor/mat-editor.module';
 export interface IMatEditorFormlyTemplateOptions {
   modules: any;
   hasSideBar: boolean;
+  placeholder: string;
 }
 
 @NgModule({
@@ -26,7 +27,6 @@ export interface IMatEditorFormlyTemplateOptions {
     CustomComponentsModule,
     ReactiveFormsModule,
     QuillModule,
-
     FormlyMatFormFieldModule,
     FileUploadModule,
     MatFabSpeedDialModule,
@@ -39,7 +39,8 @@ export interface IMatEditorFormlyTemplateOptions {
         component: MatEditorFormlyComponent,
         defaultOptions: {
           templateOptions: {
-            matEditorConfig: <IMatEditorFormlyTemplateOptions>{
+            matEditorFormlyConfig: <IMatEditorFormlyTemplateOptions>{
+              placeholder: 'Insert text here...',
               modules : {
                 toolbar: [
                   [{ header: [1, 2, false] }],

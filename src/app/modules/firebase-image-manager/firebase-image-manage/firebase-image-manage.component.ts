@@ -4,9 +4,9 @@ import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IImageFirebaseModel } from '@firebase-schemas/images/image.model';
 import { ImagesState } from '@states/images/images.state';
-import { FirebaseImageUploaderService } from '../firebase-image-uploader-service/firebase-image-uploader.service';
 import { IImagesRemoveRequest } from '@states/images/images.model';
 import { ImagesLoadNextPageAction, ImagesLoadPreviousPageAction, ImagesRemoveAction } from '@states/images/images.actions';
+import { FirebaseImageUploaderService } from '../../formly-fields-extended/types/firebase-image-formly/firebase-image-uploader-service/firebase-image-uploader.service';
 
 export type GALLERY_DISPLAY_TYPE = "PRESENTER" | "SELECTION";
 
