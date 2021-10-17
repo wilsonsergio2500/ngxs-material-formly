@@ -43,7 +43,6 @@ export class AdminPageEditComponent implements OnInit {
     const value$ = this.record$.pipe(
       filter(_ => !!_),
       tap(({ Id, url, title, body }) => {
-        console.log('happen');
         console.log({ Id, url, title, body });
         this.formlyGroup.setModel({ Id, url, title, body })
       })
