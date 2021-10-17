@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 import { FormlyTypeGroup } from '../../../../modules/formly-fields-extended/base/FormlyTypeGroup';
 import { FieldTypes } from '../../../../modules/formly-fields-extended/base/fields-types-schemas';
 import { IPageFirebaseModel } from '../../../../schemas/pages/page.model';
-import { PageCreateAction } from '../../../../states/pages/pages.actions';
+import { PageCreateAction } from '@states/pages/pages.actions';
 import { QuillEditorComponent } from 'ngx-quill'
 import { MatQuill } from '../../../../modules/mat-quill/mat-quill';
 import { MediaManageDialogService } from '../../../../modules/media/media-manage-dialog-service/media-manage-dialog.service';
@@ -23,10 +23,10 @@ export class AdminPageCreateComponent implements OnInit {
   formlyGroup: FormlyTypeGroup<IPageFirebaseModel>;
 
   title: string = 'New Page';
-  btnReadyLabel = 'Update';
-  btnLoadingLabel = 'Updating...';
+  btnReadyLabel = 'Add';
+  btnLoadingLabel = 'Adding...';
   componentTitle = 'Admin Page Create Title';
-  listPath = "../list"
+  listPath = "/admin/pages";
 
   displaySideBar: boolean = false;
 

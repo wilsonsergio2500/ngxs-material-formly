@@ -45,4 +45,13 @@ export class PageRemoveAction {
   constructor(public page: IPageFirebaseModel) { }
 }
 
+export class PageSetCurrentIdSelectedAction {
+  static type = '[Page] Set Current Id Selected Action';
+  constructor(public id: string) { }
+}
+
+export class PageSetCurrentSelectedAction {
+  static type = '[Page] Set Current Record Selected Action';
+}
+
 
