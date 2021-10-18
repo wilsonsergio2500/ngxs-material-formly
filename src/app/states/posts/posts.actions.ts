@@ -32,3 +32,8 @@ export class PostPrevPage {
 export class PostNextPage {
     static type = '[Posts] Get Post Next Page';
 }
+
+export class PostRemoveAction {
+  static type = '[Posts] Remove Action';
+  constructor(public post: IPostFirebaseModel) {}
+}

@@ -1,0 +1,11 @@
+:host {
+  ::ng-deep {
+    .post-publish-toogle {
+      * > .mat-form-field-infix {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+

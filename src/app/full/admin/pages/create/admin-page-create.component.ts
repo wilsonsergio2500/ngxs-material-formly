@@ -14,7 +14,7 @@ export class AdminPageCreateComponent implements OnInit {
 
   formlyGroup: FormlyTypeGroup<IPageFirebaseModel>;
 
-  title: string = 'Pages';
+  title = 'Pages';
   btnReadyLabel = 'Add';
   btnLoadingLabel = 'Adding...';
   listPath = "/admin/pages";

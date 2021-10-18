@@ -457,7 +457,7 @@ export namespace FieldTypes {
   }
 
   export class FirebaseImageUploader extends InputBase {
-    constructor(label: string, required: boolean, fxFlex = 100, firebaseImageFormlyconfig: Partial<IFirebaseImageFormlyTemplateOptions>, config?: Partial<InputBase>) {
+    constructor(label: string, required: boolean, fxFlex = 100, firebaseImageFormlyconfig?: Partial<IFirebaseImageFormlyTemplateOptions>, config?: Partial<InputBase>) {
       super(label, required, fxFlex, config);
       this.type = 'firebase-image-uploader';
       this.templateOptions.firebaseImageFormlyconfig = { ...this.templateOptions.firebaseImageFormlyconfig, ...firebaseImageFormlyconfig };

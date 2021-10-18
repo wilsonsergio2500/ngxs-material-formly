@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { IPostFirebaseModel } from '../../../../schemas/posts/post.model';
-import { PostState } from '../../../../states/posts/posts.state';
-import { PostNextPage, PostPrevPage } from '../../../../states/posts/posts.actions';
+import { IPostFirebaseModel } from '@firebase-schemas/posts/post.model';
+import { PostState } from '@states/posts/posts.state';
+import { PostNextPage, PostPrevPage, PostRemoveAction } from '@states/posts/posts.actions';
 
 @Component({
     selector: 'admin-post-list',
@@ -29,5 +29,9 @@ export class AdminPostListComponent {
 
     onPrevPage() {
         this.store.dispatch(new PostPrevPage());
-    }
+  }
+
+  onRemove(row: IPostFirebaseModel) {
+    this.store.dispatch(new PostRemoveAction(row));
+  }
 }
