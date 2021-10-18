@@ -33,8 +33,8 @@ export class AdminPageEditComponent implements OnInit {
   ngOnInit() {
 
     this.formlyGroup = new FormlyTypeGroup<IPageFirebaseModel>({
-      url: new FieldTypes.FriendlyUrlField('Url', true, 60),
-      publish: new FieldTypes.ToogleField('Publish', 40, { className: 'page-publish-toogle' }),
+      url: new FieldTypes.FriendlyUrlField('Url', true, 60, { templateOptions: { fxFlexXs: 60 }}),
+      publish: new FieldTypes.ToogleField('Publish', 40, { className: 'page-publish-toogle', templateOptions: { fxFlexXs: 40 } }),
       title: new FieldTypes.InputField('Title', true, 100),
       body: new FieldTypes.MatEditor('Body', true, 100)
     });

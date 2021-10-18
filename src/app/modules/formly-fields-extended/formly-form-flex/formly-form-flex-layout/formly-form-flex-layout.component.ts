@@ -7,7 +7,6 @@ import { FormlyForm } from '@ngx-formly/core';
     <div
       fxLayout="row wrap"
       class="content" 
-      fxLayout.xs="column"
       fxFlexFill>
       <formly-field *ngFor="let field of fields"
         [fxFlex]="field.templateOptions.fxFlex"
