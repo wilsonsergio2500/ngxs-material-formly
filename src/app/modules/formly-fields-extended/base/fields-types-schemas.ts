@@ -46,6 +46,7 @@ export namespace FieldTypes {
 
   export interface IFormlyAppTemplateOptions extends FormlyTemplateOptions {
     fxFlex: string | number;
+    fxFlexXs: string | number;
     toolbar: any;
     autogrow: boolean;
     fxHideXs: boolean;
@@ -92,7 +93,7 @@ export namespace FieldTypes {
       this.type = 'input';
       this.wrappers = ['suffix', 'form-field', 'prefix'];
       this.templateOptions = <IFormlyAppTemplateOptions>{
-        label, required, fxFlex, fxHideXs: false, textMask: {}
+        label, required, fxFlex, fxFlexXs: 100, fxHideXs: false, textMask: {}
       };
       this.modelOptions = {};
       const messages = {
@@ -306,8 +307,8 @@ export namespace FieldTypes {
   }
 
   export class ToogleField extends InputBase {
-    constructor(label?: string, required: boolean = true, fxFlex = 100, config?: Partial<InputBase>) {
-      super(label, required, fxFlex, config);
+    constructor(label?: string, fxFlex = 100, config?: Partial<InputBase>) {
+      super(label, true, fxFlex, config);
       this.type = 'toggle';
       this.defaultValue = false;
     }

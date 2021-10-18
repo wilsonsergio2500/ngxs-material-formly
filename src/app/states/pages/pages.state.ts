@@ -1,9 +1,9 @@
 import { State, StateContext, Action, Store, Selector } from "@ngxs/store";
 import { IPageStateModel } from './pages.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { PageSetAsLoadingAction, PageSetLoadingAsDoneAction, PageLoadItemsAction, PageSetPaginator, PagePaginateItems, PageCreateAction, PageGetCurrentPageAction, PageSearchItemsByTitleAction, PageSearchClearItemsAction, PageRemoveAction, PageSetCurrentIdSelectedAction, PageSetCurrentSelectedAction } from './pages.actions';
-import { tap, mergeMap, catchError } from 'rxjs/operators';
-import { Subscription, from, of, Observable, empty } from 'rxjs';
+import { PageSetAsLoadingAction, PageSetLoadingAsDoneAction, PageLoadItemsAction, PageSetPaginator, PagePaginateItems, PageCreateAction, PageGetCurrentPageAction, PageSearchItemsByTitleAction, PageSearchClearItemsAction, PageRemoveAction, PageSetCurrentIdSelectedAction, PageUpdateAction } from './pages.actions';
+import { tap, mergeMap, catchError, delay } from 'rxjs/operators';
+import { Subscription, from, of, empty } from 'rxjs';
 import { Navigate } from '@ngxs/router-plugin';
 import { FirebasePaginationInMemoryStateModel } from '../../firebase/types/firebase-pagination-inmemory';
 import { PageFireStore } from '../../schemas/pages/page.firebase';
@@ -196,25 +196,37 @@ export class PageState {
   @Action(PageSetCurrentIdSelectedAction)
   onSetCurrentId(ctx: StateContext<IPageStateModel>, action: PageSetCurrentIdSelectedAction) {
     const { id: currentId } = action;
+    ctx.dispatch(new PageSetAsLoadingAction());
     return from(this.pages.queryCollection(ref => ref.where('Id', '==', currentId)).get()).pipe(
       tap(records => {
         if (records?.docs.length) {
           const selected = records.docs[0].data() as IPageFirebaseModel;
           ctx.patchState({ currentId, selected });
         }
-      })
+      }),
+      delay(1000),
+      mergeMap(() => ctx.dispatch(new PageSetLoadingAsDoneAction()))
     )
   }
 
-  //@Action(PageSetCurrentSelectedAction)
-  //onGetCurrent(ctx: StateContext<IPageStateModel>) {
-  //  const { currentId, paginationState } = ctx.getState();
-  //  if (currentId) {
-  //    const selected = paginationState.items.filter(g => g.Id === currentId)[0];
-  //    ctx.patchState({ selected });
-  //  }
-  //}
+  @Action(PageUpdateAction)
+  onUpdateAction(ctx: StateContext<IPageStateModel>, action: PageUpdateAction) {
 
+    return this.store.selectOnce(AuthState.getUser).pipe(
+      mergeMap((user) => {
+        const now = Date.now();
+        const metadata = <Partial<IFireBaseEntity>>{ updatedDate: now, updatedBy: user }
+        const form = { ...action.request, ...metadata };
+        return this.pages.update(action.request.Id, form);
+      }),
+      delay(1000),
+      tap(() => {
+        this.snackBarStatus.OpenComplete('Page Updated Succesfully');
+        ctx.dispatch(new Navigate(['admin/pages/list']));
+      })
+    );
+
+  }
 
 
 }

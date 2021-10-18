@@ -11,7 +11,7 @@ import { FormlyForm } from '@ngx-formly/core';
       fxFlexFill>
       <formly-field *ngFor="let field of fields"
         [fxFlex]="field.templateOptions.fxFlex"
-        [fxFlex.xs]="100"
+        [fxFlex.xs]="field.templateOptions.fxFlexXs"
         [fxHide.xs]="field.templateOptions.fxHideXs"
         [field]="field"
         [ngClass]="field.className"

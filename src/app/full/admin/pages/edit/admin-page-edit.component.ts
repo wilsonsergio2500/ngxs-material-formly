@@ -6,6 +6,7 @@ import { IPageFirebaseModel } from '@firebase-schemas/pages/page.model';
 import { FormlyTypeGroup } from '../../../../modules/formly-fields-extended/base/FormlyTypeGroup';
 import { FieldTypes } from '../../../../modules/formly-fields-extended/base/fields-types-schemas';
 import { filter, tap } from 'rxjs/operators';
+import { PageUpdateAction } from '@states/pages/pages.actions';
 
 @Component({
     selector: 'admin-page-edit',
@@ -14,10 +15,11 @@ import { filter, tap } from 'rxjs/operators';
   })
 export class AdminPageEditComponent implements OnInit {
 
+  @Select(PageState.IsLoading) working$: Observable<boolean>;
   @Select(PageState.getCurrenSelectedRecord) record$: Observable<IPageFirebaseModel>;
 
   formlyGroup: FormlyTypeGroup<IPageFirebaseModel>;
-  title = 'Edit Page';
+  title = 'Pages';
   listPath = "/admin/pages";
 
   btnReadyLabel = 'Update';
@@ -31,25 +33,28 @@ export class AdminPageEditComponent implements OnInit {
   ngOnInit() {
 
     this.formlyGroup = new FormlyTypeGroup<IPageFirebaseModel>({
-      url: new FieldTypes.FriendlyUrlField('Url', true, 100),
+      url: new FieldTypes.FriendlyUrlField('Url', true, 60),
+      publish: new FieldTypes.ToogleField('Publish', 40, { className: 'page-publish-toogle' }),
       title: new FieldTypes.InputField('Title', true, 100),
       body: new FieldTypes.MatEditor('Body', true, 100)
     });
 
-    this.bind();
-  }
-  bind() {
-
     const value$ = this.record$.pipe(
       filter(_ => !!_),
-      tap(({ Id, url, title, body }) => {
-        console.log({ Id, url, title, body });
-        this.formlyGroup.setModel({ Id, url, title, body })
+      tap(({ Id, url, title, body, publish }) => {
+        this.formlyGroup.setModel({ Id, url, title, body, publish })
       })
     );
 
     this.subscriptions = [...this.subscriptions, value$.subscribe()];
 
   }
+
+  formSubmit() {
+    this.formlyGroup.markAsBusy();
+    this.store.dispatch(new PageUpdateAction({...this.formlyGroup.model}))
+  }
+
+ 
   
   } 

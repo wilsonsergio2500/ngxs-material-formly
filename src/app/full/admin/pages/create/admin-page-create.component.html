@@ -14,48 +14,12 @@
 
   </div>
 
-  <div>
-
     <formly-form-flex-json [formlyGroup]="formlyGroup"
                            [show-revert]="false"
                            [btn-ready]="btnReadyLabel"
                            [btn-busy]="btnLoadingLabel"
                            [read-only]="false"
-                           (onFormSubmit)="formSubmit($event)">
+                           (onFormSubmit)="formSubmit()">
     </formly-form-flex-json>
-
-  </div>
-
-  <!--<div class="editor-container">
-
-
-    <mat-quill theme="bubble" [modules]="modules" (onEditorCreated)="onQuillEditorCreated()">
-
-      <div class="sidebar">
-        <mat-fab-speed-dial [direction]="'right'" *ngIf="displaySideBar">
-          <mat-fab-speed-dial-trigger>
-            <button mat-mini-fab (click)="doAction('trigger')"><mat-icon>menu</mat-icon></button>
-          </mat-fab-speed-dial-trigger>
-
-          <mat-fab-speed-dial-actions>
-            <button mat-mini-fab (click)="doAction('action1')"><mat-icon>add</mat-icon></button>
-            <button mat-mini-fab (click)="doAction('action2')"><mat-icon>edit</mat-icon></button>
-            <button mat-mini-fab (click)="doAction('action3')"><mat-icon>search</mat-icon></button>
-          </mat-fab-speed-dial-actions>
-        </mat-fab-speed-dial>
-      </div>
-
-
-
-    </mat-quill>
-
-
-
-  </div>-->
-
-  <div>
-    <!--<mat-editor></mat-editor>-->
-
-  </div>
 
 </div>

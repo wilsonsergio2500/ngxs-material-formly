@@ -50,8 +50,10 @@ export class PageSetCurrentIdSelectedAction {
   constructor(public id: string) { }
 }
 
-export class PageSetCurrentSelectedAction {
-  static type = '[Page] Set Current Record Selected Action';
+export class PageUpdateAction {
+  static type = '[Page] Update Action';
+  constructor(public request: IPageFirebaseModel) {}
 }
+
 
 
