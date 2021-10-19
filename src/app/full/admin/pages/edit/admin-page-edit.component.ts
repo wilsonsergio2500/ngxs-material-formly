@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subscription } from 'rxjs';
 import { PageState } from '@states/pages/pages.state';
@@ -13,7 +13,7 @@ import { PageUpdateAction } from '@states/pages/pages.actions';
     templateUrl: 'admin-page-edit.component.html',
     styleUrls: [`admin-page-edit.component.scss`]
   })
-export class AdminPageEditComponent implements OnInit {
+export class AdminPageEditComponent implements OnInit, OnDestroy {
 
   @Select(PageState.IsLoading) working$: Observable<boolean>;
   @Select(PageState.getCurrenSelectedRecord) record$: Observable<IPageFirebaseModel>;
@@ -34,7 +34,7 @@ export class AdminPageEditComponent implements OnInit {
 
     this.formlyGroup = new FormlyTypeGroup<IPageFirebaseModel>({
       url: new FieldTypes.FriendlyUrlField('Url', true, 60, { templateOptions: { fxFlexXs: 60 }}),
-      publish: new FieldTypes.ToogleField('Publish', 40, { className: 'page-publish-toogle', templateOptions: { fxFlexXs: 40 } }),
+      publish: new FieldTypes.ToogleField('Publish', 40, { templateOptions: { fxFlexXs: 40 } }),
       title: new FieldTypes.InputField('Title', true, 100),
       body: new FieldTypes.MatEditor('Body', true, 100)
     });
@@ -55,6 +55,11 @@ export class AdminPageEditComponent implements OnInit {
     this.store.dispatch(new PageUpdateAction({...this.formlyGroup.model}))
   }
 
+  ngOnDestroy() {
+    if (this.subscriptions?.length) {
+      this.subscriptions.forEach(s => s.unsubscribe());
+    }
+  }
  
   
   } 

@@ -10,6 +10,7 @@ import { FirebaseImageItemComponent } from './firebase-image-item/firebase-image
 import { FirebaseImageManageDialogComponent } from './firebase-image-manage-dialog/firebase-image-manage-dialog.component';
 import { FirebaseImageManageDialogService } from './firebase-image-manage-dialog-service/firebase-image-manage-dialog.service';
 import { CustomComponentsModule } from '../../components/components.module';
+import { FirebaseImageManageGalleryUploaderComponent } from './firebase-image-manage-gallery-uploader/firebase-image-manage-gallery-uploader.component';
 
 
 @NgModule({
@@ -25,12 +26,14 @@ import { CustomComponentsModule } from '../../components/components.module';
   declarations: [
     FirebaseImageManageComponent,
     FirebaseImageItemComponent,
-    FirebaseImageManageDialogComponent
+    FirebaseImageManageDialogComponent,
+    FirebaseImageManageGalleryUploaderComponent
   ],
   exports: [
     FirebaseImageManageComponent,
     FirebaseImageItemComponent,
-    FirebaseImageManageDialogComponent
+    FirebaseImageManageDialogComponent,
+    FirebaseImageManageGalleryUploaderComponent
   ],
   entryComponents: [
     FirebaseImageManageComponent,

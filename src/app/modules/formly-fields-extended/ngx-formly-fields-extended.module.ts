@@ -23,6 +23,7 @@ import { FormlyImageResizeIoModule } from './types/image-resize-io-upload/image-
 import { FirebaseImageFormlyModule } from './types/firebase-image-formly/firebase-image-formly.module';
 import { FormlyMatEditorModule } from './types/mat-editor-formly/mat-editor-formly.module';
 import { FormlyFormsFlexModule } from './formly-form-flex/formly-form-flex.module';
+import { FormlyFirebaseImageGalleryModule } from './types/firebase-image-gallery-formly/firebase-image-gallery-formly.module';
 
 
 @NgModule({
@@ -47,8 +48,9 @@ import { FormlyFormsFlexModule } from './formly-form-flex/formly-form-flex.modul
     FomlySuffixIconWrapperModule,
     FomlyPrefixIconWrapperModule,
     FormlyImageResizeIoModule,
-    FirebaseImageFormlyModule
+    FirebaseImageFormlyModule,
     //TextMaskModule
+    FormlyFirebaseImageGalleryModule
   ],
   exports: [
     FormlyModule,
@@ -67,7 +69,8 @@ import { FormlyFormsFlexModule } from './formly-form-flex/formly-form-flex.modul
     FomlySuffixIconWrapperModule,
     FomlyPrefixIconWrapperModule,
     FormlyImageResizeIoModule,
-    FirebaseImageFormlyModule
+    FirebaseImageFormlyModule,
+    FormlyFirebaseImageGalleryModule
   ]
 })
 export class NgxFormlyFieldExtendedModule { }

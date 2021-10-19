@@ -218,7 +218,6 @@ export class ImagesState {
       }),
       mergeMap(() => from(this.schema.delete(id))),
       tap(() => this.snackBarStatus.OpenComplete('Image has been Removed')),
-      mergeMap(() => ctx.dispatch(new ImagesLoadFirstPageAction()))
     )
   }
 

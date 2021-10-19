@@ -26,9 +26,9 @@ export class AdminPostCreateComponent implements OnInit {
 
     this.formlyGroup = new FormlyTypeGroup<IPostFirebaseModel>({
       url: new FieldTypes.FriendlyUrlField('Url', true, 60, { templateOptions: { fxFlexXs: 60 } }),
-      publish: new FieldTypes.ToogleField('Publish', 40, { className: 'post-publish-toogle', templateOptions: { fxFlexXs: 40 } }),
+      publish: new FieldTypes.ToogleField('Publish', 40, { templateOptions: { fxFlexXs: 40 } }),
       title: new FieldTypes.InputField('Title', true, 100),
-      image: new FieldTypes.FirebaseImageUploader('Image', true, 100),
+      image: new FieldTypes.FirebaseImageGalleryUploader('Post Image', true, 100),
       excerpt: new FieldTypes.MatEditor('Excerpt', true, 100, { placeholder: 'Insert excerpt here...', hasSideBar: false }),
       body: new FieldTypes.MatEditor('Body', true, 100, { placeholder: 'Insert post here...'})
     });
@@ -38,7 +38,6 @@ export class AdminPostCreateComponent implements OnInit {
   formSubmit() {
     this.formlyGroup.markAsBusy();
     this.store.dispatch(new CreatePostAction({ ...this.formlyGroup.model }))
-
   }
 
 }

@@ -7,6 +7,7 @@ import { getCountryStates } from '../../../utils/country-states';
 import { IImageResizeIoUploaderOptions } from '../types/image-resize-io-upload/contracts/image-rio-uploader-options';
 import { IFirebaseImageFormlyTemplateOptions } from '../types/firebase-image-formly/firebase-image-formly.module';
 import { IMatEditorFormlyTemplateOptions } from '../types/mat-editor-formly/mat-editor-formly.module';
+import { IFirebaseImageGalleryFormlyTemplateOptions } from '../types/firebase-image-gallery-formly/firebase-image-gallery-formly.module';
 
 
 export namespace FieldTypes {
@@ -53,6 +54,7 @@ export namespace FieldTypes {
     fileUploder: IFileUploaderOptions;
     fileResizeIoUploader: IImageResizeIoUploaderOptions,
     firebaseImageFormlyconfig: IFirebaseImageFormlyTemplateOptions,
+    firebaseImageGalleryFormlyconfig: IFirebaseImageGalleryFormlyTemplateOptions,
     matEditorFormlyConfig: IMatEditorFormlyTemplateOptions;
     height: number;
     suffixIcon: string;
@@ -461,6 +463,15 @@ export namespace FieldTypes {
       super(label, required, fxFlex, config);
       this.type = 'firebase-image-uploader';
       this.templateOptions.firebaseImageFormlyconfig = { ...this.templateOptions.firebaseImageFormlyconfig, ...firebaseImageFormlyconfig };
+      this.templateOptions.placeholder = label;
+    }
+  }
+
+  export class FirebaseImageGalleryUploader extends InputBase {
+    constructor(label: string, required: boolean, fxFlex = 100, firebaseImageGalleryFormlyconfig?: Partial<IFirebaseImageGalleryFormlyTemplateOptions>, config?: Partial<InputBase>) {
+      super(label, required, fxFlex, config);
+      this.type = 'firebase-imaga-gallery-uploader';
+      this.templateOptions.firebaseImageGalleryFormlyconfig = { ...this.templateOptions.firebaseImageGalleryFormlyconfig, ...firebaseImageGalleryFormlyconfig };
       this.templateOptions.placeholder = label;
     }
   }
