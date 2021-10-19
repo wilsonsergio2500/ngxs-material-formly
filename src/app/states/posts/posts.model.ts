@@ -2,8 +2,9 @@ import { IFirebasePaginationState } from '../../firebase/types/firabes-paginatio
 import { IPostFirebaseModel } from '../../schemas/posts/post.model';
 
 export interface IPostStateModel {
-    working: boolean;
-    posts: IPostFirebaseModel[];
-    size: number;
-    paginationState: IFirebasePaginationState<IPostFirebaseModel>
+  working: boolean;
+  posts: IPostFirebaseModel[];
+  size: number;
+  paginationState: IFirebasePaginationState<IPostFirebaseModel>;
+  selected: IPostFirebaseModel
 }

@@ -1,7 +1,7 @@
 import { State, Action, StateContext, Store, Selector } from '@ngxs/store'
 import { IPostStateModel } from './posts.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction, PostNextPage, PostPrevPage, PostRemoveAction } from './posts.actions';
+import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction, PostNextPage, PostPrevPage, PostRemoveAction, PostGetCurrentSelectedAction, PostUpdateAction } from './posts.actions';
 import { from, Subscription, of } from 'rxjs';
 import { tap, mergeMap, delay, catchError } from 'rxjs/operators';
 import { Navigate } from '@ngxs/router-plugin';
@@ -21,7 +21,8 @@ import { IFireBaseEntity } from '../../firebase/types/firebase-entity';
     working: false,
     posts: [],
     size: 0,
-    paginationState: new FirebasePaginationStateModel<IPostFirebaseModel>()
+    paginationState: new FirebasePaginationStateModel<IPostFirebaseModel>(),
+    selected: null
   }
 })
 @Injectable()
@@ -64,6 +65,10 @@ export class PostState {
   @Selector()
   static IsPaginatorEnabled(state: IPostStateModel): boolean {
     return state.paginationState.prev || state.paginationState.next;
+  }
+  @Selector()
+  static getCurrenSelectedRecord(state: IPostStateModel) : IPostFirebaseModel {
+    return state.selected;
   }
 
   @Action(SetPostAsLoadingAction)
@@ -217,9 +222,44 @@ export class PostState {
   @Action(PostRemoveAction)
   onPostRemove(ctx: StateContext<IPostStateModel>, action: PostRemoveAction) {
     const { Id } = action.post;
-    return this.confirmationDialog.OnConfirm('Are you sure you would like to delete this Page?').pipe(
+    return this.confirmationDialog.OnConfirm('Are you sure you would like to delete this Post?').pipe(
       mergeMap(() => from(this.posts.delete(Id))),
-      tap(() => this.snackBarStatus.OpenComplete('Page has been Removed')),
+      tap(() => this.snackBarStatus.OpenComplete('Post has been Removed')),
     )
   }
+
+  @Action(PostGetCurrentSelectedAction)
+  onGetCurrentSelected(ctx: StateContext<IPostStateModel>, action: PostGetCurrentSelectedAction) {
+    const { id : currentId } = action;
+    ctx.dispatch(new SetPostAsLoadingAction());
+    return from(this.posts.queryCollection(ref => ref.where('Id', '==', currentId)).get()).pipe(
+      tap(records => {
+        if (records?.docs.length) {
+          const selected = records.docs[0].data() as IPostFirebaseModel;
+          ctx.patchState({ selected });
+        }
+      }),
+      delay(1000),
+      mergeMap(() => ctx.dispatch(new SetPostAsDoneAction()))
+    )
+  }
+
+  @Action(PostUpdateAction)
+  onPostUpdateAction(ctx: StateContext<IPostStateModel>, action: PostUpdateAction) {
+
+    return this.store.selectOnce(AuthState.getUser).pipe(
+      mergeMap((user) => {
+        const now = Date.now();
+        const metadata = <Partial<IFireBaseEntity>>{ updatedDate: now, updatedBy: user }
+        const form = { ...action.post, ...metadata };
+        return this.posts.update(action.post.Id, form);
+      }),
+      delay(1000),
+      tap(() => {
+        this.snackBarStatus.OpenComplete('Post Updated Succesfully');
+        ctx.dispatch(new Navigate(['admin/posts']));
+      })
+    );
+  }
+
 }

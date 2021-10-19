@@ -96,7 +96,8 @@ export class MatEditorComponent extends _MatQuillBase {
     const index = this.quillEditor.getSelection()?.index ?? 0;
     const onImageSelect$ = this.firebaseGalleryService.OnOpen().pipe(
       tap(_ => {
-        this.quillEditor.insertEmbed(index, 'image', _);
+        this.quillEditor.insertEmbed(index, 'image', _, Quill.sources.USER);
+        this.quillEditor.setSelection(index + 1, Quill.sources.SILENT);
       })
     );
     this.subscriptions = [...this.subscriptions, onImageSelect$.subscribe()];
