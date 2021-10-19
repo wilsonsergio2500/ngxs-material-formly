@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
+import { PostState } from '@states/posts/posts.state';
 import { Observable } from 'rxjs';
 import { IPostFirebaseModel } from '@firebase-schemas/posts/post.model';
-import { PostState } from '@states/posts/posts.state';
-import { PostNextPage, PostPrevPage, PostRemoveAction } from '@states/posts/posts.actions';
+import { PostNextPage, PostPrevPage } from '@states/posts/posts.actions';
 
 @Component({
-  selector: 'admin-post-list',
-  templateUrl: 'admin-post-list.component.html',
-  styleUrls: ['admin-post-list.component.scss']
+  selector: 'blogs',
+  templateUrl: 'blogs.component.html',
+  styleUrls: [`blogs.component.scss`]
 })
-export class AdminPostListComponent {
+export class BlogsComponent {
 
   @Select(PostState.IsLoading) working$: Observable<boolean>;
   @Select(PostState.getPage) records$: Observable<IPostFirebaseModel[]>;
@@ -18,10 +18,7 @@ export class AdminPostListComponent {
   @Select(PostState.getPreviousEnabled) prev$: Observable<boolean>;
   @Select(PostState.IsPaginatorEnabled) paginationEnabled$: Observable<boolean>;
 
-  constructor(
-    private store: Store
-  ) {
-  }
+  constructor(private store: Store) { }
 
   onNextPage() {
     this.store.dispatch(new PostNextPage())
@@ -31,7 +28,5 @@ export class AdminPostListComponent {
     this.store.dispatch(new PostPrevPage());
   }
 
-  onRemove(row: IPostFirebaseModel) {
-    this.store.dispatch(new PostRemoveAction(row));
-  }
+
 }

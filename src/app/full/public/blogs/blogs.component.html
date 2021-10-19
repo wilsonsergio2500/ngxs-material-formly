@@ -1,0 +1,32 @@
+<div fxLayout="column" fxFlex>
+
+  <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+    <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+    <span [ngStyle]="{'padding.px': 10}">Loading Posts...</span>
+  </div>
+
+  <ng-template #done>
+    <div class="blogs-container">
+      Here is the container
+
+      <ng-container *ngIf="records$ | async as records">
+
+        <ng-container *ngIf="!records.length">
+          <mat-card>
+            No Blog Posts Found
+          </mat-card>
+        </ng-container>
+
+        <ng-container *ngIf="records.length">
+          <div *ngFor="let post of records">
+            {{post.title}}
+          </div>
+
+        </ng-container>
+
+      </ng-container>
+
+    </div>
+  </ng-template>
+
+</div>
