@@ -1,5 +1,49 @@
 :host {
-  .blogs-container{
-      padding: 30px
+    padding:20px;
+
+  .blogs-container {
+    padding: 30px;
+    width: 1500px;
+
+    @media(max-width: 1919px) {
+        width:100%;
+    }
+
+    .blog-item {
+      display: flex;
+
+      @media(max-width: 600px) {
+        flex-direction: column;
+      }
+
+      .blog-image {
+        display: flex;
+        padding: 20px;
+        min-width: 200px;
+
+        img {
+          width: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+
+      .blog-detail {
+        margin: 20px;
+
+        .blog-excerpt {
+          height: 180px;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 8;
+          overflow: hidden;
+        }
+
+        .blog-link {
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+    }
   }
 }

@@ -42,8 +42,14 @@ div {
 }
 
 
-.color-primary {
-  color: mat-color($primary);
+.mat-color-primary {
+  color: $mat-color-primary
+}
+.mat-color-accent {
+  color: $mat-color-accent;
+}
+.mat-color-warn {
+  color: $mat-color-warn;
 }
 
 [hidden] {
@@ -81,7 +87,6 @@ a {
 @media(max-width: 959px) {
   .dialog-responsive, .img-gallery-responsive {
     max-width: 90vw !important;
-    /*    height: 90vh;*/
   }
 }
 
