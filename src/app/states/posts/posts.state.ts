@@ -1,7 +1,7 @@
 import { State, Action, StateContext, Store, Selector } from '@ngxs/store'
 import { IPostStateModel } from './posts.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction, PostNextPage, PostPrevPage, PostRemoveAction, PostGetCurrentSelectedAction, PostUpdateAction } from './posts.actions';
+import { CreatePostAction, SetPostAsDoneAction, GetPostsAction, SetPostsAction, SetPostAsLoadingAction, GetPostPageAction, PostNextPage, PostPrevPage, PostRemoveAction, PostGetCurrentSelectedAction, PostUpdateAction, PostGetAction } from './posts.actions';
 import { from, Subscription, of } from 'rxjs';
 import { tap, mergeMap, delay, catchError } from 'rxjs/operators';
 import { Navigate } from '@ngxs/router-plugin';
@@ -22,6 +22,7 @@ import { IFireBaseEntity } from '../../firebase/types/firebase-entity';
     posts: [],
     size: 0,
     paginationState: new FirebasePaginationStateModel<IPostFirebaseModel>(),
+    currentPost: null,
     selected: null
   }
 })
@@ -65,6 +66,10 @@ export class PostState {
   @Selector()
   static IsPaginatorEnabled(state: IPostStateModel): boolean {
     return state.paginationState.prev || state.paginationState.next;
+  }
+  @Selector()
+  static getCurrentPost(state: IPostStateModel): IPostFirebaseModel  {
+    return state.currentPost;
   }
   @Selector()
   static getCurrenSelectedRecord(state: IPostStateModel) : IPostFirebaseModel {
@@ -261,5 +266,26 @@ export class PostState {
       })
     );
   }
+
+  @Action(PostGetAction)
+  onFindPost(ctx: StateContext<IPostStateModel>, action: PostGetAction) {
+
+    ctx.dispatch(new SetPostAsLoadingAction())
+    return from(this.posts.queryCollection(ref => ref.where('url', '==', action.url).where('publish', '==', true)).get()).pipe(
+      mergeMap(page => {
+        const currentPost = page.docs[0].data() as IPostFirebaseModel;
+        ctx.patchState({ currentPost });
+        ctx.dispatch(new SetPostAsDoneAction())
+        return of(page);
+      }),
+      catchError(() => {
+        ctx.dispatch(new Navigate(['error/page-not-found']));
+        return of('404-Page-Not-Found');
+      })
+    )
+
+  }
+
+  
 
 }

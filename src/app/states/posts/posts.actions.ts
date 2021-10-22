@@ -47,3 +47,8 @@ export class PostUpdateAction {
   static type = '[Posts] Update Action';
   constructor(public post: IPostFirebaseModel) {}
 }
+
+export class PostGetAction {
+  static type = '[Post] Get Action';
+  constructor(public url: string) { }
+}

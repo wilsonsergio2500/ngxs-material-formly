@@ -6,5 +6,6 @@ export interface IPostStateModel {
   posts: IPostFirebaseModel[];
   size: number;
   paginationState: IFirebasePaginationState<IPostFirebaseModel>;
+  currentPost: IPostFirebaseModel,
   selected: IPostFirebaseModel
 }

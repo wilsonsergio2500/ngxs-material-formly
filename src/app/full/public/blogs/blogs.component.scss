@@ -1,12 +1,11 @@
 :host {
-    padding:20px;
 
   .blogs-container {
     padding: 30px;
     width: 1500px;
 
     @media(max-width: 1919px) {
-        width:100%;
+        width:95%;
     }
 
     .blog-item {
