@@ -41,7 +41,6 @@ div {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-
 .mat-color-primary {
   color: $mat-color-primary
 }
@@ -50,6 +49,13 @@ div {
 }
 .mat-color-warn {
   color: $mat-color-warn;
+}
+
+
+:root {
+  --mat-color-primary: $mat-color-primary;
+  --mat-color-accent: $mat-color-accent;
+  --mat-color-warn: $mat-color-warn
 }
 
 [hidden] {

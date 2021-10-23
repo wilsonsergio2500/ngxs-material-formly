@@ -1,4 +1,10 @@
+@import 'styles-variables';
 :host {
+
+  h1 {
+    color: $mat-color-primary;
+  }
+
   ::ng-deep {
     .content-container {
       * img {
