@@ -7,7 +7,9 @@ import { ImageResize } from './extensions/ImageResize/imageResize'
 import { DividerBlot } from './extensions/Divider/divider';
 import { Subscription } from 'rxjs';
 import { FirebaseImageManageDialogService } from '../firebase-image-manager/firebase-image-manage-dialog-service/firebase-image-manage-dialog.service';
+import { ImageFormat } from './extensions/ImageFormats/image-formats';
 Quill.register('modules/imageResize', ImageResize)
+Quill.register(ImageFormat, true);
 Quill.register(DividerBlot);
 
 let nextUniqueId = 0
@@ -89,7 +91,6 @@ export class MatEditorComponent extends _MatQuillBase {
       delta.ops = ops
       return delta
     })
-
   }
 
   onImage() {

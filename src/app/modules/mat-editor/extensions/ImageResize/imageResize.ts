@@ -1,6 +1,6 @@
 import DefaultOptions from './defaultOptions'
 import { DisplaySize } from './modules/displaysize';
-import { Toolbar } from './modules/Toolbar';
+import { Toolbar } from './modules/toolbar';
 import { Resize } from './modules/Resize';
 
 import * as Quill from 'quill';

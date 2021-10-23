@@ -274,6 +274,7 @@ export class PostState {
     return from(this.posts.queryCollection(ref => ref.where('url', '==', action.url).where('publish', '==', true)).get()).pipe(
       mergeMap(page => {
         const currentPost = page.docs[0].data() as IPostFirebaseModel;
+        console.log(currentPost.body);
         ctx.patchState({ currentPost });
         ctx.dispatch(new SetPostAsDoneAction())
         return of(page);

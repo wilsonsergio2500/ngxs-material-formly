@@ -24,6 +24,10 @@ const FloatStyle = new Parchment.Attributor.Style('float', 'float');
 const MarginStyle = new Parchment.Attributor.Style('margin', 'margin');
 const DisplayStyle = new Parchment.Attributor.Style('display', 'display');
 
+Parchment.register(FloatStyle);
+Parchment.register(MarginStyle);
+Parchment.register(DisplayStyle);
+
 export class Toolbar extends BaseModule {
   toolbar: HTMLDivElement;
   alignments: any[];
@@ -34,6 +38,7 @@ export class Toolbar extends BaseModule {
     this.toolbar = document.createElement('div');
     Object.assign(this.toolbar.style, this.options.toolbarStyles);
     this.overlay.appendChild(this.toolbar);
+
 
     // Setup Buttons
     this._defineAlignments();

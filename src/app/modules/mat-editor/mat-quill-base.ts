@@ -150,7 +150,7 @@ export abstract class _MatQuillBase
 
   get value(): any {
     try {
-      return this.valueGetter(this.quillEditor, this.editorElem!)
+      return this.valueGetter(this.quillEditor, this.editorElem!);
     } catch (e) {
       return
     }
