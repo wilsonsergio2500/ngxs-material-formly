@@ -16,7 +16,7 @@
         </ng-container>
         <ng-container *ngIf="post.body">
 
-          <div class="content-container" [innerHtml]="post.body | dompurify"></div>
+          <div class="content-container" [innerHtml]="post.body | safeHtml"></div>
 
         </ng-container>
 

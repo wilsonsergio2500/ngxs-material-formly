@@ -43,7 +43,7 @@ export interface IMatEditorFormlyTemplateOptions {
               placeholder: 'Insert text here...',
               modules : {
                 toolbar: [
-                  [{ header: [1, 2, false] }],
+                  [{ header: [1, 2, 3, false] }],
                   ['bold', 'italic', 'underline'],
                 ],
                 'imageResize': {}

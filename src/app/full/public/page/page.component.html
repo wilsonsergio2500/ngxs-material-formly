@@ -16,7 +16,7 @@
         </ng-container>
         <ng-container *ngIf="page.body">
 
-          <div class="content-container" [innerHtml]="page.body | dompurify"></div>
+          <div class="content-container" [innerHtml]="page.body | safeHtml"></div>
 
         </ng-container>
 

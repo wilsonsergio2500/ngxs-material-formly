@@ -20,6 +20,7 @@ import { MatFabSpeedDialModule } from './modules/mat-fab-speed-dial/mat-fab-spee
 import { MatEditorModule } from './modules/mat-editor/mat-editor.module';
 import { FirebaseImageModule } from './modules/firebase-image/firebase-image.module';
 import { FirebaseImageManagerModule } from './modules/firebase-image-manager/firebase-image-manager.module';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 @NgModule({
   imports: [
@@ -62,6 +63,9 @@ import { FirebaseImageManagerModule } from './modules/firebase-image-manager/fir
     FirebaseImageModule,
     FirebaseImageManagerModule.forRoot()
   ],
+  declarations: [
+    SafeHtmlPipe
+  ],
   //providers: [
   //],
   exports: [
@@ -83,7 +87,8 @@ import { FirebaseImageManagerModule } from './modules/firebase-image-manager/fir
     MatEditorModule,
     MatFabSpeedDialModule,
     FirebaseImageModule,
-    FirebaseImageManagerModule
+    FirebaseImageManagerModule,
+    SafeHtmlPipe
 
   ]
 })

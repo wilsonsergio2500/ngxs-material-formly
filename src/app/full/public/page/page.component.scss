@@ -1,7 +1,7 @@
 @import 'styles-variables';
 :host {
 
-  h1 {
+  h1, h2, h3 {
     color: $mat-color-primary;
   }
 
@@ -9,6 +9,10 @@
     .content-container {
       * img {
         max-width: 100%;
+      }
+
+      h1, h2, h3 {
+        color: $mat-color-primary;
       }
     }
   }
