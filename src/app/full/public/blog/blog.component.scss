@@ -14,6 +14,19 @@
       h1, h2, h3 {
         color: $mat-color-primary;
       }
+
+      hr {
+        border: none;
+        color: #111;
+        letter-spacing: 1em;
+        text-align: center;
+      }
+
+      hr:before {
+        content: '...';
+        font-size: 25px;
+        font-weight: bold;
+      }
     }
   }
 }

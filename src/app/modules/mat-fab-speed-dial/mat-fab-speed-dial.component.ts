@@ -94,7 +94,7 @@ export class MatFabSpeedDialComponent implements OnDestroy, AfterContentInit {
   @ContentChild(MatFabSpeedDialActionsBase) _childActions: MatFabSpeedDialActionsBase;
 
   constructor(
-    private elementRef: ElementRef,
+    public elementRef: ElementRef,
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document: Document,
   ) { }

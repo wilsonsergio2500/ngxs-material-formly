@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core'
+import { Component, HostBinding, Input, ViewChild } from '@angular/core'
 import { MatFormFieldControl } from '@angular/material/form-field';
 import Quill from 'quill'
 import { tap } from 'rxjs/operators'
@@ -8,6 +8,7 @@ import { DividerBlot } from './extensions/Divider/divider';
 import { Subscription } from 'rxjs';
 import { FirebaseImageManageDialogService } from '../firebase-image-manager/firebase-image-manage-dialog-service/firebase-image-manage-dialog.service';
 import { ImageFormat } from './extensions/ImageFormats/image-formats';
+import { MatFabSpeedDialComponent } from '../mat-fab-speed-dial/mat-fab-speed-dial.component';
 Quill.register('modules/imageResize', ImageResize)
 Quill.register(ImageFormat, true);
 Quill.register(DividerBlot);
@@ -38,18 +39,17 @@ export class MatEditorComponent extends _MatQuillBase {
   @HostBinding() id = `${SELECTOR}-${nextUniqueId++}`;
   displaySideBar = false;
   subscriptions: Subscription[] = [];
+  @ViewChild(MatFabSpeedDialComponent) speedDialSideBar : MatFabSpeedDialComponent;
 
   static ngAcceptInputType_disabled: boolean | string | null | undefined
   static ngAcceptInputType_required: boolean | string | null | undefined
 
-  private firebaseGalleryService: FirebaseImageManageDialogService
+  private firebaseGalleryService: FirebaseImageManageDialogService;
 
   ngOnInit() {
     const editorCreated$ = this.onEditorCreated.pipe(tap(q => this.editorCreated(q)));
     this.firebaseGalleryService = this.injector.get(FirebaseImageManageDialogService);
-
     this.subscriptions = [...this.subscriptions, editorCreated$.subscribe()];
-
   }
 
   editorCreated(quill) {
@@ -65,6 +65,8 @@ export class MatEditorComponent extends _MatQuillBase {
       if (range.length === 0) {
         let [block,] = editor.scroll.descendant(Block, range.index);
         if (block != null && block.domNode.firstChild instanceof HTMLBRElement) {
+          const lineBounds = editor.getBounds(range);
+          this.setSideBarLocation(lineBounds);
           this.displaySideBar = true;
         } else {
           this.displaySideBar = false;
@@ -115,6 +117,17 @@ export class MatEditorComponent extends _MatQuillBase {
     const index = this.quillEditor.getSelection()?.index ?? 0;
     this.quillEditor.insertEmbed(index, 'divider', true, Quill.sources.USER);
     this.quillEditor.setSelection(index + 1, Quill.sources.SILENT);
+  }
+
+  private setSideBarLocation(pos: { top: number }) {
+    if (this.hasSideBar && this.speedDialSideBar) {
+      const { elementRef } = this.speedDialSideBar;
+      this.changeElementStyle(elementRef.nativeElement, 'top', `${Math.round(pos.top) - 10}px`);
+    }
+  }
+
+  private changeElementStyle(elem: any, style: string, value: string | number) {
+    this.renderer.setStyle(elem, style, value);
   }
 
   ngOnDestroy() {
