@@ -15,6 +15,10 @@
       </ng-container>
     </ng-container>
 
+    <div class="static-sites">
+      <a mat-button routerLink="/blogs"><mat-icon>notes</mat-icon></a>
+    </div>
+
 
     <button mat-icon-button mat-raised-button [matMenuTriggerFor]="usermenu">
       <mat-icon aria-label="profile">person</mat-icon>
@@ -40,6 +44,16 @@
         <side-navigation [navigations]="navigations"></side-navigation>
       </ng-container>
     </ng-container>
+
+    <mat-list>
+      <mat-divider></mat-divider>
+      <mat-list-item class="menu-list-item">
+        <mat-icon mat-list-icon>notes</mat-icon>
+        <a matLine routerLink="/blogs">
+          <span>Blogs</span>
+        </a>
+      </mat-list-item>
+    </mat-list>
 
   </mat-sidenav>
   <router-outlet></router-outlet>

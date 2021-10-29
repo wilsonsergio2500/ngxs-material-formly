@@ -9,16 +9,28 @@
 
     <ng-template #done>
 
+      <div fxLayout="row">
+        <div [ngStyle]="{'margin-top.px': 15}">
+          <a mat-button routerLink="/blogs">
+            <mat-icon color="primary">chevron_left</mat-icon>
+          </a>
+        </div>
+        <h5>Posts</h5>
+      </div>
+
       <ng-container *ngIf="post$ | async as post">
 
-        <ng-container *ngIf="post.title">
-          <h1>{{post.title}}</h1>
-        </ng-container>
-        <ng-container *ngIf="post.body">
+        <div class="post-content">
 
-          <div class="content-container" [innerHtml]="post.body | safeHtml"></div>
+          <ng-container *ngIf="post.title">
+            <h1>{{post.title}}</h1>
+          </ng-container>
+          <ng-container *ngIf="post.body">
 
-        </ng-container>
+            <div class="content-container" [innerHtml]="post.body | safeHtml"></div>
+
+          </ng-container>
+        </div>
 
       </ng-container>
 
