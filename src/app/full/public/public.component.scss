@@ -1,6 +1,27 @@
 :host {
   display: flex;
   height: 100%;
+  flex-direction: column;
+
+  .mat-sidenav-container {
+    flex-grow: 1;
+  }
+
+  .fill-space {
+    flex: 1 1 auto;
+  }
+
+  .nav-item {
+    padding: 10px;
+
+    & li {
+      display: inline-block;
+      font-size: 0.8em;
+      list-style-type: none;
+      margin-left: 2px;
+    }
+  }
+
 }
 
 :host ::ng-deep .menu-list-item .mat-badge-content {
@@ -38,9 +59,7 @@
   flex-flow: column;
 }
 
-.fill-space {
-  flex: 1 1 auto;
-}
+
 
 .app-title {
   cursor: pointer;

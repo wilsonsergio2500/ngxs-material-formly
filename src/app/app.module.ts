@@ -14,6 +14,8 @@ import { getRootStates } from './states/states';
 import { getRootGuards } from './guards/guards';
 import { environment } from '../environments/environment';
 import { getGlobalResolvers } from './resolvers/resolvers';
+import { QuillModule } from 'ngx-quill';
+import { MatQuillModule } from './modules/mat-quill/mat-quill.module';
 
 
 @NgModule({
@@ -22,22 +24,22 @@ import { getGlobalResolvers } from './resolvers/resolvers';
     ...getFullPageViewComponents()
   ],
   imports: [
-      BrowserModule,
-      AppRoutingModule,
-      BrowserAnimationsModule,
-      FirebaseModule,
-      SharedModule.forRoot(),
-      NgxsModule.forRoot([...getRootStates()], { developmentMode: !environment.production }),
-      NgxsRouterPluginModule.forRoot(),
-      NgxsReduxDevtoolsPluginModule.forRoot({
-          disabled: environment.production
-      }),
-      MaterialComponentsModule
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FirebaseModule,
+    SharedModule.forRoot(),
+    NgxsModule.forRoot([...getRootStates()], { developmentMode: !environment.production }),
+    NgxsRouterPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot({
+      disabled: environment.production
+    }),
+    MaterialComponentsModule
   ],
-    providers: [
-        ...getRootGuards(),
-        ...getGlobalResolvers()
-    ],
+  providers: [
+    ...getRootGuards(),
+    ...getGlobalResolvers()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

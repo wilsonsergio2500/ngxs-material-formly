@@ -1,0 +1,6 @@
+<div fxFlex fxLayout="column">
+  <div class="close-action-container">
+    <mat-icon (click)="onClose()">close</mat-icon>
+  </div>
+  <firebase-image-manage [displayType]="displayType" (onSelectImage)="onSelectItem($event)"></firebase-image-manage>
+</div>

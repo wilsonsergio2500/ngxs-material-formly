@@ -6,8 +6,6 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyMatToggleModule } from './types/toggle/toggle.module';
 import { FormlyMatDatepickerModule } from './types/datepicker/datepicker.module';
-import { FormlyFormFlexLayoutComponent } from './forms/formly-form-flex-layout/formly-form-flex-layout.component';
-import { FormlyFormFlexJsonComponent } from './forms/formly-form-flex-json/fomly-form-flex-json.component'
 import { FormlyChipTypeModule } from './types/ngx-chip/chip.module';
 import { FormlyMatNumberInputModule } from './types/number/number.module';
 
@@ -22,52 +20,57 @@ import { FomlyPrefixIconWrapperModule } from './wrappers/prefix/prefix-icon.modu
 
 import { CustomComponentsModule } from '../../components/components.module';
 import { FormlyImageResizeIoModule } from './types/image-resize-io-upload/image-rio-uploader.module';
-//import { TextMaskModule } from 'angular2-text-mask';
+import { FirebaseImageFormlyModule } from './types/firebase-image-formly/firebase-image-formly.module';
+import { FormlyMatEditorModule } from './types/mat-editor-formly/mat-editor-formly.module';
+import { FormlyFormsFlexModule } from './formly-form-flex/formly-form-flex.module';
+import { FormlyFirebaseImageGalleryModule } from './types/firebase-image-gallery-formly/firebase-image-gallery-formly.module';
 
 
 @NgModule({
-    declarations: [
-        FormlyFormFlexLayoutComponent,
-        FormlyFormFlexJsonComponent
-    ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FlexLayoutModule,
-        MaterialComponentsModule,
-        CustomComponentsModule,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
+    MaterialComponentsModule,
+    CustomComponentsModule,
 
-        FormlyModule.forRoot(),
-        FormlyMaterialModule,
-        FormlyMatToggleModule,
-        FormlyMatDatepickerModule,
-        FormlyChipTypeModule,
-        FormlyMatNumberInputModule,
-        FormlyGroupFlexTypeModule,
-        //FormlyMatInputTypeMaskModule,
+    FormlyModule.forRoot(),
+    FormlyFormsFlexModule,
+    FormlyMaterialModule,
+    FormlyMatToggleModule,
+    FormlyMatDatepickerModule,
+    FormlyChipTypeModule,
+    FormlyMatNumberInputModule,
+    FormlyGroupFlexTypeModule,
+    FormlyMatEditorModule,
+    //FormlyMatInputTypeMaskModule,
 
-        FomlySuffixIconWrapperModule,
-        FomlyPrefixIconWrapperModule,
-        FormlyImageResizeIoModule
-        //TextMaskModule
-    ],
-    exports: [
-        FormlyModule,
-        FormlyMaterialModule,
-        FormlyMatToggleModule,
-        FormlyMatDatepickerModule,
-        FormlyFormFlexLayoutComponent,
-        FormlyFormFlexJsonComponent,
-        FormlyChipTypeModule,
-        FormlyMatNumberInputModule,
-        FormlyGroupFlexTypeModule,
-        //FormlyMatInputTypeMaskModule,
+    FomlySuffixIconWrapperModule,
+    FomlyPrefixIconWrapperModule,
+    FormlyImageResizeIoModule,
+    FirebaseImageFormlyModule,
+    //TextMaskModule
+    FormlyFirebaseImageGalleryModule
+  ],
+  exports: [
+    FormlyModule,
+    FormlyFormsFlexModule,
+    FormlyMaterialModule,
+    FormlyMatToggleModule,
+    FormlyMatDatepickerModule,
+    //FormlyFormFlexLayoutComponent,
+    //FormlyFormFlexJsonComponent,
+    FormlyChipTypeModule,
+    FormlyMatNumberInputModule,
+    FormlyGroupFlexTypeModule,
+    FormlyMatEditorModule,
+    //FormlyMatInputTypeMaskModule,
 
-        FomlySuffixIconWrapperModule,
-        FomlyPrefixIconWrapperModule,
-        FormlyImageResizeIoModule
-    ]
+    FomlySuffixIconWrapperModule,
+    FomlyPrefixIconWrapperModule,
+    FormlyImageResizeIoModule,
+    FirebaseImageFormlyModule,
+    FormlyFirebaseImageGalleryModule
+  ]
 })
-export class NgxFormlyFieldExtendedModule {
-
-}
+export class NgxFormlyFieldExtendedModule { }

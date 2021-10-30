@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  ::ng-deep {
+    .content {
+      justify-content: center
+    }
+
+    .mat-form-field-type-firebase-image-uploader {
+      .mat-form-field-underline, .mat-form-field-label {
+        display: none;
+      }
+    }
+
+  }
+}

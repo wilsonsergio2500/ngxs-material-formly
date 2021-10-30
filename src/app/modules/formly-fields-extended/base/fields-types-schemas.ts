@@ -5,11 +5,14 @@ import { IFileUploaderOptions } from '../types/file-uploader/contracts/file-uplo
 import { Observable } from 'rxjs';
 import { getCountryStates } from '../../../utils/country-states';
 import { IImageResizeIoUploaderOptions } from '../types/image-resize-io-upload/contracts/image-rio-uploader-options';
+import { IFirebaseImageFormlyTemplateOptions } from '../types/firebase-image-formly/firebase-image-formly.module';
+import { IMatEditorFormlyTemplateOptions } from '../types/mat-editor-formly/mat-editor-formly.module';
+import { IFirebaseImageGalleryFormlyTemplateOptions } from '../types/firebase-image-gallery-formly/firebase-image-gallery-formly.module';
 
 
 export namespace FieldTypes {
 
-  
+
   interface IOption {
     label: string;
     value: string;
@@ -42,23 +45,27 @@ export namespace FieldTypes {
 
 
 
-    export interface IFormlyAppTemplateOptions extends FormlyTemplateOptions {
-        fxFlex: string | number;
-        toolbar: any;
-        autogrow: boolean;
-        fxHideXs: boolean;
-        fileUploder: IFileUploaderOptions;
-        fileResizeIoUploader: IImageResizeIoUploaderOptions
-        height: number;
-        suffixIcon: string;
-        prefixIcon: string;
-        textMask: ITextMask
-    }
+  export interface IFormlyAppTemplateOptions extends FormlyTemplateOptions {
+    fxFlex: string | number;
+    fxFlexXs: string | number;
+    toolbar: any;
+    autogrow: boolean;
+    fxHideXs: boolean;
+    fileUploder: IFileUploaderOptions;
+    fileResizeIoUploader: IImageResizeIoUploaderOptions,
+    firebaseImageFormlyconfig: IFirebaseImageFormlyTemplateOptions,
+    firebaseImageGalleryFormlyconfig: IFirebaseImageGalleryFormlyTemplateOptions,
+    matEditorFormlyConfig: IMatEditorFormlyTemplateOptions;
+    height: number;
+    suffixIcon: string;
+    prefixIcon: string;
+    textMask: ITextMask
+  }
 
   class InputBase implements FormlyFieldConfig {
     key: string;
     type: string;
-    templateOptions: IFormlyAppTemplateOptions;
+    templateOptions: Partial<IFormlyAppTemplateOptions>;
     optionsTypes?: string[];
     defaultValue?: any;
     validation?: {
@@ -84,30 +91,26 @@ export namespace FieldTypes {
       [property: string]: string | ((model: any, formState: any) => boolean);
     } | any;
 
-    constructor(label? : string, required: boolean = true, fxFlex = 100, config?: Partial<InputBase> ) {
+    constructor(label?: string, required: boolean = true, fxFlex = 100, config?: Partial<InputBase>) {
       this.type = 'input';
       this.wrappers = ['suffix', 'form-field', 'prefix'];
       this.templateOptions = <IFormlyAppTemplateOptions>{
-        label, required, fxFlex, fxHideXs: false, textMask: {}
+        label, required, fxFlex, fxFlexXs: 100, fxHideXs: false, textMask: {}
       };
       this.modelOptions = {};
       const messages = {
         required: (error, field: FormlyFieldConfig) => {
           return `${field.templateOptions.label} is required`;
         }
-        }
+      }
 
-        if (config && config.templateOptions) {
-            config.templateOptions = { ...this.templateOptions, ...config.templateOptions}
-        }
+      if (config && config.templateOptions) {
+        config.templateOptions = { ...this.templateOptions, ...config.templateOptions }
+      }
 
       if (!!config) {
-          const configp = { ...config };
-        //  const configTemplateOptions = configp.templateOptions;
-        //  configTemplateOptions.label = configTemplateOptions ? configTemplateOptions.label : label;
-        //  configTemplateOptions.required = configTemplateOptions ? configTemplateOptions.required : required;
-        //configp.templateOptions.fxFlex = config.templateOptions.fxFlex || fxFlex;
-        
+        const configp = { ...config };
+
 
         Object.keys(configp).forEach((key) => {
           this[key] = configp[key];
@@ -123,28 +126,28 @@ export namespace FieldTypes {
   }
 
   export class InputField extends InputBase {
-    constructor(label?: string, required: boolean = true, fxFlex = 100,  config?: Partial<InputBase>) {
+    constructor(label?: string, required: boolean = true, fxFlex = 100, config?: Partial<InputBase>) {
       super(label, required, fxFlex, config);
       this.templateOptions.type = 'text';
     }
   }
 
-    export class HiddenField extends InputBase {
-        constructor(label?: string, required: boolean = true) {
-            super(label, required, 100);
-            this.templateOptions.type = 'text';
-            this.className = 'hidden-field';
-        }
+  export class HiddenField extends InputBase {
+    constructor(label?: string, required: boolean = true) {
+      super(label, required, 100);
+      this.templateOptions.type = 'text';
+      this.className = 'hidden-field';
     }
+  }
 
-    export class ChipField extends InputBase {
-        constructor(label: string, placeholder: string, required: boolean, fxFlex = 100, config?: Partial<InputBase>) {
-            super(label, required, fxFlex, config);
-            this.type = 'formly-chips';
-            this.templateOptions.placeholder = placeholder;
-            this.className = 'chips-formly';
-        }
+  export class ChipField extends InputBase {
+    constructor(label: string, placeholder: string, required: boolean, fxFlex = 100, config?: Partial<InputBase>) {
+      super(label, required, fxFlex, config);
+      this.type = 'formly-chips';
+      this.templateOptions.placeholder = placeholder;
+      this.className = 'chips-formly';
     }
+  }
 
 
   export class EmailField extends InputBase {
@@ -206,7 +209,7 @@ export namespace FieldTypes {
   }
 
   export class RadioField extends InputBase {
-    constructor(label?: string, required: boolean = true, fxFlex = 100, options: IRadioFieldOption[] = [], config?: Partial<InputBase>){
+    constructor(label?: string, required: boolean = true, fxFlex = 100, options: IRadioFieldOption[] = [], config?: Partial<InputBase>) {
       super(label, required, fxFlex, config);
       this.type = 'radio';
       this.templateOptions.options = options;
@@ -218,7 +221,7 @@ export namespace FieldTypes {
     constructor(label?: string, required: boolean = true, fxFlex = 100, config?: Partial<InputBase>) {
       super(label, required, fxFlex, config);
       this.type = 'datepicker';
-      this.templateOptions.min = new Date(1900, 1, 1, ) as any;
+      this.templateOptions.min = new Date(1900, 1, 1,) as any;
       this.templateOptions.max = new Date(3000, 1, 1) as any;
       this.validators = {
         'min': {
@@ -302,8 +305,8 @@ export namespace FieldTypes {
   }
 
   export class ToogleField extends InputBase {
-    constructor(label?: string, required: boolean = true, fxFlex = 100, config?: Partial<InputBase>) {
-      super(label, required, fxFlex, config);
+    constructor(label?: string, fxFlex = 100, config?: Partial<InputBase>) {
+      super(label, true, fxFlex, config);
       this.type = 'toggle';
       this.defaultValue = false;
     }
@@ -315,16 +318,6 @@ export namespace FieldTypes {
       this.type = 'textarea';
     }
   }
-
-  //export class SeachGridField extends InputBase {
-  //  constructor(searchGridConfig: ISearchGridSelector, label?: string, fxFlex?: number, required?: boolean)
-  //  constructor(searchGridConfig: ISearchGridSelector, label?: string, fxFlex = 100, required: boolean = true, config?: Partial<InputBase>) {
-  //    super(label, required, fxFlex)
-  //    this.type = 'formly-search-grid';
-  //    this.templateOptions.searchGridSelector = searchGridConfig;
-
-  //  }
-  //}
 
   export class MaskField extends InputBase {
     constructor(label: string, maskConfig: Partial<ITextMask>, required = true, fxFlex = 100) {
@@ -339,7 +332,7 @@ export namespace FieldTypes {
       super(label, required, fxFlex)
       this.type = 'input-mask';
       this.templateOptions.textMask = <ITextMask>{
-        mask: [ /[1-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+        mask: [/[1-9]/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       }
       this.templateOptions.description = 'Enter phone format as ###-###-####';
       //this.validators = {
@@ -361,7 +354,7 @@ export namespace FieldTypes {
       //  },
 
       //}
-     
+
     }
   }
 
@@ -370,13 +363,13 @@ export namespace FieldTypes {
       super(label, required, fxFlex)
       this.type = 'input-mask';
       this.templateOptions.textMask = <ITextMask>{
-        mask: [/[1-9]/, /\d/, /\d/,  /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+        mask: [/[1-9]/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
       }
       this.templateOptions.description = 'Enter Zip Code format as #####-####';
     }
   }
 
-  export class PickStateField extends InputBase{
+  export class PickStateField extends InputBase {
     constructor(label: string, required = true, fxFlex = 100) {
       super(label, required, fxFlex)
       this.type = 'select';
@@ -418,133 +411,78 @@ export namespace FieldTypes {
   }
 
   export class FileUploader extends InputBase {
-      constructor(required: boolean = true, fxFlex: number = 100, templateConfig: Partial<IFileUploaderOptions> = { placeholder: 'Upload Document'}) {
-          super(templateConfig.placeholder, required, fxFlex)
+    constructor(required: boolean = true, fxFlex: number = 100, templateConfig: Partial<IFileUploaderOptions> = { placeholder: 'Upload Document' }) {
+      super(templateConfig.placeholder, required, fxFlex)
       this.type = 'formly-file-uploader';
       this.className = 'formly-file-uploader';
-          this.templateOptions.fileUploder = { ...templateConfig };
+      this.templateOptions.fileUploder = { ...templateConfig };
       this.templateOptions.label = 'Document';
     }
-    }
+  }
 
-    export class FriendlyUrlField extends InputBase {
-        constructor(label: string, required: boolean, fxFlex = 100) {
-            super(label, required, fxFlex);
-            this.validators = {
-                'urlfriendly': {
-                    expression: (formGroup: FormGroup) => {
-                        if (!!formGroup.value) {
-                            const regex = /[ !@#$%^&*()+\=\[\]{};':"\\|,.<>\/?]/g;
-                            return !regex.test(formGroup.value);
-                        } else {
-                            return true;
-                        }
-                    },
-                    message: (error, field: FormlyFieldConfig) => {
-                        return `"${field.formControl.value}" is not a valid url name`;
-                    }
-                }
+  export class FriendlyUrlField extends InputBase {
+    constructor(label: string, required: boolean, fxFlex = 100, config?: Partial<InputBase>) {
+      super(label, required, fxFlex, config);
+      this.validators = {
+        'urlfriendly': {
+          expression: (formGroup: FormGroup) => {
+            if (!!formGroup.value) {
+              const regex = /[ !@#$%^&*()+\=\[\]{};':"\\|,.<>\/?]/g;
+              return !regex.test(formGroup.value);
+            } else {
+              return true;
             }
-            this.templateOptions.description = 'no slashes, spaces or special characters';
+          },
+          message: (error, field: FormlyFieldConfig) => {
+            return `"${field.formControl.value}" is not a valid url name`;
+          }
         }
+      }
+      this.templateOptions.description = 'No slashes, spaces or special characters';
+    }
+  }
+
+  export class ImageResizeIoUploader extends InputBase {
+    constructor(label: string, required: boolean, fxFlex = 100, templateConfig: Partial<IImageResizeIoUploaderOptions> = { thumbnailMissingImageUrl: 'https://im.ages.io/dSaintlp' }, config?: Partial<InputBase>) {
+      super(label, required, fxFlex, config);
+      this.type = 'image-resize-io-uploader';
+      const defaults = <IImageResizeIoUploaderOptions>{
+        previewFlexSize: 100,
+        thumbnailMissingImageUrl: 'https://im.ages.io/dSaintlp',
+        thumbnailAspectRatio: { width: 2, height: 1 },
+        thumbnailDimensions: { width: 300, height: 200 }
+      }
+      this.templateOptions.fileResizeIoUploader = { ...defaults, ...templateConfig };
+      this.templateOptions.placeholder = label;
     }
 
-    export class ImageResizeIoUploader extends InputBase {
-        constructor(label: string, required: boolean, fxFlex = 100, templateConfig: Partial<IImageResizeIoUploaderOptions> = { thumbnailMissingImageUrl: 'https://im.ages.io/dSaintlp' }, config?: Partial<InputBase>) {
-            super(label, required, fxFlex, config);
-            this.type = 'image-resize-io-uploader';
-            const defaults = <IImageResizeIoUploaderOptions>{
-                previewFlexSize: 100,
-                thumbnailMissingImageUrl: 'https://im.ages.io/dSaintlp',
-                thumbnailAspectRatio: { width: 2, height: 1 },
-                thumbnailDimensions: { width: 300, height: 200 }
-            }
-            this.templateOptions.fileResizeIoUploader = { ...defaults, ...templateConfig };
-            this.templateOptions.placeholder = label;
-        }
-    
+  }
+
+  export class FirebaseImageUploader extends InputBase {
+    constructor(label: string, required: boolean, fxFlex = 100, firebaseImageFormlyconfig?: Partial<IFirebaseImageFormlyTemplateOptions>, config?: Partial<InputBase>) {
+      super(label, required, fxFlex, config);
+      this.type = 'firebase-image-uploader';
+      this.templateOptions.firebaseImageFormlyconfig = { ...this.templateOptions.firebaseImageFormlyconfig, ...firebaseImageFormlyconfig };
+      this.templateOptions.placeholder = label;
     }
+  }
 
-  //export class LimitSelection extends InputBase {
-  //  constructor(list$: Observable<any[][]>, controlConfig: Partial<ILimitSelectionFormly> = {}) {
-  //    super('', true, 100);
-  //    this.type = 'formly-limit-client-selection';
+  export class FirebaseImageGalleryUploader extends InputBase {
+    constructor(label: string, required: boolean, fxFlex = 100, firebaseImageGalleryFormlyconfig?: Partial<IFirebaseImageGalleryFormlyTemplateOptions>, config?: Partial<InputBase>) {
+      super(label, required, fxFlex, config);
+      this.type = 'firebase-imaga-gallery-uploader';
+      this.templateOptions.firebaseImageGalleryFormlyconfig = { ...this.templateOptions.firebaseImageGalleryFormlyconfig, ...firebaseImageGalleryFormlyconfig };
+      this.templateOptions.placeholder = label;
+    }
+  }
 
-  //    const defaults = <ILimitSelectionFormly>{
-  //      config: [
-  //        <ILimitControlConfigItem>{ title: 'Client', expanded: true },
-  //        <ILimitControlConfigItem>{ title: 'Entity', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Location', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Department', expanded: false },
-  //      ],
-  //      maxLevel: PAYLOAD_TYPES.DEPARTMENT,
-  //      list$,
-  //      label: 'Selection'
-  //    }
-      
-  //    this.templateOptions.limitSelectionControl = { ...defaults, ...controlConfig };
-  //    this.templateOptions.label = this.templateOptions.limitSelectionControl.label;
-  //  }
-  //}
+  export class MatEditor extends InputBase {
+    constructor(label: string, required: boolean, fxFlex = 100, matEditorFormlyConfig: Partial<IMatEditorFormlyTemplateOptions> = { placeholder: 'Insert Text here...' }, config: Partial<InputBase> = { className: 'mat-editor-formly-field' }) {
+      super(label, required, fxFlex, config);
+      this.type = 'mat-editor-formly';
+      this.templateOptions.matEditorFormlyConfig = { ...matEditorFormlyConfig } as IMatEditorFormlyTemplateOptions;
+    }
+  }
 
-  //export class LimitSelectionReport extends InputBase {
-  //  constructor(list$: Observable<any[][]>, controlConfig: Partial<ILimitSelectionFormly> = {}) {
-  //    super('', true, 100);
-  //    this.type = 'formly-limit-client-selection-report';
 
-  //    const defaults = <ILimitSelectionFormly>{
-  //      config: [
-  //        <ILimitControlConfigItem>{ title: 'Client', expanded: true },
-  //        <ILimitControlConfigItem>{ title: 'Entity', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Location', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Department', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Cost Center', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Manager', expanded: false },
-  //        <ILimitControlConfigItem>{ title: 'Position', expanded: false },
-  //      ],
-  //      maxLevel: 5,
-  //      list$,
-  //      label: 'Selection'
-  //    }
-
-  //    this.templateOptions.limitSelectionControl = { ...defaults, ...controlConfig };
-  //    this.templateOptions.label = this.templateOptions.limitSelectionControl.label;
-  //  }
-  //}
-
-  //export class ReportPickerAvailableGroups extends InputBase {
-  //  constructor(label: string, list$: Observable<any[]>, controlConfig: Partial<ILimitSelectionFormly> = {}) {
-  //    super(label, false, 100);
-  //    this.type = 'formly-report-picker-available-group';
-  //    this.templateOptions.reportPickerAvailableGroups = <IReportPickerAvailableGroupConfig>{};
-  //    this.templateOptions.reportPickerAvailableGroups.list$ = list$;
-  //  }
-  //}
-
-  //export class TopReportSelectionCriteria extends InputBase {
-  //  constructor(label: string, list$: Observable<any[][]>, encodedType: string, controlConfig: Partial<ILimitSelectionFormly> = {}) {
-  //    super('', false, 100);
-  //    this.type = 'formly-limit-client-selection-report-top';
-  //    this.templateOptions.topReportSelectionCriteria = <ITopReportSelectionCriteria>{
-  //      label,
-  //      list$,
-  //      EncodedType: encodedType
-  //    };
-  //    const messages = {
-  //      required: (error, field: FormlyFieldConfig) => {
-  //        return `Main Selection is required`;
-  //      }
-  //    }
-  //    this.validation = { messages };
-  //  }
-  //}
-
-  //export class UserContextLimitLocation extends InputBase {
-  //  constructor(formlyConfig: IUserContextLimitLocationFormly, required: boolean = true, controlConfig: Partial<ILimitSelectionFormly> = {}) {
-  //    super('', required, 100);
-  //    this.type = 'formly-user-context-limit-location';
-  //    this.templateOptions.userContextLocationLimit = { ...formlyConfig };
-
-  //  }
-  //}
 }

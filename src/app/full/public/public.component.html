@@ -1,49 +1,60 @@
-<mat-sidenav-container fullscreen>
+<mat-toolbar color="primary" fxflex="100">
 
-  <mat-sidenav #start [opened]="mobileQuery.matches ? false : true" [mode]="mobileQuery.matches ? 'over' : 'side'">
+  <mat-toolbar-row>
 
-    <mat-accordion>
+    <button mat-icon-button (click)="mobilenav.open('mouse')" *ngIf="mobileQuery.matches ? true : false">
+      <mat-icon aria-label="menu icon-button with a heart icon">menu</mat-icon>
+    </button>
 
-      
-    </mat-accordion>
+    <span class="app-title" routerLink="/">Fire8</span>
+    <span class="fill-space"></span>
 
+    <ng-container *ngIf="navigations$ | async as navigations">
+      <ng-container *ngIf="navigations.length">
+        <toolbar-navigation [navigations]="navigations"></toolbar-navigation>
+      </ng-container>
+    </ng-container>
 
-  </mat-sidenav>
-
-  <mat-sidenav-content class="side-content" fxLayout="column">
-
-    <mat-toolbar color="primary" fxflex="100">
-
-      <mat-toolbar-row>
-
-        <button mat-icon-button (click)="start.open('mouse')" *ngIf="mobileQuery.matches ? true : false">
-          <mat-icon aria-label="menu icon-button with a heart icon">menu</mat-icon>
-        </button>
-
-        <span class="app-title">Fire8</span>
-        <span class="fill-space"></span>
-
-        <button mat-icon-button mat-raised-button [matMenuTriggerFor]="usermenu">
-          <mat-icon aria-label="profile">person</mat-icon>
-        </button>
-
-        <mat-menu #usermenu="matMenu" color="primary">
-          <button mat-menu-item (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
-            <span>Logout</span>
-          </button>
-        </mat-menu>
-
-
-      </mat-toolbar-row>
-
-    </mat-toolbar>
-
-    <div class="main-content">
-      <router-outlet></router-outlet>
+    <div class="static-sites">
+      <a mat-button routerLink="/blogs"><mat-icon>notes</mat-icon></a>
     </div>
 
 
-  </mat-sidenav-content>
+    <button mat-icon-button mat-raised-button [matMenuTriggerFor]="usermenu">
+      <mat-icon aria-label="profile">person</mat-icon>
+    </button>
 
+    <mat-menu #usermenu="matMenu" color="primary">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+
+
+  </mat-toolbar-row>
+
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #mobilenav [mode]="mobileQuery.matches ? 'over' : 'side'">
+
+
+    <ng-container *ngIf="navigations$ | async as navigations">
+      <ng-container *ngIf="navigations.length">
+        <side-navigation [navigations]="navigations"></side-navigation>
+      </ng-container>
+    </ng-container>
+
+    <mat-list>
+      <mat-divider></mat-divider>
+      <mat-list-item class="menu-list-item">
+        <mat-icon mat-list-icon>notes</mat-icon>
+        <a matLine routerLink="/blogs">
+          <span>Blogs</span>
+        </a>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-sidenav>
+  <router-outlet></router-outlet>
 </mat-sidenav-container>

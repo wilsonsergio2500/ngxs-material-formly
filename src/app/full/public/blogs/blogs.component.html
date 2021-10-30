@@ -1,0 +1,47 @@
+<div fxLayout="column" fxFlex fxLayoutAlign="center center" >
+
+  <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+    <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+    <span [ngStyle]="{'padding.px': 10}">Loading Posts...</span>
+  </div>
+
+  <ng-template #done>
+    <div class="blogs-container">
+
+      <h1 class="mat-color-primary">Blog Posts</h1>
+
+
+      <ng-container *ngIf="records$ | async as records">
+
+        <ng-container *ngIf="!records.length">
+          <mat-card>No Blog Posts Found</mat-card>
+        </ng-container>
+
+        <ng-container *ngIf="records.length">
+          <div *ngFor="let post of records" class="blog-item mat-elevation-z2">
+            <div class="blog-image">
+              <img src="{{post.image}}" />
+            </div>
+            <div class="blog-detail">
+              <h2 class="mat-color-primary">{{post.title}}</h2>
+              <div class="blog-excerpt" [innerHtml]="post.excerpt | dompurify"></div>
+              <div class="blog-link"><a mat-button color="primary" routerLink="/blog/{{post.url}}">Read More</a></div>
+            </div>
+          </div>
+
+
+          <ng-container *ngIf="paginationEnabled$ | async">
+            <firebase-pagination (onNextPage)="onNextPage()"
+                                 (onPreviousPage)="onPrevPage()"
+                                 [enabled-next]="next$ | async"
+                                 [enabled-previous]="prev$ | async"></firebase-pagination>
+          </ng-container>
+
+        </ng-container>
+
+      </ng-container>
+
+    </div>
+  </ng-template>
+
+</div>

@@ -39,7 +39,7 @@
         <mat-row *matRowDef="let row; columns: columns;"></mat-row>
 
       </mat-table>
-      <mat-paginator [pageSizeOptions]="[3, 5, 10]" #paginator [attr.Hidden]="paginator.pageSize >= paginator.length ? 'true' : null"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[3, 5, 10]" #paginator [attr.Hidden]="paginationEnabled$ | async" ></mat-paginator>
     </div>
 
   </div>

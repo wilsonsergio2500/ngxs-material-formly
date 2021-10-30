@@ -41,9 +41,21 @@ div {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.mat-color-primary {
+  color: $mat-color-primary
+}
+.mat-color-accent {
+  color: $mat-color-accent;
+}
+.mat-color-warn {
+  color: $mat-color-warn;
+}
 
-.color-primary {
-  color: mat-color($primary);
+
+:root {
+  --mat-color-primary: $mat-color-primary;
+  --mat-color-accent: $mat-color-accent;
+  --mat-color-warn: $mat-color-warn
 }
 
 [hidden] {
@@ -68,13 +80,19 @@ a {
 
 .dialog-responsive {
   width: 800px;
-  height: 500px;
+}
+.img-gallery-responsive {
+  width: 1200px;
+
+ &.gallery-container {
+    max-height: 65vh;
+    overflow: auto;
+  }
 }
 
 @media(max-width: 959px) {
-  .dialog-responsive {
+  .dialog-responsive, .img-gallery-responsive {
     max-width: 90vw !important;
-    height: 90vh;
   }
 }
 
@@ -95,3 +113,6 @@ a {
   white-space: pre-wrap;
 }
 
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';

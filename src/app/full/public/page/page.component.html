@@ -11,9 +11,12 @@
 
       <ng-container *ngIf="page$ | async as page">
 
+        <ng-container *ngIf="page.title">
+          <h1>{{page.title}}</h1>
+        </ng-container>
         <ng-container *ngIf="page.body">
 
-          <div [innerHtml]="page.body | dompurify"></div>
+          <div class="content-container" [innerHtml]="page.body | safeHtml"></div>
 
         </ng-container>
 

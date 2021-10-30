@@ -1,0 +1,9 @@
+<mat-menu #menu>
+  <ng-container *ngFor="let item of navigations">
+    <a *ngIf="!item.children?.length; else branch" routerLink="{{item.Url}}" mat-menu-item>{{item.Label}}</a>
+    <ng-template #branch>
+      <a mat-menu-item [matMenuTriggerFor]="innerPanel.menu">{{item.Label}}</a>
+      <toolbar-navigation-menu #innerPanel [navigations]="item.children"></toolbar-navigation-menu>
+    </ng-template>
+  </ng-container>
+</mat-menu>

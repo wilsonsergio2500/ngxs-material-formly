@@ -12,7 +12,7 @@
 
       <div fxLayout="row" fxLayoutAlign="end center">
         <div [ngStyle]="{'padding.px': 5}">
-          <a mat-button color="primary" routerLink="../create">
+          <a mat-button color="primary" routerLink="/admin/pages/create">
             New Page
             <mat-icon>add</mat-icon>
           </a>
@@ -42,7 +42,8 @@
             <ng-container matColumnDef="Action">
               <mat-header-cell *matHeaderCellDef></mat-header-cell>
               <mat-cell *matCellDef="let row" data-label="Action">
-                <a mat-button color="primary" routerLink="../detail/{{row['Id']}}">View</a>
+                <a mat-button color="primary" routerLink="/admin/pages/edit/{{row['Id']}}">View</a>
+                <button mat-button color="warn" (click)="onRemove(row)">Remove</button>
               </mat-cell>
             </ng-container>
 

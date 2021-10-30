@@ -12,12 +12,13 @@ const redirectUnauthorizedToLanding = () => redirectUnauthorizedTo(['login']);
 const routes: Routes = [
   <Route>{
     path: '', component: FullPageComponent,
-        children: [
-            <Route>{ path: 'login', component: LoginComponent },
-            <Route>{ path: 'register', component: RegisterComponent},
-            <Route>{ path: '', loadChildren: () => import('./full/public/public.module').then(m => m.PublicModule)},
-            <Route>{ path: 'main', loadChildren: () => import('./full/main/main.module').then(m => m.MainViewModule) },
-            <Route>{ path: 'admin', loadChildren: () => import('./full/admin/admin.module').then(m => m.AdminModule), ...canActivate(redirectUnauthorizedToLanding) }
+    children: [
+      <Route>{ path: 'login', component: LoginComponent },
+      <Route>{ path: 'register', component: RegisterComponent },
+      <Route>{ path: 'main', loadChildren: () => import('./full/main/main.module').then(m => m.MainViewModule) },
+      <Route>{ path: 'admin', loadChildren: () => import('./full/admin/admin.module').then(m => m.AdminModule), ...canActivate(redirectUnauthorizedToLanding) },
+      <Route>{ path: '', loadChildren: () => import('./full/public/public.module').then(m => m.PublicModule) }
+
     ]
   }
 ]

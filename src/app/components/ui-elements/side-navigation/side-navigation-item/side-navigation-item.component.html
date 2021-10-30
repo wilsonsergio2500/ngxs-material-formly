@@ -1,0 +1,26 @@
+<a mat-list-item *ngIf="navigation.IsLabelOnly" [ngStyle]="{'padding-left': (depth * 12) + 'px'}" (click)="onItemSelected(navigation)"
+   [ngClass]="{'active': navigation?.route ? router.isActive(navigation?.route, true): false, 'expanded': expanded}"
+   class="menu-list-item">
+  {{navigation.Label}}
+  <span fxFlex *ngIf="navigation.children && navigation.children.length">
+    <span fxFlex></span>
+    <mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'" >
+      expand_more
+    </mat-icon>
+  </span>
+</a>
+<a mat-list-item *ngIf="!navigation.IsLabelOnly" [ngStyle]="{'padding-left': (depth * 12) + 'px'}"  [routerLink]="navigation.Url"
+   [ngClass]="{'active': navigation?.route ? router.isActive(navigation?.route, true): false, 'expanded': expanded}"
+   class="menu-list-item">
+  {{navigation.Label}}
+  <span fxFlex *ngIf="navigation.children && navigation.children.length">
+    <span fxFlex></span>
+    <mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'" (click)="onItemSelected(navigation)">
+      expand_more
+    </mat-icon>
+  </span>
+</a>
+<div *ngIf="expanded">
+  <side-navigation-item *ngFor="let nav of navigation.children" [navigation]="nav" [depth]="depth+1">
+  </side-navigation-item>
+</div>

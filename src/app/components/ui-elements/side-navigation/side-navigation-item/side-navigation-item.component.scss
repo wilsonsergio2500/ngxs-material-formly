@@ -1,0 +1,38 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  width: 100%;
+
+  ::ng-deep .mat-list-item-content {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 16px;
+    font-size: 14px;
+    color: #2E2E2E;
+  }
+
+  .mat-list-item {
+    padding: 0;
+    display: flex;
+    width: auto;
+    height: 48px;
+
+   /* .routeIcon {
+      margin-right: 40px;
+    }*/
+  }
+
+  .mat-list-item.active {
+    /* background-color: mat-color($app-primary, 50);*/
+  }
+
+  &:hover,
+  &:focus {
+    > .mat-list-item:not(.expanded) {
+      /*background-color: mat-color($app-primary, 100) !important;*/
+    }
+  }
+}

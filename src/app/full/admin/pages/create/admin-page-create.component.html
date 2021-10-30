@@ -14,16 +14,12 @@
 
   </div>
 
-  <div>
-
     <formly-form-flex-json [formlyGroup]="formlyGroup"
                            [show-revert]="false"
                            [btn-ready]="btnReadyLabel"
                            [btn-busy]="btnLoadingLabel"
                            [read-only]="false"
-                           (onFormSubmit)="formSubmit($event)">
+                           (onFormSubmit)="formSubmit()">
     </formly-form-flex-json>
-
-  </div>
 
 </div>

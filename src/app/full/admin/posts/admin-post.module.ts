@@ -7,7 +7,6 @@ import { SharedModule } from '../../../shared.module';
 import { FirebaseModule } from '../../../firebase/firebase.module';
 import { MaterialComponentsModule } from '../../../materialcomponents.module';
 import { AdminPostRoutingModule } from './admin-post.routing.module'
-
 import { getAdminComponents, getAdminProviders } from './elements';
 
 @NgModule({
@@ -27,5 +26,4 @@ import { getAdminComponents, getAdminProviders } from './elements';
         ...getAdminProviders()
     ]
 })
-export class AdminPostModule {
-}
+export class AdminPostModule {}

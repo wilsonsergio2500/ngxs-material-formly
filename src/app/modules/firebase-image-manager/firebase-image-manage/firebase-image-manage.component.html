@@ -1,0 +1,50 @@
+<h3>Image Gallery</h3>
+
+<div class="action-item-container">
+<button mat-raised-button color="primary" (click)="onAdd()">
+  Add
+  <mat-icon>add</mat-icon>
+</button>
+</div>
+
+
+<div class="gallery-container">
+
+  <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+    <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+    <span [ngStyle]="{'padding.px': 10}">Loading Items...</span>
+  </div>
+
+  <ng-template #done>
+
+    <ng-container *ngIf="pageItems$ | async as items">
+
+      <ng-container *ngIf="items.length">
+        <div class="grid-container">
+          <firebase-image-item *ngFor="let item of items" [item]="item" [displayType]="displayType" (onRemove)="removeImage($event)" (onSelect)="imageSelected($event)"></firebase-image-item>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!items.length">
+        <mat-card class="no-image-message">
+          No images in this gallery
+        </mat-card>
+      </ng-container>
+
+    </ng-container>
+
+    <div>
+
+      <ng-container *ngIf="paginationEnabled$ | async">
+        <firebase-pagination (onNextPage)="onNextPage()"
+                             (onPreviousPage)="onPrevPage()"
+                             [enabled-next]="next$ | async"
+                             [enabled-previous]="prev$ | async"></firebase-pagination>
+      </ng-container>
+
+      </div>
+
+
+  </ng-template>
+
+</div>

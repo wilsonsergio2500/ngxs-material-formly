@@ -1,0 +1,19 @@
+:host {
+  ::ng-deep {
+    .mat-form-field-type-toggle {
+      * > .mat-form-field-infix {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .mat-form-field-type-firebase-imaga-gallery-uploader {
+      .image-container {
+        max-width: 200px;
+      }
+      .mat-form-field-underline{
+          display:none;
+      }
+    }
+  }
+}

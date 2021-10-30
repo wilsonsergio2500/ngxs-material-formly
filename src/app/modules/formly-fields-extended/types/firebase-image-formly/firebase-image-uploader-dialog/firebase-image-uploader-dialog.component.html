@@ -1,0 +1,7 @@
+<h3>Upload Image</h3>
+<formly-form-flex-json [formlyGroup]="formlyGroup"
+                       [btn-ready]="btnReadyLabel"
+                       [btn-busy]="btnLoadingLabel"
+                       (onFormSubmit)="formSubmit($event)">
+  <button mat-button type="button" (click)="onClose()" color="warn">Cancel</button>
+</formly-form-flex-json>

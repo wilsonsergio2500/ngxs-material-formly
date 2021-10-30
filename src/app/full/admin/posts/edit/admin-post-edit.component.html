@@ -1,0 +1,39 @@
+<div fxLayout="column" fxFlex="100">
+
+  <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+    <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+    <span [ngStyle]="{'padding.px': 10}">Loading Page...</span>
+  </div>
+
+  <ng-template #done>
+
+    <div fxLayout="row">
+      <div [ngStyle]="{'margin-top.px': 15}">
+        <a mat-button [routerLink]="listPath">
+          <mat-icon color="primary">chevron_left</mat-icon>
+        </a>
+      </div>
+      <h3>{{title}}</h3>
+    </div>
+
+    <ng-container *ngIf="record$ | async as record; else noRecord">
+
+      <formly-form-flex-json [formlyGroup]="formlyGroup"
+                             [show-revert]="false"
+                             [btn-ready]="btnReadyLabel"
+                             [btn-busy]="btnLoadingLabel"
+                             [read-only]="false"
+                             (onFormSubmit)="formSubmit()">
+      </formly-form-flex-json>
+
+    </ng-container>
+
+    <ng-template #noRecord>
+      <mat-card>
+        No Poost Records Found
+      </mat-card>
+    </ng-template>
+
+  </ng-template>
+
+</div>

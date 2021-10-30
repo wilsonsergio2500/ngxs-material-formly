@@ -1,4 +1,3 @@
-
 import { FormlyChipTypeComponent } from './chips.component';
 import { NgModule } from '@angular/core';
 import { CustomComponentsModule } from '../../../../components/components.module';
@@ -24,12 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete'
       types: [{
         name: 'formly-chips',
         component: FormlyChipTypeComponent,
-        wrappers: ['form-field'],
         defaultOptions: {
-          //templateOptions: {
-          //  placeholder: 'Enter elements',
-            
-          //},
         },
       }],
     }),

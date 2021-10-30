@@ -1,0 +1,6 @@
+<div fxLayout="column" fxFlex="100">
+  <div class="close-action-container">
+      <mat-icon (click)="onClose()">close</mat-icon>
+  </div>
+  <media-manage [modeType]="'Selection'" (onImageSelect)="onChange($event)"></media-manage>
+ </div>

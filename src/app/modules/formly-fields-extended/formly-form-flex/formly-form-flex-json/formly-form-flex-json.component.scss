@@ -1,0 +1,13 @@
+:host {
+  ::ng-deep {
+    .mat-editor-formly-field {
+      * .mat-form-field-label-wrapper {
+        display: none;
+      }
+
+      * .mat-form-field-underline{
+          display: none;
+      }
+    }
+  }
+}

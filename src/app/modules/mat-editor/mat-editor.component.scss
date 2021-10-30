@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  ::ng-deep {
+
+    .sidebar {
+      position: relative;
+      min-width: 40px;
+
+      mat-fab-speed-dial {
+        position: absolute;
+        bottom: 0;
+      }
+    }
+
+    .ql-container {
+      width: 100%;
+
+      hr {
+        border: none;
+        color: #111;
+        letter-spacing: 1em;
+        text-align: center;
+      }
+
+      hr:before {
+        content: '...';
+        font-size:25px;
+        font-weight:bold;
+      }
+    }
+  }
+}
