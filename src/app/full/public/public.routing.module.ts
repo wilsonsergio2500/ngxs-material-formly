@@ -18,7 +18,7 @@ const routes: Routes = [
       <Route>{ path: 'blogs', component: BlogsComponent, resolve: { action: BlogsResolver } },
       <Route>{ path: 'blog/:url', component: BlogComponent, resolve: { action: BlogResolver}},
       <Route>{ path: ':url', component: PageComponent, resolve: { action: PageResolver } },
-      <Route>{ path: '', component: PageComponent },
+      <Route>{ path: '', component: PageComponent, resolve: { action: PageResolver }  },
     ]
   }
 ]
