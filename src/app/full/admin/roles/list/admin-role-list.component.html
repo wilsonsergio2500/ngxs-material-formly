@@ -51,14 +51,10 @@
                     </div>
                   </div>
                   <div class="action-submit-container">
-                    <loading-button [IsBusy]="updating$ | async" [disabled]="hasSame(row)" (onSubmit)="onSave(row)" mat-raised-button type="button">
-                      <loading-button-ready>
-                        <mat-icon>save</mat-icon>
-                      </loading-button-ready>
-                      <loading-button-busy></loading-button-busy>
-                    </loading-button>
+                    <button mat-icon-button [disabled]="hasSame(row)" color="primary"  aria-label="save" (click)="onSave(row)">
+                      <mat-icon>save</mat-icon>
+                    </button>
                   </div>
-
                 </div>
               </mat-cell>
             </ng-container>
