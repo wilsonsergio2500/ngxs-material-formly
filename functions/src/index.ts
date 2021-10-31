@@ -27,7 +27,25 @@ export const PostCounter = functions.firestore.document('/posts/{Id}').onWrite((
     functions.logger.warn(`updated post, no action of updating counter executed`);
   } else if (!change.after.exists) {
     functions.logger.warn(`decreasing post counter`);
-    doc.update({ postCounter: firebaseAdmin.firestore.FieldValue.increment(-1) })
+    doc.update({ postCounter: firebaseAdmin.firestore.FieldValue.increment(-1) });
+  }
+
+  return;
+
+})
+
+export const PageCounter = functions.firestore.document('/pages/{Id}').onWrite((change, context) => {
+
+  const doc = firebaseAdmin.firestore().collection('config').doc('metrics');
+
+  if (!change.before.exists) {
+    functions.logger.warn(`increasing page counter`);
+    doc.update({ pageCounter: firebaseAdmin.firestore.FieldValue.increment(1) });
+  } else if (change.before.exists && change.after.exists) {
+    functions.logger.warn(`updated page, no action of updating counter executed`);
+  } else if (!change.after.exists) {
+    functions.logger.warn(`decreasing page counter`);
+    doc.update({ pageCounter: firebaseAdmin.firestore.FieldValue.increment(-1) });
   }
 
   return;
