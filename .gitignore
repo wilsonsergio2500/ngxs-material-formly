@@ -58,3 +58,6 @@ Fire8.njsproj.user
 /functions/lib
 /functions/ui-debug.log
 /package-lock.json
+/admin-tasks/node_modules
+/admin-tasks/service-account/sa.json
+/admin-tasks/package-lock.json
