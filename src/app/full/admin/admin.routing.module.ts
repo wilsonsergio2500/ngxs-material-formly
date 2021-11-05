@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, Route, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
+import { AdminDashboardComponent } from './dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   <Route>{
@@ -11,7 +12,8 @@ const routes: Routes = [
       <Route>{ path: 'media', loadChildren: () => import('./media/admin-media.module').then(m => m.AdminMediaModule) },
       <Route>{ path: 'navigation-builder', loadChildren: () => import('./navigation/admin-navigation.module').then(m => m.AdminNavigationBuilderModule) },
       <Route>{ path: 'roles', loadChildren: () => import('./roles/admin-role.module').then(m => m.AdminRoleModule) },
-      <Route>{ path: 'images', loadChildren: () => import('./images/images.module').then(m => m.ImagesModule) }
+      <Route>{ path: 'images', loadChildren: () => import('./images/images.module').then(m => m.ImagesModule) },
+      <Route>{ path: '', component: AdminDashboardComponent}
     ]
   }
 ]
