@@ -1,5 +1,5 @@
 import { State, Selector, NgxsOnInit, StateContext, Action } from "@ngxs/store";
-import { FirebaseTokenResult, IAuthStateModel, User } from './auth.model';
+import { FirebaseTokenResult, IAppPrivileges, IAuthStateModel, User } from './auth.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout, LoginRedirectOnAuthenticated, CreateUserwithEmailAndPassword, RegistrationError, CleanErrorMessage, RegistrationSuccess, AuthSetAsLoading, AuthSetAsDone } from './auth.actions';
 import { take, tap, mergeMap, catchError, delay } from 'rxjs/operators';
@@ -25,7 +25,7 @@ const REGISTRATION_ERROR_GENERIC = 'The User could not be registered at this mom
 @Injectable()
 export class AuthState implements NgxsOnInit {
 
-  private mainPage = '/main';
+  private mainPage = '/admin';
   private loginPage = '/login';
 
   constructor(
@@ -59,6 +59,18 @@ export class AuthState implements NgxsOnInit {
     return state.customClaims;
   }
 
+  @Selector()
+  static getPrivileges(state: IAuthStateModel): IAppPrivileges {
+    const { superuser, admin, blogger, editor } = state.customClaims;
+    const privileges = {
+      hasSuperUser: superuser,
+      hasAdmin: superuser || admin,
+      hasEditor: superuser || admin || editor,
+      hasBlogger: superuser || admin || blogger
+    };
+    return privileges;
+  }
+
   @Action(AuthSetAsLoading)
   onLoading(ctx: StateContext<IAuthStateModel>) {
     ctx.patchState({ working: true });
@@ -85,6 +97,7 @@ export class AuthState implements NgxsOnInit {
       tap((token: FirebaseTokenResult) => {
         const { superuser, admin, editor, blogger } = token.claims as ISecurityTypeInUserSecurityFirebaseModel
         const customClaims = { superuser, admin, editor, blogger };
+        /*console.log(customClaims);*/
         ctx.patchState({ customClaims })
       })
     )

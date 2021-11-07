@@ -17,3 +17,10 @@ export interface IAuthenticateUser {
 }
 
 export interface IRegistrationUser extends IAuthenticateUser { }
+
+export interface IAppPrivileges {
+  hasSuperUser: boolean,
+  hasAdmin: boolean,
+  hasEditor: boolean,
+  hasBlogger: boolean
+}

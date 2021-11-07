@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { AuthState } from '@states/auth/auth.state';
+import { IAppPrivileges } from '@states/auth/auth.model';
 
 @Component({
     selector: 'admin-dashboard',
@@ -6,14 +10,7 @@ import { Component } from '@angular/core';
     styleUrls: [`admin-dashboard.component.scss`]
   })
   export class AdminDashboardComponent {
-   
 
-    constructor(
-    ) {
-    }
-  
-    
-  
-   
+  @Select(AuthState.getPrivileges) privileges$: Observable<IAppPrivileges>;
   
   } 

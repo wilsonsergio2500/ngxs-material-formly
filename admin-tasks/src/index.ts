@@ -10,6 +10,6 @@ firebaseAdmin.initializeApp({
 
 firebaseAdmin.auth().createUser({ ...adminUser, emailVerified: false, disabled: false, })
   .then((user) => {
-  return firebaseAdmin.auth().setCustomUserClaims(user.uid, { superAdmin: true })
+    return firebaseAdmin.auth().setCustomUserClaims(user.uid, { superuser: true });
 })
 
