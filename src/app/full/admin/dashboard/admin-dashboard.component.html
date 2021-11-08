@@ -5,8 +5,8 @@
 
     <ng-container *ngIf="privileges$ | async as privileges">
 
-      <div class="grid-container" *ngIf="privileges.hasBlogger">
-        <div class="grid-item">
+      <div class="grid-container" >
+        <div class="grid-item" *ngIf="privileges.hasBlogger">
           <mat-card>
             <mat-icon>notes</mat-icon>
             <h4>Posts</h4>
@@ -41,7 +41,7 @@
         <div class="grid-item" *ngIf="privileges.hasSuperUser">
           <mat-card>
             <mat-icon>lock</mat-icon>
-            <h4>Privileges</h4>
+            <h4>Roles</h4>
             <a mat-button color="primary" routerLink="./roles">View</a>
           </mat-card>
         </div>

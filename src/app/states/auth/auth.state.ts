@@ -97,7 +97,6 @@ export class AuthState implements NgxsOnInit {
       tap((token: FirebaseTokenResult) => {
         const { superuser, admin, editor, blogger } = token.claims as ISecurityTypeInUserSecurityFirebaseModel
         const customClaims = { superuser, admin, editor, blogger };
-        /*console.log(customClaims);*/
         ctx.patchState({ customClaims })
       })
     )
@@ -119,6 +118,7 @@ export class AuthState implements NgxsOnInit {
       tap(() => {
         this.snackBarStatus.OpenComplete('Authenticated');
         ctx.dispatch(new AuthSetAsDone());
+        ctx.dispatch(new LoadSession());
       }),
       catchError(() => {
         ctx.dispatch(new AuthSetAsDone());

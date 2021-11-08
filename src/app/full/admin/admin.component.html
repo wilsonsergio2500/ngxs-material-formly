@@ -2,45 +2,51 @@
 
   <mat-sidenav #start [opened]="mobileQuery.matches ? false : true" [mode]="mobileQuery.matches ? 'over' : 'side'">
 
-    <mat-accordion>
+    <ng-container *ngIf="privileges$ | async as privileges">
 
-      <mat-expansion-panel expanded="true" class="noshadow">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Manage Content
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+      <mat-accordion>
 
-        <mat-list>
-          <mat-list-item class="menu-list-item">
-            <a matLine routerLink="/admin/posts/list">
-              <span>Blogs</span>
-            </a>
-          </mat-list-item>
-          <mat-list-item class="menu-list-item">
-            <a matLine routerLink="pages/list">
-              <span>Pages</span>
-            </a>
-          </mat-list-item>
-          <mat-list-item class="menu-list-item">
-            <a matLine routerLink="images">
-              <span>Images</span>
-            </a>
-          </mat-list-item>
-          <mat-list-item class="menu-list-item">
-            <a matLine routerLink="navigation-builder">
-              <span>Navigation</span>
-            </a>
-          </mat-list-item>
-          <mat-list-item class="menu-list-item">
-            <a matLine routerLink="roles/list">
-              <span>Roles</span>
-            </a>
-          </mat-list-item>
-        </mat-list>
+        <mat-expansion-panel expanded="true" class="noshadow">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Manage Content
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-      </mat-expansion-panel>
-    </mat-accordion>
+          <mat-list>
+            <mat-list-item class="menu-list-item" *ngIf="privileges.hasBlogger">
+              <a matLine routerLink="/admin/posts/list">
+                <span>Blogs</span>
+              </a>
+            </mat-list-item>
+            <mat-list-item class="menu-list-item" *ngIf="privileges.hasEditor">
+              <a matLine routerLink="pages/list">
+                <span>Pages</span>
+              </a>
+            </mat-list-item>
+            <mat-list-item class="menu-list-item">
+              <a matLine routerLink="images">
+                <span>Images</span>
+              </a>
+            </mat-list-item>
+            <mat-list-item class="menu-list-item" *ngIf="privileges.hasEditor">
+              <a matLine routerLink="navigation-builder">
+                <span>Navigation</span>
+              </a>
+            </mat-list-item>
+            <mat-list-item class="menu-list-item" *ngIf="privileges.hasSuperUser">
+              <a matLine routerLink="roles/list">
+                <span>Roles</span>
+              </a>
+            </mat-list-item>
+          </mat-list>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </ng-container>
+
+    
 
 
   </mat-sidenav>

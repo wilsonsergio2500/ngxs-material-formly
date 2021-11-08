@@ -1,7 +1,10 @@
 import { Component, ChangeDetectorRef, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Store } from '@ngxs/store';
-import { Logout } from '../../states/auth/auth.actions';
+import { Select, Store } from '@ngxs/store';
+import { Logout } from '@states/auth/auth.actions';
+import { AuthState } from '@states/auth/auth.state';
+import { Observable } from 'rxjs';
+import { IAppPrivileges } from '@states/auth/auth.model';
 
 @Component({
     selector: 'admin-view-component',
@@ -11,7 +14,8 @@ import { Logout } from '../../states/auth/auth.actions';
 export class AdminComponent implements OnInit, AfterViewInit, OnDestroy {
 
     mobileQuery: MediaQueryList;
-    examples: any[];
+  examples: any[];
+  @Select(AuthState.getPrivileges) privileges$: Observable<IAppPrivileges>;
 
     constructor(
         private media: MediaMatcher,
