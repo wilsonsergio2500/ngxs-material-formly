@@ -24,3 +24,11 @@ export interface ISecurityTypeInUserSecurityFirebaseModel {
     blogger?: boolean;
     moderator?: boolean;
 }
+
+export const PrivilegeType = {
+  superuser: 'superuser',
+  admin: 'admin',
+  editor: 'editor',
+  blogger: 'blogger',
+  moderator: 'moderator'
+}

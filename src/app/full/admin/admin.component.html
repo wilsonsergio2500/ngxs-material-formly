@@ -15,12 +15,12 @@
 
           <mat-list>
             <mat-list-item class="menu-list-item" *ngIf="privileges.hasBlogger">
-              <a matLine routerLink="/admin/posts/list">
+              <a matLine routerLink="posts">
                 <span>Blogs</span>
               </a>
             </mat-list-item>
             <mat-list-item class="menu-list-item" *ngIf="privileges.hasEditor">
-              <a matLine routerLink="pages/list">
+              <a matLine routerLink="pages">
                 <span>Pages</span>
               </a>
             </mat-list-item>
@@ -35,7 +35,7 @@
               </a>
             </mat-list-item>
             <mat-list-item class="menu-list-item" *ngIf="privileges.hasSuperUser">
-              <a matLine routerLink="roles/list">
+              <a matLine routerLink="roles">
                 <span>Roles</span>
               </a>
             </mat-list-item>
