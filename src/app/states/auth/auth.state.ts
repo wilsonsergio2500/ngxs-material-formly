@@ -84,6 +84,7 @@ export class AuthState implements NgxsOnInit {
 
   @Action(LoadSession)
   onLoadSession(ctx: StateContext<IAuthStateModel>) {
+    ctx.dispatch(new AuthSetAsLoading());
     return this.fireAuth.authState.pipe(
       take(1),
       mergeMap((user: User) => {
@@ -98,7 +99,8 @@ export class AuthState implements NgxsOnInit {
         const { superuser, admin, editor, blogger } = token.claims as ISecurityTypeInUserSecurityFirebaseModel
         const customClaims = { superuser, admin, editor, blogger };
         ctx.patchState({ customClaims })
-      })
+      }),
+      mergeMap(() => ctx.dispatch(new AuthSetAsDone()))
     )
   }
 

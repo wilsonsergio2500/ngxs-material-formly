@@ -1,55 +1,65 @@
 <div [ngStyle]="{'padding.px': 30}" [ngStyle.xs]="{'padding.px': 10}">
 
-  <div class="dashboard-container">
-    <h2>Manage Content</h2>
+  <div fxLayout="column" fxLayoutAlign="start center" [ngStyle]="{'padding-top.px': 30}" *ngIf="working$ | async as loading; else done">
+    <mat-progress-spinner mode="indeterminate" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+    <span [ngStyle]="{'padding.px': 10}">Loading Dashboard...</span>
+  </div>
 
-    <ng-container *ngIf="privileges$ | async as privileges">
+  <ng-template #done>
 
-      <div class="grid-container" >
-        <div class="grid-item" *ngIf="privileges.hasBlogger">
-          <mat-card>
-            <mat-icon>notes</mat-icon>
-            <h4>Posts</h4>
-            <a mat-button color="primary" routerLink="./posts">View</a>
-          </mat-card>
+    <div class="dashboard-container">
+      <h2>Manage Content</h2>
+
+      <ng-container *ngIf="privileges$ | async as privileges">
+
+        <div class="grid-container">
+          <div class="grid-item" *ngIf="privileges.hasBlogger">
+            <mat-card>
+              <mat-icon>notes</mat-icon>
+              <h4>Posts</h4>
+              <a mat-button color="primary" routerLink="./posts">View</a>
+            </mat-card>
+          </div>
+
+          <div class="grid-item" *ngIf="privileges.hasEditor">
+            <mat-card>
+              <mat-icon>layers</mat-icon>
+              <h4>Pages</h4>
+              <a mat-button color="primary" routerLink="./pages">View</a>
+            </mat-card>
+          </div>
+
+          <div class="grid-item">
+            <mat-card>
+              <mat-icon>photo_library</mat-icon>
+              <h4>Image Gallery</h4>
+              <a mat-button color="primary" routerLink="./images">View</a>
+            </mat-card>
+          </div>
+
+          <div class="grid-item" *ngIf="privileges.hasEditor">
+            <mat-card>
+              <mat-icon>account_tree</mat-icon>
+              <h4>Navigation Builder</h4>
+              <a mat-button color="primary" routerLink="./navigation-builder">View</a>
+            </mat-card>
+          </div>
+
+          <div class="grid-item" *ngIf="privileges.hasSuperUser">
+            <mat-card>
+              <mat-icon>lock</mat-icon>
+              <h4>Roles</h4>
+              <a mat-button color="primary" routerLink="./roles">View</a>
+            </mat-card>
+          </div>
         </div>
+      </ng-container>
 
-        <div class="grid-item" *ngIf="privileges.hasEditor">
-          <mat-card>
-            <mat-icon>layers</mat-icon>
-            <h4>Pages</h4>
-            <a mat-button color="primary" routerLink="./pages">View</a>
-          </mat-card>
-        </div>
 
-        <div class="grid-item" >
-          <mat-card>
-            <mat-icon>photo_library</mat-icon>
-            <h4>Image Gallery</h4>
-            <a mat-button color="primary" routerLink="./images">View</a>
-          </mat-card>
-        </div>
+    </div>
 
-        <div class="grid-item" *ngIf="privileges.hasEditor">
-          <mat-card>
-            <mat-icon>account_tree</mat-icon>
-            <h4>Navigation Builder</h4>
-            <a mat-button color="primary" routerLink="./navigation-builder">View</a>
-          </mat-card>
-        </div>
-
-        <div class="grid-item" *ngIf="privileges.hasSuperUser">
-          <mat-card>
-            <mat-icon>lock</mat-icon>
-            <h4>Roles</h4>
-            <a mat-button color="primary" routerLink="./roles">View</a>
-          </mat-card>
-        </div>
-      </div>
-    </ng-container>
+  </ng-template>
 
     
-
-  </div>
 
 </div>

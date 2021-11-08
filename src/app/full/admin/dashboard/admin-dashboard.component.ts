@@ -11,6 +11,7 @@ import { IAppPrivileges } from '@states/auth/auth.model';
   })
   export class AdminDashboardComponent {
 
+  @Select(AuthState.IsLoading) working$: Observable<boolean>;
   @Select(AuthState.getPrivileges) privileges$: Observable<IAppPrivileges>;
   
   } 
