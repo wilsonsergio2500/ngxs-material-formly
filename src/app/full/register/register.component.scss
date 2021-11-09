@@ -1,4 +1,4 @@
-@import "../../../styles-variables";
+@import 'styles-variables';
 :host {
   .register-frame {
     align-items: center;
@@ -16,6 +16,7 @@
   .logo-header {
     font-size: 30px;
     padding: 20px;
+    color: $mat-color-primary;
   }
 
   .flex-center {

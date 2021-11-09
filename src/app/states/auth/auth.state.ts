@@ -2,7 +2,7 @@ import { State, Selector, NgxsOnInit, StateContext, Action } from "@ngxs/store";
 import { FirebaseTokenResult, IAppPrivileges, IAuthStateModel, User } from './auth.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout, LoginRedirectOnAuthenticated, CreateUserwithEmailAndPassword, RegistrationError, CleanErrorMessage, RegistrationSuccess, AuthSetAsLoading, AuthSetAsDone } from './auth.actions';
-import { take, tap, mergeMap, catchError, delay } from 'rxjs/operators';
+import { take, tap, mergeMap, catchError, delay, finalize } from 'rxjs/operators';
 import { Navigate } from '@ngxs/router-plugin';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 import { EMPTY, from } from 'rxjs';
@@ -100,7 +100,7 @@ export class AuthState implements NgxsOnInit {
         const customClaims = { superuser, admin, editor, blogger };
         ctx.patchState({ customClaims })
       }),
-      mergeMap(() => ctx.dispatch(new AuthSetAsDone()))
+      finalize(() => ctx.dispatch(new AuthSetAsDone()))
     )
   }
 
