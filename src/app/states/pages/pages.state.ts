@@ -146,7 +146,7 @@ export class PageState {
   @Action(PageGetCurrentPageAction)
   onGetPAge(ctx: StateContext<IPageStateModel>, action: PageGetCurrentPageAction) {
     ctx.dispatch(new PageSetAsLoadingAction())
-    return from(this.pages.queryCollection(ref => ref.where('url', '==', action.pageUrl)).get()).pipe(
+    return from(this.pages.queryCollection(ref => ref.where('url', '==', action.pageUrl).where('publish', '==', true)).get()).pipe(
       mergeMap(page => {
         const currentPage = page.docs[0].data() as IPageFirebaseModel;
         ctx.patchState({ currentPage });

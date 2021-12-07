@@ -2,45 +2,51 @@
 
   <mat-sidenav #start [opened]="mobileQuery.matches ? false : true" [mode]="mobileQuery.matches ? 'over' : 'side'">
 
-    <mat-accordion>
+    <ng-container *ngIf="privileges$ | async as privileges">
 
-      <mat-expansion-panel expanded="true" class="noshadow">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Manage Content
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+      <mat-accordion>
 
-        <mat-list>
-          <mat-list-item class="menu-list-item">
-            <a matLine routerLink="/admin/posts/list">
-              <span>Blogs</span>
-            </a>
-          </mat-list-item>
-          <mat-list-item class="menu-list-item">
-            <a matLine routerLink="pages/list">
-              <span>Pages</span>
-            </a>
-          </mat-list-item>
-          <mat-list-item class="menu-list-item">
-            <a matLine routerLink="images">
-              <span>Images</span>
-            </a>
-          </mat-list-item>
-          <mat-list-item class="menu-list-item">
-            <a matLine routerLink="navigation-builder">
-              <span>Navigation</span>
-            </a>
-          </mat-list-item>
-          <mat-list-item class="menu-list-item">
-            <a matLine routerLink="roles/list">
-              <span>Roles</span>
-            </a>
-          </mat-list-item>
-        </mat-list>
+        <mat-expansion-panel expanded="true" class="noshadow">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Manage Content
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-      </mat-expansion-panel>
-    </mat-accordion>
+          <mat-list>
+            <mat-list-item class="menu-list-item" *ngIf="privileges.hasBlogger">
+              <a matLine routerLink="posts">
+                <span>Blogs</span>
+              </a>
+            </mat-list-item>
+            <mat-list-item class="menu-list-item" *ngIf="privileges.hasEditor">
+              <a matLine routerLink="pages">
+                <span>Pages</span>
+              </a>
+            </mat-list-item>
+            <mat-list-item class="menu-list-item">
+              <a matLine routerLink="images">
+                <span>Images</span>
+              </a>
+            </mat-list-item>
+            <mat-list-item class="menu-list-item" *ngIf="privileges.hasEditor">
+              <a matLine routerLink="navigation-builder">
+                <span>Navigation</span>
+              </a>
+            </mat-list-item>
+            <mat-list-item class="menu-list-item" *ngIf="privileges.hasSuperUser">
+              <a matLine routerLink="roles">
+                <span>Roles</span>
+              </a>
+            </mat-list-item>
+          </mat-list>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </ng-container>
+
+    
 
 
   </mat-sidenav>
@@ -55,19 +61,42 @@
           <mat-icon aria-label="menu icon-button with a heart icon">menu</mat-icon>
         </button>
 
-        <span class="app-title">Fire8</span>
+        <span class="app-title" routerLink="/admin">Fire8</span>
         <span class="fill-space"></span>
 
-        <button mat-icon-button mat-raised-button [matMenuTriggerFor]="usermenu">
-          <mat-icon aria-label="profile">person</mat-icon>
-        </button>
+        <ng-container *ngIf="user$ | async as user; else done">
 
-        <mat-menu #usermenu="matMenu" color="primary">
-          <button mat-menu-item (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
-            <span>Logout</span>
-          </button>
-        </mat-menu>
+          <ng-container *ngIf="user.photoURL">
+            <button mat-icon-button mat-raised-button class="user-photo-url-background" [style.backgroundImage]="getUrlPath(user.photoURL)" [matMenuTriggerFor]="usermenu">
+            </button>
+
+          </ng-container>
+
+          <ng-container *ngIf="!user.photoURL">
+            <button mat-icon-button mat-raised-button [matMenuTriggerFor]="usermenu">
+              <mat-icon aria-label="profile">person</mat-icon>
+            </button>
+          </ng-container>
+
+          <mat-menu #usermenu="matMenu" color="primary">
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+
+        </ng-container>
+
+        <!--<button mat-icon-button mat-raised-button [matMenuTriggerFor]="usermenu">
+    <mat-icon aria-label="profile">person</mat-icon>
+  </button>
+
+  <mat-menu #usermenu="matMenu" color="primary">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>-->
 
 
       </mat-toolbar-row>

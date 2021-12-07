@@ -1,4 +1,5 @@
-@import "../../../styles-variables";
+@import 'styles-variables';
+
 .login-frame {
   align-items: center;
   display: flex;
@@ -31,10 +32,10 @@
 .logo-font {
   font-family: spartan
 }
-.logo-header{
-
+.logo-header {
   font-size: 30px;
-  padding:20px;
+  padding: 20px;
+  color: $mat-color-primary;
 }
 .subheading{
   font-size:0.8em;

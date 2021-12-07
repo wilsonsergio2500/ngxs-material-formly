@@ -1,6 +1,13 @@
 :host {
   display: flex;
   height: 100%;
+
+  .user-photo-url-background {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
 }
 
 :host ::ng-deep .menu-list-item .mat-badge-content {

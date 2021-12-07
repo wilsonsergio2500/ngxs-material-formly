@@ -1,8 +1,8 @@
 import { State, Selector, NgxsOnInit, StateContext, Action } from "@ngxs/store";
-import { FirebaseTokenResult, IAuthStateModel, User } from './auth.model';
+import { FirebaseTokenResult, IAppPrivileges, IAuthStateModel, User } from './auth.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { LoadSession, LoginSuccess, LoginFail, LogoutSuccess, LoginWithEmailAndPassword, Logout, LoginRedirectOnAuthenticated, CreateUserwithEmailAndPassword, RegistrationError, CleanErrorMessage, RegistrationSuccess, AuthSetAsLoading, AuthSetAsDone } from './auth.actions';
-import { take, tap, mergeMap, catchError, delay } from 'rxjs/operators';
+import { take, tap, mergeMap, catchError, delay, finalize } from 'rxjs/operators';
 import { Navigate } from '@ngxs/router-plugin';
 import { SnackbarStatusService } from '../../components/ui-elements/snackbar-status/service/snackbar-status.service';
 import { EMPTY, from } from 'rxjs';
@@ -25,7 +25,7 @@ const REGISTRATION_ERROR_GENERIC = 'The User could not be registered at this mom
 @Injectable()
 export class AuthState implements NgxsOnInit {
 
-  private mainPage = '/main';
+  private mainPage = '/admin';
   private loginPage = '/login';
 
   constructor(
@@ -59,6 +59,18 @@ export class AuthState implements NgxsOnInit {
     return state.customClaims;
   }
 
+  @Selector()
+  static getPrivileges(state: IAuthStateModel): IAppPrivileges {
+    const { superuser, admin, blogger, editor } = state.customClaims;
+    const privileges = {
+      hasSuperUser: superuser,
+      hasAdmin: superuser || admin,
+      hasEditor: superuser || admin || editor,
+      hasBlogger: superuser || admin || blogger
+    };
+    return privileges;
+  }
+
   @Action(AuthSetAsLoading)
   onLoading(ctx: StateContext<IAuthStateModel>) {
     ctx.patchState({ working: true });
@@ -72,6 +84,7 @@ export class AuthState implements NgxsOnInit {
 
   @Action(LoadSession)
   onLoadSession(ctx: StateContext<IAuthStateModel>) {
+    ctx.dispatch(new AuthSetAsLoading());
     return this.fireAuth.authState.pipe(
       take(1),
       mergeMap((user: User) => {
@@ -86,7 +99,8 @@ export class AuthState implements NgxsOnInit {
         const { superuser, admin, editor, blogger } = token.claims as ISecurityTypeInUserSecurityFirebaseModel
         const customClaims = { superuser, admin, editor, blogger };
         ctx.patchState({ customClaims })
-      })
+      }),
+      finalize(() => ctx.dispatch(new AuthSetAsDone()))
     )
   }
 
@@ -106,6 +120,7 @@ export class AuthState implements NgxsOnInit {
       tap(() => {
         this.snackBarStatus.OpenComplete('Authenticated');
         ctx.dispatch(new AuthSetAsDone());
+        ctx.dispatch(new LoadSession());
       }),
       catchError(() => {
         ctx.dispatch(new AuthSetAsDone());

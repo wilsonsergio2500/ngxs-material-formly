@@ -1,0 +1,17 @@
+{
+  "name": "admintasks",
+  "scripts": {
+    "build": "tsc",
+    "add-super-user": "tsc && node ./lib/index.js"
+  },
+  "engines": {
+    "node": "12"
+  },
+  "dependencies": {
+    "firebase-admin": "^9.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.0"
+  },
+  "private": true
+}
