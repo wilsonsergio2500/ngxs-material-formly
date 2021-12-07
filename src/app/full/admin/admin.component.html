@@ -64,16 +64,39 @@
         <span class="app-title" routerLink="/admin">Fire8</span>
         <span class="fill-space"></span>
 
-        <button mat-icon-button mat-raised-button [matMenuTriggerFor]="usermenu">
-          <mat-icon aria-label="profile">person</mat-icon>
-        </button>
+        <ng-container *ngIf="user$ | async as user; else done">
 
-        <mat-menu #usermenu="matMenu" color="primary">
-          <button mat-menu-item (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
-            <span>Logout</span>
-          </button>
-        </mat-menu>
+          <ng-container *ngIf="user.photoURL">
+            <button mat-icon-button mat-raised-button class="user-photo-url-background" [style.backgroundImage]="getUrlPath(user.photoURL)" [matMenuTriggerFor]="usermenu">
+            </button>
+
+          </ng-container>
+
+          <ng-container *ngIf="!user.photoURL">
+            <button mat-icon-button mat-raised-button [matMenuTriggerFor]="usermenu">
+              <mat-icon aria-label="profile">person</mat-icon>
+            </button>
+          </ng-container>
+
+          <mat-menu #usermenu="matMenu" color="primary">
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+
+        </ng-container>
+
+        <!--<button mat-icon-button mat-raised-button [matMenuTriggerFor]="usermenu">
+    <mat-icon aria-label="profile">person</mat-icon>
+  </button>
+
+  <mat-menu #usermenu="matMenu" color="primary">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>-->
 
 
       </mat-toolbar-row>

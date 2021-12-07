@@ -17,7 +17,7 @@ export class PublicComponent implements OnInit, OnDestroy {
 
   mobileQuery: MediaQueryList;
   @Select(NavigationState.getNavigationRoot) navigations$: Observable<INavigationModel[]>;
-  @Select(AuthState.getUser) user$: Observable<AppFirebaseUser>
+  @Select(AuthState.getUser) user$: Observable<AppFirebaseUser>;
 
   constructor(
     private media: MediaMatcher,
