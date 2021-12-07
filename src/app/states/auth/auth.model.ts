@@ -2,6 +2,7 @@ import firebase from 'firebase'
 import { ISecurityTypeInUserSecurityFirebaseModel } from '../../schemas/users/user.model';
 
 export type User = firebase.User;
+export type AppFirebaseUser = { uid: string, phoneNumber: string, photoURL: string, email, displayName: string }
 export type FirebaseTokenResult = firebase.auth.IdTokenResult;
 
 export interface IAuthStateModel {
